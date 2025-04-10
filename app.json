@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "expo-template-default",
+    "name": "Playing in the Sandox looking at Flowers",
+    "slug": "playing-in-the-sandox-looking-at-flowers",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.djscottyb.playinginthesandoxlookingatflowers"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ce77dd42-8e41-4320-8eb3-6b96b801b3b6"
+      }
+    },
+    "owner": "djscottyb",
+    "updates": {
+      "url": "https://u.expo.dev/ce77dd42-8e41-4320-8eb3-6b96b801b3b6"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
