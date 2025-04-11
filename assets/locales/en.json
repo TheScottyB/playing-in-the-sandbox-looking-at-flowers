@@ -1,0 +1,37 @@
+{
+  "appName": "Sandbox Playing Flowers",
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "back": "Back"
+  },
+  "tabs": {
+    "home": "Home",
+    "explore": "Explore",
+    "cards": "Cards",
+    "flowers": "Flowers"
+  },
+  "flowers": {
+    "gallery": "Flower Gallery",
+    "flip": "Flip for Next Flower",
+    "loading": "Loading next flower...",
+    "viewedCount": "Flowers viewed: {{count}}",
+    "filterLabel": "Filter by season:",
+    "tip": "Tip: Tap the button to flip to a new flower!",
+    "didYouKnow": "Did you know?",
+    "seasons": {
+      "all": "All",
+      "spring": "Spring",
+      "summer": "Summer",
+      "fall": "Fall",
+      "winter": "Winter"
+    }
+  }
+}
+
