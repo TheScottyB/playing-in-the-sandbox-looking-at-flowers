@@ -1,3 +1,190 @@
+# Screenshot Capture Guide
+
+This document provides detailed guidelines for capturing, organizing, and preparing screenshots for App Store submission. Per Apple's guidelines, only the first 3 screenshots will be used on app installation sheets, and screenshots will be used across all device sizes, so quality and accuracy are critical.
+
+## Directory Structure
+
+All screenshots are organized in the `/screenshots` directory with the following structure:
+
+```
+screenshots/
+├── iphone_pro_max/         # iPhone 15 Pro Max (1290 × 2796) - HIGHEST PRIORITY
+│   ├── light/              # Light mode screenshots
+│   │   ├── flowers/        # Flower gallery screenshots (PRIMARY)
+│   │   ├── cards/          # Interactive cards screenshots (SECONDARY)
+│   │   └── explore/        # Explore interface screenshots (TERTIARY)
+│   └── dark/               # Dark mode screenshots
+│       ├── flowers/
+│       ├── cards/
+│       └── explore/
+├── iphone/                 # iPhone standard sizes
+│   ├── light/
+│   │   ├── flowers/
+│   │   ├── cards/
+│   │   ├── explore/
+│   │   └── home/
+│   └── dark/
+│       ├── flowers/
+│       ├── cards/
+│       ├── explore/
+│       └── home/
+└── ipad/                   # iPad Pro 12.9"
+    ├── light/
+    │   ├── flowers/
+    │   ├── cards/
+    │   ├── explore/
+    │   └── home/
+    └── dark/
+        ├── flowers/
+        ├── cards/
+        ├── explore/
+        └── home/
+```
+
+## Critical Screenshots (First 3)
+
+These are the most important screenshots that will appear on the App Store installation sheet and should be captured first.
+
+### 1. Flower Gallery (PRIMARY)
+
+- **Device**: iPhone 15 Pro Max
+- **Mode**: Light mode
+- **Directory**: `screenshots/iphone_pro_max/light/flowers/`
+- **Content Requirements**:
+  - Show the flower gallery with flip card animations in action
+  - Capture mid-animation if possible to show dynamic elements
+  - Ensure flowers are clearly visible and appealing
+  - Include UI elements that highlight interactivity
+  - Clean status bar with carrier text removed
+
+### 2. Interactive Cards (SECONDARY)
+
+- **Device**: iPhone 15 Pro Max
+- **Mode**: Light mode
+- **Directory**: `screenshots/iphone_pro_max/light/cards/`
+- **Content Requirements**:
+  - Display cards in various states (collapsed/expanded)
+  - Capture expansion animation if possible
+  - Show multiple cards for context
+  - Include visual indicator of haptic feedback if possible
+  - Clean status bar with carrier text removed
+
+### 3. Explore Interface (TERTIARY)
+
+- **Device**: iPhone 15 Pro Max
+- **Mode**: Light mode
+- **Directory**: `screenshots/iphone_pro_max/light/explore/`
+- **Content Requirements**:
+  - Show the main discovery/explore interface
+  - Display navigation elements clearly
+  - Highlight discovery features
+  - Show content relevant to user journey
+  - Clean status bar with carrier text removed
+
+## Screenshot Capture Process
+
+### Preparation
+
+1. Install and set up the app on the target device (iPhone 15 Pro Max).
+2. Ensure the device is in Light Mode for initial screenshots.
+3. Set device time to 9:41 AM (Apple's preferred time).
+4. Clear all notifications and ensure a full battery icon.
+5. Connect to WiFi but remove carrier name if possible.
+
+### Capturing
+
+Using Simulator or Physical Device:
+
+1. **Using Xcode Simulator**:
+   ```bash
+   # Start a specific simulator
+   xcrun simctl boot "iPhone 15 Pro Max"
+   
+   # Set simulator appearance to light mode
+   xcrun simctl ui booted appearance light
+   
+   # Take a screenshot
+   xcrun simctl io booted screenshot screenshots/iphone_pro_max/light/flowers/flower_gallery_main.png
+   ```
+
+2. **Using Physical Device**:
+   - Navigate to the screen you want to capture
+   - Press the Side button + Volume up button simultaneously
+   - Transfer the screenshot to your computer via AirDrop or cable
+   - Rename according to naming conventions below
+
+3. **Using QuickTime Player**:
+   - Connect your device to your Mac
+   - Open QuickTime Player
+   - Select File > New Movie Recording
+   - Click the dropdown next to the record button and select your iOS device
+   - Take screenshots using Screenshot app on Mac (Shift+Command+5)
+
+### Post-Processing
+
+1. Crop screenshots if needed to remove any unwanted elements
+2. Verify proper dimensions match the target device
+3. Ensure PNG format and proper color space (RGB)
+4. Optimize file size using ImageOptim without quality loss
+5. Verify no status bar artifacts or unwanted elements
+
+## File Naming Conventions
+
+Follow this naming pattern for consistency:
+
+```
+[section]_[feature]_[state]_[count].png
+```
+
+Examples:
+- `flowers_gallery_main_01.png`
+- `flowers_flip_animation_02.png`
+- `cards_expanded_view_01.png`
+- `cards_spring_animation_02.png`
+- `explore_categories_main_01.png`
+- `explore_seasonal_featured_02.png`
+
+## Quality Checklist
+
+Before submitting screenshots, verify each image against this checklist:
+
+- [ ] Correct dimensions for target device (iPhone 15 Pro Max: 1290 × 2796)
+- [ ] PNG format with RGB color space
+- [ ] No alpha channel or transparency
+- [ ] File size optimized but without visible compression artifacts
+- [ ] No carrier text, notifications, or time (except 9:41 AM)
+- [ ] Battery shown as full
+- [ ] WiFi icon present, no cellular signal indicators if possible
+- [ ] Content accurately represents actual app functionality
+- [ ] Text is legible and not cut off
+- [ ] UI elements are clearly visible and not obscured
+- [ ] No developer debugging information visible
+- [ ] Consistent light/dark theme usage within each category
+- [ ] No cut-off content or UI elements
+
+## Automated Processing
+
+After capturing initial screenshots, you can use ImageMagick for batch processing:
+
+```bash
+# Resize all screenshots to match required dimensions
+magick mogrify -resize 1290x2796! screenshots/iphone_pro_max/light/flowers/*.png
+
+# Optimize PNG files
+find screenshots -name "*.png" -exec magick convert {} -strip -quality 95 {} \;
+```
+
+## Useful Resources
+
+- [Apple's App Store Screenshot Specifications](https://developer.apple.com/app-store/product-page/)
+- [iOS Design Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/overview/themes/)
+- [Screenshot Templates](https://developer.apple.com/app-store/marketing/guidelines/#section-products)
+
+---
+
+**Last Updated**: April 11, 2025  
+**Responsible Team Member**: Scott Beilfuss (scottybe@tbdstud.io)
+
 # App Store Screenshot Requirements for Sandbox Flowers
 
 This document outlines the required screenshots for App Store submission, including specifications for different device sizes, orientations, and content recommendations.
