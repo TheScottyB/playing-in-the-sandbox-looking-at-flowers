@@ -1,25 +1,20 @@
-# Changelog
-
-All notable changes to the "Sandbox Flowers" project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
 
 ### Added
-- New features and improvements planned for future releases
+- Streamlined iOS hardware build workflow configured for development and production
+- Automatic device installation for hardware testing (UDID: 00008110-000A156A21E2801E)
+- Secure handling of all build credentials through GitHub Secrets
+- Integration with App Store Connect API for TestFlight deployment
 
-### App Store Preparation
-- Generated all required app icon sizes for iPhone and iPad devices
-- Created organized screenshot directory structure for all required devices
-- Established submission timeline and requirements checklist
+### Changed
+- Simplified CI/CD pipeline to focus on iOS hardware builds
+- Updated workflow triggers to use gh-pages branch
+- Reorganized App Store preparation documentation
 
-### Documentation
-- Added comprehensive App Store submission assets documentation (APP_STORE_ASSETS.md)
-- Created detailed app icon manifest and verification documentation
-- Added complete changelog tracking all project changes
-
+### Infrastructure
+- Configured GitHub Actions secrets for secure credential management
+- Set up comprehensive build environment variables
+- Added build caching for improved performance
 ## [1.0.0] - 2025-04-11
 
 ### Features
