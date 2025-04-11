@@ -1,50 +1,86 @@
-# Welcome to your Expo app 👋
+# Sandbox Flowers
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+An interactive app for creative expression and exploration with immersive iOS-native experiences.
 
-## Get started
+## Features
 
-1. Install dependencies
+- **NEW! Animated Card Interactions** - Expandable cards with fluid spring animations
+- **NEW! Haptic Feedback Integration** - Tactile response on card interactions and tab changes
+- **NEW! Tabbed Navigation Structure** - Home, Explore, and Cards sections
+- Native iOS styling with blur effects and translucency
+- iOS-optimized performance and animations
+- Responsive parallax scrolling
+- Adaptive light/dark theme support
 
+## Development Setup
+
+**Important**: This app requires iOS hardware testing for proper development. Web and simulator environments may not accurately represent the final product, especially haptic feedback and animation performance.
+
+For detailed development instructions, see [DEVELOPMENT.md](DEVELOPMENT.md).
+
+### Quick Start
+
+1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. For iOS hardware development (recommended):
    ```bash
-    npx expo start
+   npx expo install expo-dev-client
+   eas build --profile development --platform ios
+   npx expo start --dev-client
    ```
 
-In the output, you'll find options to open the app in a
+3. For quick testing in simulator:
+   ```bash
+   npx expo start --ios
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Navigation Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+The app features a tab-based navigation system:
 
-## Get a fresh project
+- **Home** - Welcome screen with parallax effect and getting started guide
+- **Explore** - Discover features and capabilities of the app
+- **Cards** - Interactive animated cards with expand/collapse animations and haptic feedback
 
-When you're ready, run:
+## Requirements
 
-```bash
-npm run reset-project
+- macOS computer
+- Xcode 15.0 or later
+- Apple Developer Account
+- Physical iOS device (required for haptic feedback testing)
+- Node.js 16 or later
+
+## Project Structure
+
+```
+├── app/                   # Main application screens
+│   ├── (tabs)/            # Tab-based navigation screens
+│   └── _layout.tsx        # Main navigation layout
+├── components/            # Reusable components
+│   ├── AnimatedCard.tsx   # Spring-animated card component
+│   ├── HapticTab.tsx      # Tactile feedback tab buttons
+│   └── ui/                # UI primitives and styled components
+├── assets/                # Images and other assets
+├── constants/             # App constants
+├── hooks/                 # Custom React hooks
+└── scripts/               # Build and utility scripts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## iOS-Specific Optimizations
 
-## Learn more
+- Native blur effects in tab bar
+- iOS-specific haptic feedback patterns
+- Optimized spring animations for iOS devices
+- Adaptive styling based on device capabilities
 
-To learn more about developing your project with Expo, look at the following resources:
+## Building for Production
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed instructions on creating production builds.
 
-## Join the community
+## Support
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+For development issues, refer to [DEVELOPMENT.md](DEVELOPMENT.md).
+For other questions, open an issue in the GitHub repository.
