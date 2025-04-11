@@ -4,6 +4,8 @@ This document outlines all required assets, metadata, and specifications needed 
 
 ## Screenshot Specifications
 
+> **IMPORTANT**: According to Apple's guidelines, only the first 3 screenshots will be used on the app installation sheets. These screenshots will be used for all display sizes and localizations. Focus on representing the app's core user experience accurately on the newest devices.
+
 All screenshots must be:
 - In PNG or JPEG format
 - RGB color space (not CMYK)
@@ -12,26 +14,38 @@ All screenshots must be:
 
 ### Required Device Screenshots
 
-| Device | Size (pixels) | Orientation | Quantity | Status |
-|--------|---------------|-------------|----------|--------|
-| iPhone 13 Pro Max | 1284 × 2778 | Portrait | 3-10 | ❌ Pending |
-| iPhone 8 Plus/7 Plus | 1242 × 2208 | Portrait | 3-10 | ❌ Pending |
-| iPad Pro (12.9") | 2048 × 2732 | Portrait | 3-10 | ❌ Pending |
-| iPad Pro (12.9") | 2732 × 2048 | Landscape | 3-10 | ❌ Pending |
+| Device | Size (pixels) | Orientation | Quantity | Priority | Status |
+|--------|---------------|-------------|----------|----------|--------|
+| iPhone 15 Pro Max | 1290 × 2796 | Portrait | 3 | High (Installation Sheet) | ❌ Pending |
+| iPhone 15 Pro Max | 1290 × 2796 | Portrait | 2-7 | Medium (App Store) | ❌ Pending |
+| iPad Pro (12.9", 6th gen) | 2048 × 2732 | Portrait | 3 | Medium | ❌ Pending |
+| iPad Pro (12.9", 6th gen) | 2732 × 2048 | Landscape | 3 | Medium | ❌ Pending |
 
-### Screenshot Content Recommendations
+### Screenshot Priority and Content
 
-1. **Home Screen** - Show the welcome screen with parallax effect
-2. **Explore Tab** - Display the discovery features
-3. **Cards Tab** - Showcase the animated cards with expansion animation
-4. **Flowers Tab** - Feature the flower gallery with flip animations
-5. **Dark Mode** - Include at least one screenshot with dark mode enabled
+#### Critical (First 3 Screenshots)
+These will appear on installation sheets and should represent core functionality:
+
+1. **Flower Gallery (Primary)** - Feature the flower gallery with flip animations, clearly showcasing the app's main purpose
+2. **Interactive Cards** - Showcase the animated cards with expansion animation, highlighting interactive elements
+3. **Explore Interface** - Display the discovery features with visual appeal and core navigation
+
+#### Supporting Screenshots (4-10)
+These provide additional context in the App Store listing:
+
+4. **Home Screen** - Show the welcome screen with parallax effect
+5. **Dark Mode Experience** - Showcase the app's appearance in dark mode
+6. **Haptic Feedback Visual** - Illustrate the haptic feedback interactions
+7. **Seasonal Collections** - Highlight different flower collections if applicable
+8. **Tablet Experience** - Show how the app takes advantage of larger screens (iPad)
 
 ### Screenshot Tips
 
 - Avoid showing time, carrier text, or notifications in the status bar
-- Use iOS 16+ style (current iOS version)
+- Use iOS 17+ style (current iOS version)
 - Include clear visual elements that highlight key features
+- Prioritize visual appeal in the first 3 screenshots - these are critical for conversions
+- Use consistent styling across all screenshots
 - Consider using [Apple's App Preview guidelines](https://developer.apple.com/app-store/app-previews/) for framing
 
 ## App Icon Requirements
