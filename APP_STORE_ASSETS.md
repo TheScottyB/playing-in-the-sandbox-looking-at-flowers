@@ -1,0 +1,193 @@
+# App Store Submission Assets
+
+This document outlines all required assets, metadata, and specifications needed for submitting "Sandbox Flowers" to the Apple App Store.
+
+## Screenshot Specifications
+
+All screenshots must be:
+- In PNG or JPEG format
+- RGB color space (not CMYK)
+- No alpha channel
+- High-quality without compression artifacts
+
+### Required Device Screenshots
+
+| Device | Size (pixels) | Orientation | Quantity | Status |
+|--------|---------------|-------------|----------|--------|
+| iPhone 13 Pro Max | 1284 × 2778 | Portrait | 3-10 | ❌ Pending |
+| iPhone 8 Plus/7 Plus | 1242 × 2208 | Portrait | 3-10 | ❌ Pending |
+| iPad Pro (12.9") | 2048 × 2732 | Portrait | 3-10 | ❌ Pending |
+| iPad Pro (12.9") | 2732 × 2048 | Landscape | 3-10 | ❌ Pending |
+
+### Screenshot Content Recommendations
+
+1. **Home Screen** - Show the welcome screen with parallax effect
+2. **Explore Tab** - Display the discovery features
+3. **Cards Tab** - Showcase the animated cards with expansion animation
+4. **Flowers Tab** - Feature the flower gallery with flip animations
+5. **Dark Mode** - Include at least one screenshot with dark mode enabled
+
+### Screenshot Tips
+
+- Avoid showing time, carrier text, or notifications in the status bar
+- Use iOS 16+ style (current iOS version)
+- Include clear visual elements that highlight key features
+- Consider using [Apple's App Preview guidelines](https://developer.apple.com/app-store/app-previews/) for framing
+
+## App Icon Requirements
+
+### App Icon Sizes
+
+| Usage | Size (pixels) | Format | Status |
+|-------|---------------|--------|--------|
+| App Store | 1024 × 1024 | PNG | ❌ Pending |
+| iPhone Notifications | 20 × 20 @2x, @3x | PNG | ❌ Pending |
+| iPhone Settings | 29 × 29 @2x, @3x | PNG | ❌ Pending |
+| iPhone Spotlight | 40 × 40 @2x, @3x | PNG | ❌ Pending |
+| iPhone App | 60 × 60 @2x, @3x | PNG | ❌ Pending |
+| iPad Notifications | 20 × 20 @1x, @2x | PNG | ❌ Pending |
+| iPad Settings | 29 × 29 @1x, @2x | PNG | ❌ Pending |
+| iPad Spotlight | 40 × 40 @1x, @2x | PNG | ❌ Pending |
+| iPad App | 76 × 76 @1x, @2x | PNG | ❌ Pending |
+| iPad Pro App | 83.5 × 83.5 @2x | PNG | ❌ Pending |
+
+### Icon Design Guidelines
+
+- Simple, recognizable design that works at small sizes
+- Avoid transparency (not supported)
+- Don't include the App Store logo or "Download on the App Store" badge
+- Avoid screenshots in your app icon
+- Primary color scheme should incorporate our brand green (#4CAF50)
+- Include the flower motif to reflect app content
+
+## App Store Metadata
+
+### Basic Information
+
+| Metadata | Requirements | Status |
+|----------|--------------|--------|
+| App Name | "Sandbox Flowers" (max 30 characters) | ✅ Complete |
+| Subtitle | "Interactive Flower Gallery" (max 30 characters) | ❌ Pending |
+| Category | Primary: Entertainment<br>Secondary: Education | ✅ Complete |
+| Price | Free | ✅ Complete |
+| Availability | All territories | ❌ Pending |
+
+### Descriptions
+
+| Item | Requirements | Status |
+|------|--------------|--------|
+| Description | Full app description (max 4000 characters)<br>Current: "An interactive flower gallery with beautiful animations and seasonal collections. Flip through various flower types with immersive haptic feedback." | ✅ Complete |
+| Promotional Text | Changeable marketing text (max 170 characters) | ❌ Pending |
+| Keywords | Comma-separated list (max 100 characters)<br>Suggested: "flowers,gallery,animation,interactive,nature,haptic,flip,cards" | ❌ Pending |
+
+### App Review Information
+
+| Item | Requirements | Status |
+|------|--------------|--------|
+| Contact Info | Name, email, and phone number for Apple to contact | ❌ Pending |
+| Demo Account | If app requires login, provide test credentials | N/A |
+| Notes | Special instructions for reviewers | ❌ Pending |
+
+## Localization Requirements
+
+### Current Localization
+
+| Language | Localized Elements | Status |
+|----------|-------------------|--------|
+| English (US) | Full localization | ✅ Complete |
+
+### Recommended Additional Languages
+
+| Language | Market Importance | Status |
+|----------|-------------------|--------|
+| Spanish | High | ❌ Pending |
+| Japanese | High | ❌ Pending |
+| French | Medium | ❌ Pending |
+| German | Medium | ❌ Pending |
+| Chinese (Simplified) | High | ❌ Pending |
+
+For each language, the following must be localized:
+- App name
+- Description
+- Keywords
+- Screenshots (text overlays)
+- In-app content
+
+## App Preview Videos (Optional)
+
+### Video Specifications
+
+| Device | Resolution | Orientation | Length | Format | Status |
+|--------|------------|-------------|--------|--------|--------|
+| iPhone 13 Pro Max | 1284 × 2778 | Portrait | 15-30 sec | H.264 | ❌ Optional |
+| iPad Pro (12.9") | 2048 × 2732 | Portrait | 15-30 sec | H.264 | ❌ Optional |
+
+### Content Recommendations
+
+1. Start with app launch and logo reveal
+2. Showcase parallax scrolling effect
+3. Demonstrate flower gallery with flip animations
+4. Highlight the haptic feedback integration
+5. Show light/dark mode transition
+6. End with a call to action
+
+## App Store Submission Checklist
+
+### Legal Requirements
+
+- [x] Privacy Policy URL available
+- [x] App complies with GDPR requirements
+- [x] App complies with CCPA requirements
+- [x] Digital Services Act (DSA) compliance documentation
+- [x] Encryption declaration completed
+
+### Technical Requirements
+
+- [ ] App successfully runs on all declared devices
+- [ ] No crashes or freezes during normal operation
+- [ ] All user interfaces are complete and functional
+- [ ] No placeholder content or debug information
+- [ ] App icon is properly displayed on all devices
+- [ ] App correctly handles background/foreground transitions
+- [ ] Haptic feedback functions as intended on supported devices
+
+### Content Requirements
+
+- [ ] All screenshots completed and uploaded
+- [ ] App Store icon (1024×1024) uploaded
+- [ ] App description finalized
+- [ ] Keywords optimized and finalized
+- [ ] Support URL is valid and accessible
+- [ ] Marketing URL is valid and accessible
+- [ ] Copyright information is current and accurate
+
+### App-Specific Requirements
+
+- [ ] All flower gallery images are properly credited
+- [ ] Animation performance verified on older devices
+- [ ] Seasonal collections are properly labeled
+- [ ] Haptic feedback patterns tested on multiple devices
+- [ ] Dark mode theme properly implemented for all screens
+
+## Asset Creation Tools
+
+- **Screenshots**: Use QuickTime Player screen recording or Xcode's built-in screenshot feature
+- **App Icon**: [App Icon Generator](https://appicon.co/) can generate all required sizes
+- **Video Preview**: iMovie or Final Cut Pro for editing screen recordings
+- **Image Optimization**: [ImageOptim](https://imageoptim.com/mac) for lossless compression
+
+## Submission Timeline
+
+1. Prepare all screenshots and app icon assets (Deadline: April 18, 2025)
+2. Finalize app metadata and descriptions (Deadline: April 20, 2025)
+3. Complete app preview video (if applicable) (Deadline: April 22, 2025)
+4. Submit for App Review (Target Date: April 25, 2025)
+5. Expected review time: 1-3 business days
+6. Target public release: May 1, 2025
+
+---
+
+**Last Updated**: April 11, 2025
+
+**Responsible Team Member**: Scott Beilfuss (scottybe@tbdstud.io)
+
