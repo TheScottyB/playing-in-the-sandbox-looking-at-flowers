@@ -65,9 +65,14 @@ The app features a tab-based navigation system:
 │   └── ui/                # UI primitives and styled components
 ├── assets/                # Images and other assets
 ├── constants/             # App constants
+├── docs/                  # GitHub Pages documentation
+│   ├── index.html         # Documentation landing page
+│   └── privacy.html       # Privacy policy for App Store
 ├── hooks/                 # Custom React hooks
 └── scripts/               # Build and utility scripts
 ```
+
+> **Note on GitHub Pages**: The project uses GitHub Pages to host the [privacy policy](https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html) required for App Store submission. To enable or update GitHub Pages, go to the repository settings under Pages and set the source to the `main` branch and `/docs` folder.
 
 ## iOS-Specific Optimizations
 
