@@ -67,11 +67,23 @@ All icon sizes have been generated and are located in the `app_store_assets/icon
 
 ### Icon Generation Process
 
-The app icons were generated using ImageMagick from our base 1024x1024 source icon:
+The app icons were generated using ImageMagick from our custom base 1024x1024 source icon:
 1. Source: `assets/images/icon.png` (1024x1024, 8-bit sRGB)
 2. Verified icon properties meet App Store requirements (no alpha channel, proper color space)
 3. Generated all required sizes for both iPhone and iPad
 4. Created a verification MANIFEST.md file in the icons directory
+
+#### Custom Icon Specifications
+
+We selected the custom `icon.png` from the project's `assets/images/` directory as our source for all App Store icons based on the following specifications:
+
+- **Dimensions**: Perfect 1024×1024 pixels (Apple's required size for App Store)
+- **Color Space**: sRGB (required by App Store guidelines)
+- **Bit Depth**: 8-bit (optimal for iOS display)
+- **File Size**: 22KB (optimized for quality/size balance)
+- **Alpha Channel**: None (as required by Apple)
+
+This icon was chosen over other alternatives (like adaptive-icon.png and splash-icon.png) because it features our distinctive flower motif that best represents the app's purpose and aesthetic. The icon's unique visual design maintains recognizability even at small sizes while incorporating our brand green (#4CAF50) color scheme.
 
 See `app_store_assets/icons/MANIFEST.md` for detailed verification information of all generated icons.
 
