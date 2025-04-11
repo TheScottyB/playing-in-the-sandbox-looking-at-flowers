@@ -40,16 +40,21 @@ All screenshots must be:
 
 | Usage | Size (pixels) | Format | Status |
 |-------|---------------|--------|--------|
-| App Store | 1024 × 1024 | PNG | ❌ Pending |
-| iPhone Notifications | 20 × 20 @2x, @3x | PNG | ❌ Pending |
-| iPhone Settings | 29 × 29 @2x, @3x | PNG | ❌ Pending |
-| iPhone Spotlight | 40 × 40 @2x, @3x | PNG | ❌ Pending |
-| iPhone App | 60 × 60 @2x, @3x | PNG | ❌ Pending |
-| iPad Notifications | 20 × 20 @1x, @2x | PNG | ❌ Pending |
-| iPad Settings | 29 × 29 @1x, @2x | PNG | ❌ Pending |
-| iPad Spotlight | 40 × 40 @1x, @2x | PNG | ❌ Pending |
-| iPad App | 76 × 76 @1x, @2x | PNG | ❌ Pending |
-| iPad Pro App | 83.5 × 83.5 @2x | PNG | ❌ Pending |
+| App Store | 1024 × 1024 | PNG | ✅ Complete |
+| iPhone Notifications | 20 × 20 @2x, @3x | PNG | ✅ Complete |
+| iPhone Settings | 29 × 29 @2x, @3x | PNG | ✅ Complete |
+| iPhone Spotlight | 40 × 40 @2x, @3x | PNG | ✅ Complete |
+| iPhone App | 60 × 60 @2x, @3x | PNG | ✅ Complete |
+| iPad Notifications | 20 × 20 @1x, @2x | PNG | ✅ Complete |
+| iPad Settings | 29 × 29 @1x, @2x | PNG | ✅ Complete |
+| iPad Spotlight | 40 × 40 @1x, @2x | PNG | ✅ Complete |
+| iPad App | 76 × 76 @1x, @2x | PNG | ✅ Complete |
+| iPad Pro App | 83.5 × 83.5 @2x | PNG | ✅ Complete |
+
+All icon sizes have been generated and are located in the `app_store_assets/icons/` directory with the following structure:
+- `AppStore-1024x1024.png` - Main App Store icon
+- `iphone/` - All iPhone-specific icons with appropriate naming
+- `ipad/` - All iPad-specific icons with appropriate naming
 
 ### Icon Design Guidelines
 
@@ -59,6 +64,16 @@ All screenshots must be:
 - Avoid screenshots in your app icon
 - Primary color scheme should incorporate our brand green (#4CAF50)
 - Include the flower motif to reflect app content
+
+### Icon Generation Process
+
+The app icons were generated using ImageMagick from our base 1024x1024 source icon:
+1. Source: `assets/images/icon.png` (1024x1024, 8-bit sRGB)
+2. Verified icon properties meet App Store requirements (no alpha channel, proper color space)
+3. Generated all required sizes for both iPhone and iPad
+4. Created a verification MANIFEST.md file in the icons directory
+
+See `app_store_assets/icons/MANIFEST.md` for detailed verification information of all generated icons.
 
 ## App Store Metadata
 
@@ -122,11 +137,11 @@ For each language, the following must be localized:
 | iPhone 13 Pro Max | 1284 × 2778 | Portrait | 15-30 sec | H.264 | ❌ Optional |
 | iPad Pro (12.9") | 2048 × 2732 | Portrait | 15-30 sec | H.264 | ❌ Optional |
 
-### Content Recommendations
+### Content Requirements
 
-1. Start with app launch and logo reveal
-2. Showcase parallax scrolling effect
-3. Demonstrate flower gallery with flip animations
+- [ ] All screenshots completed and uploaded
+- [x] App Store icon (1024×1024) uploaded
+- [ ] App description finalized
 4. Highlight the haptic feedback integration
 5. Show light/dark mode transition
 6. End with a call to action
@@ -179,6 +194,8 @@ For each language, the following must be localized:
 ## Submission Timeline
 
 1. Prepare all screenshots and app icon assets (Deadline: April 18, 2025)
+   - ✅ App icons completed on April 11, 2025
+   - ❌ Screenshots pending
 2. Finalize app metadata and descriptions (Deadline: April 20, 2025)
 3. Complete app preview video (if applicable) (Deadline: April 22, 2025)
 4. Submit for App Review (Target Date: April 25, 2025)
@@ -187,7 +204,7 @@ For each language, the following must be localized:
 
 ---
 
-**Last Updated**: April 11, 2025
+**Last Updated**: April 11, 2025 (Updated with icon generation completion)
 
 **Responsible Team Member**: Scott Beilfuss (scottybe@tbdstud.io)
 
