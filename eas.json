@@ -7,11 +7,20 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "env": {
+        "APP_ENV": "development"
+      },
+      "channel": "development",
       "android": {
-        "image": "latest"
+        "image": "latest",
+        "buildType": "apk"
       },
       "ios": {
-        "image": "latest"
+        "image": "latest",
+        "resourceClass": "m1-medium"
+      },
+      "cache": {
+        "key": "dev-{{ os }}"
       }
     },
     "development-simulator": {
@@ -22,26 +31,49 @@
     },
     "preview": {
       "distribution": "internal",
-      "channel": "main",
+      "channel": "preview",
+      "autoIncrement": true,
+      "env": {
+        "APP_ENV": "staging"
+      },
       "android": {
-        "image": "latest"
+        "image": "latest",
+        "buildType": "app-bundle"
       },
       "ios": {
-        "image": "latest"
+        "image": "latest",
+        "resourceClass": "m1-medium"
+      },
+      "cache": {
+        "key": "preview-{{ os }}"
       }
     },
     "production": {
       "channel": "production",
       "autoIncrement": true,
+      "env": {
+        "APP_ENV": "production"
+      },
       "android": {
-        "image": "latest"
+        "image": "latest",
+        "buildType": "app-bundle"
       },
       "ios": {
-        "image": "latest"
+        "image": "latest",
+        "resourceClass": "m1-medium"
+      },
+      "cache": {
+        "key": "prod-{{ os }}-{{ datetime }}"
       }
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "beilsco@gmail.com",
+        "ascAppId": "6744488642",
+        "appleTeamId": "3X872JR6P3"
+      }
+    }
   }
 }
