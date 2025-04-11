@@ -3,6 +3,15 @@
     "name": "Sandbox Playing Flowers",
     "slug": "playing-in-the-sandox-looking-at-flowers",
     "version": "1.0.0",
+    "privacy": "public",
+    "web": {
+      "favicon": "./assets/images/favicon.png",
+      "name": "Sandbox Flowers",
+      "shortName": "Sandbox Flowers",
+      "description": "Creative expression in a digital sandbox",
+      "themeColor": "#ffffff",
+      "lang": "en-US"
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",

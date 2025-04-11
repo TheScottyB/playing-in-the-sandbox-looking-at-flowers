@@ -13,7 +13,7 @@
 ## Required URLs
 | URL Type | Value |
 |----------|-------|
-| Privacy Policy URL | https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/PRIVACY.md |
+| Privacy Policy URL | https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/docs/privacy.html |
 | Support URL | https://github.com/TheScottyB/playing-in-the-sandox-looking-at-flowers/issues |
 | Marketing URL (Optional) | - |
 | User Privacy Choices URL (Optional) | - |
