@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Playing in the Sandox looking at Flowers",
+    "name": "Sandbox Playing Flowers",
     "slug": "playing-in-the-sandox-looking-at-flowers",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers"
+      "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
