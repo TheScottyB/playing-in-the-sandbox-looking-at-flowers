@@ -47,6 +47,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="rectangle.stack.fill" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="flowers"
+        options={{
+          title: 'Flowers',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="leaf.fill" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

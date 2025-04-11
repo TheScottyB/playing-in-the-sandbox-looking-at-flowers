@@ -4,14 +4,8 @@
     "slug": "playing-in-the-sandox-looking-at-flowers",
     "version": "1.0.0",
     "privacy": "public",
-    "web": {
-      "favicon": "./assets/images/favicon.png",
-      "name": "Sandbox Flowers",
-      "shortName": "Sandbox Flowers",
-      "description": "Creative expression in a digital sandbox",
-      "themeColor": "#ffffff",
-      "lang": "en-US"
-    },
+    "description": "An interactive flower gallery with beautiful animations and seasonal collections. Flip through various flower types with immersive haptic feedback.",
+    "primaryColor": "#4CAF50",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -20,21 +14,40 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers",
+      "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+        "ITSAppUsesNonExemptEncryption": false,
+        "LSApplicationCategoryType": "public.app-category.entertainment",
+        "CFBundleLocalizations": ["en"],
+        "UIRequiredDeviceCapabilities": ["arm64"],
+        "UIBackgroundModes": [],
+        "UIViewControllerBasedStatusBarAppearance": true
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "associatedDomains": [],
+      "primaryCategory": "Entertainment",
+      "secondaryCategory": "Education"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.djscottyb.playinginthesandoxlookingatflowers"
+      "package": "com.djscottyb.playinginthesandoxlookingatflowers",
+      "versionCode": 1,
+      "permissions": []
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "name": "Sandbox Flowers",
+      "shortName": "Sandbox Flowers",
+      "description": "Creative expression in a digital sandbox",
+      "themeColor": "#ffffff",
+      "lang": "en-US"
     },
     "plugins": [
       "expo-router",
@@ -54,7 +67,9 @@
     "extra": {
       "eas": {
         "projectId": "ce77dd42-8e41-4320-8eb3-6b96b801b3b6"
-      }
+      },
+      "encryptionDocPath": "./ENCRYPTION_NOTICE.md",
+      "dsaCompliancePath": "./DSA_COMPLIANCE.md"
     },
     "owner": "djscottyb",
     "updates": {
@@ -62,6 +77,21 @@
     },
     "runtimeVersion": {
       "policy": "appVersion"
-    }
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "jsEngine": "hermes",
+    "locales": {
+      "en": "./assets/locales/en.json"
+    },
+    "platforms": ["ios", "android", "web"],
+    "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandox-looking-at-flowers",
+    "contentRating": ["4+", "everyone"]
   }
 }
