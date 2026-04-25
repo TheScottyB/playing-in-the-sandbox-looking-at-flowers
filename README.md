@@ -5,7 +5,7 @@ A daily ritual app: every morning, a fresh AI-generated picture of a flower nati
 ## How it works
 
 1. On first launch, the app asks for your location once and resolves it to a US state code (e.g. `CA`). The state is cached locally; no coordinates are stored or sent anywhere.
-2. Each night at 04:00 PT, a GitHub Actions cron picks one in-season native species per state from `data/species.json`, generates an image with Gemini 2.5 Flash Image, and commits the `.webp` + sidecar JSON to `docs/daily/{state}/{YYYY-MM-DD}.{webp,json}`.
+2. Each night at 04:00 PT, a GitHub Actions cron picks one in-season native species per state from `data/species.json`, generates an image with Gemini 2.5 Flash Image, and commits the `.png` + sidecar JSON to `docs/daily/{state}/{YYYY-MM-DD}.{png,json}`.
 3. GitHub Pages serves those files as a free static CDN. The app fetches today's flower for your state and displays it full-bleed with the common name, latin name, and a short blurb.
 
 If permission is denied, or you're outside the US, the app falls back to a curated `default` bucket.
@@ -27,7 +27,7 @@ If permission is denied, or you're outside the US, the app falls back to a curat
 ├── .github/workflows/
 │   └── generate-daily.yml     # Cron 0 11 * * * UTC = 04:00 PT
 ├── docs/                      # GitHub Pages site (privacy + daily/ CDN tree)
-│   ├── daily/{state}/{date}.webp
+│   ├── daily/{state}/{date}.png
 │   ├── daily/{state}/{date}.json
 │   ├── index.html
 │   └── privacy.html
@@ -60,7 +60,34 @@ The daily generator needs:
 1. `GEMINI_API_KEY` repo secret (Settings → Secrets → Actions)
 2. GitHub Pages enabled from `docs/` on `main` (Settings → Pages)
 
-Manual run: Actions → "Generate Daily Flowers" → Run workflow. Optional inputs: `date` (YYYY-MM-DD) and `states` (comma-separated codes) for backfills.
+### Manual runs
+
+Actions → "Generate Daily Flowers" → **Run workflow**. Inputs:
+
+| Input | Default | Use it for |
+|---|---|---|
+| `date` | today UTC | Generate flowers for a specific date (`2026-04-25`) |
+| `states` | every bucket | Limit to a subset (`CA,NY,TX`) |
+| `missing_only` | `false` | Conservative backfill: skip states that have any partial output (won't overwrite). Default behavior already skips states that are *fully* complete. |
+| `dry_run` | `false` | Smoke-test the pipeline without burning Gemini credits |
+
+### Backfilling missing states
+
+If the cron has only generated a partial set (rate limits, bad API key, etc.),
+re-run with `missing_only: true` for the affected dates. Existing valid files
+are skipped; only the gaps get filled. The script tolerates per-state failures
+without aborting the workflow's commit step, so partial progress is always
+persisted.
+
+Local backfill:
+
+```bash
+GEMINI_API_KEY=... node scripts/generate-daily.mjs \
+  --date 2026-04-25 --missing-only
+```
+
+The script prints `Re-run with: --states ... --missing-only` after a partial
+run so you can resume without re-paying for the states that already worked.
 
 ## Documentation
 

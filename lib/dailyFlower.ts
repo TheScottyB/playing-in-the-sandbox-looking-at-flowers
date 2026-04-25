@@ -23,7 +23,20 @@ export interface DailyFlowerSidecar {
   generatedAt: string;
 }
 
-function todayIso(): string {
+/** Tagged error so callers can distinguish 404 ("coming soon") from 5xx
+ *  ("service trouble") without parsing strings. Network failures (offline,
+ *  DNS, etc.) surface as the original TypeError from fetch and don't reach
+ *  this class. */
+export class FlowerFetchError extends Error {
+  readonly status: number;
+  constructor(state: string, date: string, status: number) {
+    super(`No flower for ${state} on ${date} (HTTP ${status})`);
+    this.name = 'FlowerFetchError';
+    this.status = status;
+  }
+}
+
+export function todayLocalIso(): string {
   const now = new Date();
   const yyyy = now.getFullYear();
   const mm = String(now.getMonth() + 1).padStart(2, '0');
@@ -31,20 +44,18 @@ function todayIso(): string {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-export function imageUrlFor(state: string, date: string = todayIso()): string {
+export function imageUrlFor(state: string, date: string = todayLocalIso()): string {
   return `${PAGES_BASE_URL}/${state}/${date}.png`;
 }
 
-function sidecarUrlFor(state: string, date: string = todayIso()): string {
+function sidecarUrlFor(state: string, date: string = todayLocalIso()): string {
   return `${PAGES_BASE_URL}/${state}/${date}.json`;
 }
 
-export async function fetchDailyFlower(state: string, date: string = todayIso()): Promise<DailyFlower> {
+export async function fetchDailyFlower(state: string, date: string = todayLocalIso()): Promise<DailyFlower> {
   const sidecar = await fetch(sidecarUrlFor(state, date));
   if (!sidecar.ok) {
-    throw new Error(
-      `No flower published for ${state} on ${date} (HTTP ${sidecar.status})`,
-    );
+    throw new FlowerFetchError(state, date, sidecar.status);
   }
   const meta = (await sidecar.json()) as DailyFlowerSidecar;
   return {

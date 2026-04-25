@@ -12,6 +12,11 @@ on:
       states:
         description: 'Comma-separated state codes to regenerate (default: all)'
         required: false
+      missing_only:
+        description: 'Skip states that already have valid files for the date'
+        required: false
+        default: 'false'
+        type: boolean
       dry_run:
         description: 'Skip Gemini API calls, write placeholder files (true/false)'
         required: false
@@ -39,13 +44,20 @@ jobs:
         run: |
           DATE_ARG=""
           STATES_ARG=""
+          MISSING_ARG=""
           if [ -n "${{ github.event.inputs.date }}" ]; then
             DATE_ARG="--date ${{ github.event.inputs.date }}"
           fi
           if [ -n "${{ github.event.inputs.states }}" ]; then
             STATES_ARG="--states ${{ github.event.inputs.states }}"
           fi
-          node scripts/generate-daily.mjs $DATE_ARG $STATES_ARG
+          # Cron uses default "heal" mode: regenerate any incomplete state.
+          # Manual dispatch can opt into --missing-only to never overwrite
+          # existing partials (safer for backfills).
+          if [ "${{ github.event.inputs.missing_only }}" = "true" ]; then
+            MISSING_ARG="--missing-only"
+          fi
+          node scripts/generate-daily.mjs $DATE_ARG $STATES_ARG $MISSING_ARG
 
       - name: Commit generated files
         run: |
