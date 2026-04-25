@@ -1,43 +1,30 @@
-# Navigation: visit every tab and assert key content on each screen.
+# Date navigation: tap Yesterday then Today to verify date browsing works.
+# Requires network access to GitHub Pages daily flower data.
 # Local dev (Expo Go): host.exp.Exponent
 # CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
 appId: host.exp.Exponent
 ---
 - launchApp
-# Navigate from Expo Go home into the app
 - tapOn: "http://localhost:8081"
+# Wait for the flower to load (up to 20s for network fetch)
 - extendedWaitUntil:
-    visible: "Hello World!!"
-    timeout: 15000
+    visible: "← Yesterday"
+    timeout: 20000
+- assertVisible: "← Yesterday"
 
-# --- Home tab (default) ---
-- assertVisible: "Hello World!!"
-- assertVisible: "Step 1: Try it"
+# Navigate to yesterday
+- tapOn: "← Yesterday"
+# Yesterday's flower loads and "Today →" button appears
+- extendedWaitUntil:
+    visible: "Today →"
+    timeout: 10000
+- assertVisible: "Today →"
+- assertVisible: "← Yesterday"
 
-# --- Explore tab ---
-- tapOn: "Explore"
-- assertVisible: "Explore"
-- assertVisible: "This app includes example code to help you get started."
-- assertVisible: "File-based routing"
-- assertVisible: "Android, iOS, and web support"
-- assertVisible: "Animations"
-
-# --- Cards tab ---
-- tapOn: "Cards"
-- assertVisible: "First Card"
-- assertVisible: "Second Card"
-- assertVisible: "Third Card"
-
-# --- Flowers tab ---
-- tapOn: "Flowers"
-- assertVisible: "Flower Gallery"
-- assertVisible: "Flip through our beautiful flower collection"
-- assertVisible: "All"
-- assertVisible: "Spring"
-- assertVisible: "Summer"
-- assertVisible: "Fall"
-- assertVisible: "Winter"
-
-# --- Return to Home ---
-- tapOn: "Home"
-- assertVisible: "Hello World!!"
+# Navigate back to today
+- tapOn: "Today →"
+# "Today →" disappears when back on current date
+- extendedWaitUntil:
+    notVisible: "Today →"
+    timeout: 10000
+- assertVisible: "← Yesterday"

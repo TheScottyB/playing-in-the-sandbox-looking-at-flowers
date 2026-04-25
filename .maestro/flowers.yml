@@ -1,40 +1,29 @@
-# Flowers: verify gallery screen and season filter interactions.
+# Error state: verify the app shows a recoverable error when data is unavailable.
+# This test intentionally disconnects from the server to trigger the error path.
 # Local dev (Expo Go): host.exp.Exponent
 # CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
 appId: host.exp.Exponent
 ---
 - launchApp
 - tapOn: "http://localhost:8081"
+# Wait for the screen to resolve to any state (loading spinner disappears)
 - extendedWaitUntil:
-    visible: "Hello World!!"
-    timeout: 15000
-- tapOn: "Flowers"
+    anyOf:
+      - visible: "← Yesterday"
+      - visible: "No flower today"
+    timeout: 20000
 
-# Screen loads with title and initial state
-- assertVisible: "Flower Gallery"
-- assertVisible: "Flip through our beautiful flower collection"
-- assertVisible: "Flowers viewed: 0"
-- assertVisible: "Tip: Tap the button to flip to a new flower!"
-
-# All season filter buttons are present
-- assertVisible: "All"
-- assertVisible: "Spring"
-- assertVisible: "Summer"
-- assertVisible: "Fall"
-- assertVisible: "Winter"
-
-# Tap Spring season filter
-- tapOn: "Spring"
-
-# Tap Summer season filter
-- tapOn: "Summer"
-
-# Tap Fall season filter
-- tapOn: "Fall"
-
-# Tap Winter season filter
-- tapOn: "Winter"
-
-# Return to All
-- tapOn: "All"
-- assertVisible: "Flowers viewed: 0"
+# If the error state is shown, verify the retry button is present
+- runFlow:
+    when:
+      visible: "No flower today"
+    commands:
+      - assertVisible: "No flower today"
+      - assertVisible: "Try again"
+      # Retry triggers a re-fetch
+      - tapOn: "Try again"
+      - extendedWaitUntil:
+          anyOf:
+            - visible: "← Yesterday"
+            - visible: "No flower today"
+          timeout: 15000

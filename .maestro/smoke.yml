@@ -1,4 +1,4 @@
-# Smoke test: verify app launches and all tab bar items are visible.
+# Smoke test: app launches and the daily flower screen resolves.
 #
 # App IDs:
 #   Expo Go (iOS)    [local dev]: host.exp.Exponent      <- used below
@@ -8,19 +8,20 @@
 # Prerequisites:
 #   - Run `npx expo start --ios` to boot simulator + install Expo Go
 #   - Then: maestro test .maestro/smoke.yml
-#   - For CI with a dev client build, change appId to the bundle identifier above.
 appId: host.exp.Exponent
 ---
 - launchApp
-# Expo Go opens its home screen first — tap the dev server entry to enter our app
+# Expo Go opens its home screen — tap the dev server entry to enter our app
 - tapOn: "http://localhost:8081"
-# Wait for splash screen to dismiss and home screen to render
+# Loading state: spinner shows while region + flower data fetches
+# Wait up to 15 s for the screen to resolve (ok or error)
 - extendedWaitUntil:
-    visible: "Hello World!!"
+    anyOf:
+      - visible: "← Yesterday"
+      - visible: "No flower today"
     timeout: 15000
-- assertVisible: "Hello World!!"
-# Assert home screen content (tab bar labels are native UITabBar on iOS
-# and not in the JS accessibility tree)
-- assertVisible: "Step 1: Try it"
-- assertVisible: "Step 2: Explore"
-- assertVisible: "Step 3: Get a fresh start"
+# Either a flower loaded or we got the expected error state
+- assertVisible:
+    anyOf:
+      - text: "← Yesterday"
+      - text: "No flower today"
