@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Generates one flower image + sidecar JSON per state bucket for today's date
- * and writes them to docs/daily/{state}/{YYYY-MM-DD}.{webp,json}.
+ * and writes them to docs/daily/{state}/{YYYY-MM-DD}.{png,json}.
  *
  * Usage:
  *   GEMINI_API_KEY=... node scripts/generate-daily.mjs [--date YYYY-MM-DD] [--states AL,TX]
@@ -19,9 +19,10 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DOCS_DIR = join(ROOT, 'docs', 'daily');
+const IMG_EXT = 'png'; // Gemini image generation returns PNG
 const SPECIES_PATH = join(ROOT, 'data', 'species.json');
 
-const GEMINI_MODEL = 'gemini-2.5-flash-preview-04-17';
+const GEMINI_MODEL = 'gemini-2.5-flash-image';
 const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 // Parse CLI args
@@ -52,11 +53,12 @@ function pickSpecies(species, state, date) {
 async function generateImage(apiKey, species, state) {
   const month = new Date().toLocaleString('en-US', { month: 'long' });
   const prompt =
-    `A beautiful, highly detailed photorealistic illustration of a ${species.common} ` +
-    `(${species.latin}) in full bloom. The flower is native to the US state region associated ` +
-    `with "${state}" and is blooming in ${month}. ` +
-    `Soft natural lighting, botanically accurate, white or blurred outdoor background. ` +
-    `No text, no watermarks, portrait orientation.`;
+    `Generate a beautiful, highly detailed photorealistic image of a ${species.common} ` +
+    `(${species.latin}) in full bloom, native to the "${state}" region of the US and blooming in ${month}. ` +
+    `Soft natural lighting, botanically accurate, white or softly blurred outdoor background. ` +
+    `No text, no watermarks, portrait orientation.\n\n` +
+    `After the image, write exactly one sentence (max 280 characters) describing this flower's ` +
+    `appearance or ecological significance. Start directly with the description — no preamble.`;
 
   const body = {
     contents: [{ parts: [{ text: prompt }] }],
@@ -114,10 +116,10 @@ async function run() {
 
   for (const state of states) {
     const stateDir = join(DOCS_DIR, state);
-    const webpPath = join(stateDir, `${targetDate}.webp`);
+    const imgPath = join(stateDir, `${targetDate}.${IMG_EXT}`);
     const jsonPath = join(stateDir, `${targetDate}.json`);
 
-    if (existsSync(webpPath) && existsSync(jsonPath)) {
+    if (existsSync(imgPath) && existsSync(jsonPath)) {
       console.log(`  ${state}: already exists, skipping`);
       skip++;
       continue;
@@ -137,7 +139,7 @@ async function run() {
       mkdirSync(stateDir, { recursive: true });
 
       if (dryRun) {
-        writeFileSync(webpPath, Buffer.alloc(0));
+        writeFileSync(imgPath, Buffer.alloc(0));
         writeFileSync(
           jsonPath,
           JSON.stringify({
@@ -149,7 +151,7 @@ async function run() {
         );
       } else {
         const { imageData, blurb } = await generateImage(apiKey, picked, state);
-        writeFileSync(webpPath, Buffer.from(imageData, 'base64'));
+        writeFileSync(imgPath, Buffer.from(imageData, 'base64'));
         writeFileSync(
           jsonPath,
           JSON.stringify({

@@ -5,7 +5,7 @@
  */
 
 const PAGES_BASE_URL =
-  'https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/daily';
+  'https://thescottyb.github.io/playing-in-the-sandbox-looking-at-flowers/daily';
 
 export interface DailyFlower {
   imageUrl: string;
@@ -32,7 +32,7 @@ function todayIso(): string {
 }
 
 export function imageUrlFor(state: string, date: string = todayIso()): string {
-  return `${PAGES_BASE_URL}/${state}/${date}.webp`;
+  return `${PAGES_BASE_URL}/${state}/${date}.png`;
 }
 
 function sidecarUrlFor(state: string, date: string = todayIso()): string {
