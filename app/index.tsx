@@ -9,18 +9,48 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { fetchDailyFlower, type DailyFlower } from '@/lib/dailyFlower';
+import {
+  fetchDailyFlower,
+  FlowerFetchError,
+  todayLocalIso,
+  type DailyFlower,
+} from '@/lib/dailyFlower';
 import { getRegion, resetRegion } from '@/lib/region';
+
+type ErrorKind = 'unpublished' | 'service' | 'network';
 
 type State =
   | { status: 'loading' }
   | { status: 'ok'; flower: DailyFlower }
-  | { status: 'error'; message: string };
+  | { status: 'error'; kind: ErrorKind; message: string };
 
+const ERROR_COPY: Record<ErrorKind, { title: string; sub: string }> = {
+  unpublished: {
+    title: 'Coming soon to your area',
+    sub: 'No flower has been published for this date yet. It usually arrives by 4 a.m. Pacific.',
+  },
+  service: {
+    title: 'The flower service is having trouble',
+    sub: 'Please try again in a moment.',
+  },
+  network: {
+    title: "Couldn't reach the flower service",
+    sub: 'Check your connection, then tap Try again.',
+  },
+};
+
+/**
+ * Add `days` to a `YYYY-MM-DD` string in the user's local calendar (anchored
+ * at noon to dodge DST shifts). The original implementation used toISOString,
+ * which silently shifted the date by a day for users east of UTC.
+ */
 function offsetDate(base: string, days: number): string {
-  const d = new Date(base + 'T00:00:00');
+  const d = new Date(base + 'T12:00:00');
   d.setDate(d.getDate() + days);
-  return d.toISOString().slice(0, 10);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
 }
 
 export default function HomeScreen() {
@@ -37,13 +67,24 @@ export default function HomeScreen() {
       setState({ status: 'loading' });
       try {
         const region = await getRegion();
-        const today = new Date().toISOString().slice(0, 10);
-        const date = offsetDate(today, dayOffset);
+        const date = offsetDate(todayLocalIso(), dayOffset);
         const flower = await fetchDailyFlower(region, date);
         if (!cancelled) setState({ status: 'ok', flower });
       } catch (e) {
-        if (!cancelled)
-          setState({ status: 'error', message: String(e) });
+        if (cancelled) return;
+        // Keep the technical detail in the console for debug, show the user
+        // a friendly message based on what kind of failure happened.
+        console.error('Flower fetch failed:', e);
+        if (e instanceof FlowerFetchError) {
+          const kind: ErrorKind = e.status === 404 ? 'unpublished' : 'service';
+          setState({ status: 'error', kind, message: ERROR_COPY[kind].sub });
+        } else {
+          setState({
+            status: 'error',
+            kind: 'network',
+            message: ERROR_COPY.network.sub,
+          });
+        }
       }
     }
 
@@ -62,12 +103,13 @@ export default function HomeScreen() {
       {state.status === 'loading' && (
         <View style={styles.center}>
           <ActivityIndicator size="large" color="#4CAF50" />
+          <Text style={styles.loadingLabel}>Finding flowers in your area…</Text>
         </View>
       )}
 
       {state.status === 'error' && (
         <View style={styles.center}>
-          <Text style={styles.errorText}>No flower today</Text>
+          <Text style={styles.errorText}>{ERROR_COPY[state.kind].title}</Text>
           <Text style={styles.errorSub}>{state.message}</Text>
           <Pressable
             style={styles.retryBtn}
@@ -127,6 +169,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#fff' },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
+  loadingLabel: { marginTop: 16, color: '#666', fontSize: 14 },
   card: { flex: 1 },
   image: { flex: 1 },
   info: {
@@ -158,8 +201,8 @@ const styles = StyleSheet.create({
   },
   navBtnDisabled: { opacity: 0.3 },
   navLabel: { fontSize: 14, color: '#333' },
-  errorText: { fontSize: 20, fontWeight: '600', color: '#333' },
-  errorSub: { fontSize: 13, color: '#999', marginTop: 8, textAlign: 'center' },
+  errorText: { fontSize: 20, fontWeight: '600', color: '#333', textAlign: 'center' },
+  errorSub: { fontSize: 13, color: '#999', marginTop: 8, textAlign: 'center', lineHeight: 18 },
   retryBtn: {
     marginTop: 20,
     paddingVertical: 10,
