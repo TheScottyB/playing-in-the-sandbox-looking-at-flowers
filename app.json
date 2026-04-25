@@ -2,8 +2,7 @@
   "expo": {
     "name": "Sandbox Playing Flowers",
     "slug": "playing-in-the-sandox-looking-at-flowers",
-    "version": "1.0.0",
-    "privacy": "public",
+    "version": "1.1.0",
     "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
     "primaryColor": "#4CAF50",
     "orientation": "portrait",
@@ -38,7 +37,7 @@
       },
       "package": "com.djscottyb.playinginthesandoxlookingatflowers",
       "versionCode": 1,
-      "permissions": []
+      "permissions": ["INTERNET"]
     },
     "web": {
       "bundler": "metro",
@@ -87,15 +86,6 @@
     "runtimeVersion": {
       "policy": "appVersion"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "splash": {
-      "image": "./assets/images/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "jsEngine": "hermes",
     "locales": {
       "en": "./assets/locales/en.json"
     },

@@ -1,5 +1,0 @@
-name: iOS Hardware Build
-
-on:
-  push:
-    branches: [main, development]
