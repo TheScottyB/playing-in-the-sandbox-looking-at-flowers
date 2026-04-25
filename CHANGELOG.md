@@ -13,7 +13,7 @@
 - `.github/workflows/generate-daily.yml` — daily cron at 04:00 PT plus `workflow_dispatch` with optional `date` and `states` inputs for backfills
 - `NSLocationWhenInUseUsageDescription` and `expo-location` plugin in `app.json`
 - `expo-location` and `@react-native-async-storage/async-storage` dependencies
-- Location-data disclosure in `PRIVACY.md` and `docs/privacy.html`
+- Location-data disclosure in `meta/PRIVACY.md` and `docs/privacy.html`
 
 ### Removed
 - `app/(tabs)/` — Home, Explore, Cards, Flowers screens

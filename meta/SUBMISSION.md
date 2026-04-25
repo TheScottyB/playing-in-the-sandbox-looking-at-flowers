@@ -93,4 +93,4 @@ All categories: None
 - No login or account creation
 - Hardware testing required to exercise the location prompt
 - Daily images are generated via GitHub Actions cron at 04:00 PT and served from GitHub Pages
-- See `meta/BUILD_CONFIG.md` for build details
+- See `BUILD_CONFIG.md` for build details
