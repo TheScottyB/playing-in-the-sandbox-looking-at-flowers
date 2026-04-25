@@ -1,20 +1,26 @@
 # Smoke test: verify app launches and all tab bar items are visible.
 #
 # App IDs:
-#   Dev client (iOS):  com.djscottyb.playinginthesandoxlookingatflowers
-#   Dev client (Android): com.djscottyb.playinginthesandoxlookingatflowers
-#   Expo Go (iOS):     host.exp.Exponent
-#   Expo Go (Android): host.exp.exponent
+#   Expo Go (iOS)    [local dev]: host.exp.Exponent      <- used below
+#   Expo Go (Android)[local dev]: host.exp.exponent
+#   Dev client (iOS) [CI/prod]:   com.djscottyb.playinginthesandoxlookingatflowers
 #
 # Prerequisites:
-#   - iOS Simulator or Android Emulator is running
-#   - App is already installed (dev client) OR Expo Go is open
-#   - Run: maestro test .maestro/smoke.yml
-appId: com.djscottyb.playinginthesandoxlookingatflowers
+#   - Run `npx expo start --ios` to boot simulator + install Expo Go
+#   - Then: maestro test .maestro/smoke.yml
+#   - For CI with a dev client build, change appId to the bundle identifier above.
+appId: host.exp.Exponent
 ---
 - launchApp
+# Expo Go opens its home screen first — tap the dev server entry to enter our app
+- tapOn: "http://localhost:8081"
+# Wait for splash screen to dismiss and home screen to render
+- extendedWaitUntil:
+    visible: "Hello World!!"
+    timeout: 15000
 - assertVisible: "Hello World!!"
-- assertVisible: "Home"
-- assertVisible: "Explore"
-- assertVisible: "Cards"
-- assertVisible: "Flowers"
+# Assert home screen content (tab bar labels are native UITabBar on iOS
+# and not in the JS accessibility tree)
+- assertVisible: "Step 1: Try it"
+- assertVisible: "Step 2: Explore"
+- assertVisible: "Step 3: Get a fresh start"

@@ -1,7 +1,13 @@
 # Flowers: verify gallery screen and season filter interactions.
-appId: com.djscottyb.playinginthesandoxlookingatflowers
+# Local dev (Expo Go): host.exp.Exponent
+# CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
+appId: host.exp.Exponent
 ---
 - launchApp
+- tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible: "Hello World!!"
+    timeout: 15000
 - tapOn: "Flowers"
 
 # Screen loads with title and initial state

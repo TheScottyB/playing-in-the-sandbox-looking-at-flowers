@@ -1,7 +1,14 @@
 # Navigation: visit every tab and assert key content on each screen.
-appId: com.djscottyb.playinginthesandoxlookingatflowers
+# Local dev (Expo Go): host.exp.Exponent
+# CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
+appId: host.exp.Exponent
 ---
 - launchApp
+# Navigate from Expo Go home into the app
+- tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible: "Hello World!!"
+    timeout: 15000
 
 # --- Home tab (default) ---
 - assertVisible: "Hello World!!"

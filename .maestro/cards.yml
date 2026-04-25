@@ -1,7 +1,13 @@
 # Cards: verify animated card expand/collapse interactions.
-appId: com.djscottyb.playinginthesandoxlookingatflowers
+# Local dev (Expo Go): host.exp.Exponent
+# CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
+appId: host.exp.Exponent
 ---
 - launchApp
+- tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible: "Hello World!!"
+    timeout: 15000
 - tapOn: "Cards"
 
 # All three cards are visible in their collapsed state
