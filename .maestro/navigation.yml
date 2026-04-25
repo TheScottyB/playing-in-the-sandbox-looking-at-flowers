@@ -1,0 +1,36 @@
+# Navigation: visit every tab and assert key content on each screen.
+appId: com.djscottyb.playinginthesandoxlookingatflowers
+---
+- launchApp
+
+# --- Home tab (default) ---
+- assertVisible: "Hello World!!"
+- assertVisible: "Step 1: Try it"
+
+# --- Explore tab ---
+- tapOn: "Explore"
+- assertVisible: "Explore"
+- assertVisible: "This app includes example code to help you get started."
+- assertVisible: "File-based routing"
+- assertVisible: "Android, iOS, and web support"
+- assertVisible: "Animations"
+
+# --- Cards tab ---
+- tapOn: "Cards"
+- assertVisible: "First Card"
+- assertVisible: "Second Card"
+- assertVisible: "Third Card"
+
+# --- Flowers tab ---
+- tapOn: "Flowers"
+- assertVisible: "Flower Gallery"
+- assertVisible: "Flip through our beautiful flower collection"
+- assertVisible: "All"
+- assertVisible: "Spring"
+- assertVisible: "Summer"
+- assertVisible: "Fall"
+- assertVisible: "Winter"
+
+# --- Return to Home ---
+- tapOn: "Home"
+- assertVisible: "Hello World!!"

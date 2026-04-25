@@ -1,0 +1,33 @@
+# Cards: verify animated card expand/collapse interactions.
+appId: com.djscottyb.playinginthesandoxlookingatflowers
+---
+- launchApp
+- tapOn: "Cards"
+
+# All three cards are visible in their collapsed state
+- assertVisible: "First Card"
+- assertVisible: "Second Card"
+- assertVisible: "Third Card"
+
+# Expand First Card — content becomes visible after spring animation
+- tapOn: "First Card"
+- extendedWaitUntil:
+    visible: "This is the content of the first card."
+    timeout: 3000
+- assertVisible: "This is the content of the first card. It will expand when tapped."
+
+# Collapse First Card by tapping again
+- tapOn: "First Card"
+- extendedWaitUntil:
+    notVisible: "This is the content of the first card."
+    timeout: 3000
+
+# Expand Second Card
+- tapOn: "Second Card"
+- extendedWaitUntil:
+    visible: "This is the content of the second card."
+    timeout: 3000
+- assertVisible: "This is the content of the second card. It will expand when tapped."
+
+# Collapse Second Card
+- tapOn: "Second Card"

@@ -1,0 +1,34 @@
+# Flowers: verify gallery screen and season filter interactions.
+appId: com.djscottyb.playinginthesandoxlookingatflowers
+---
+- launchApp
+- tapOn: "Flowers"
+
+# Screen loads with title and initial state
+- assertVisible: "Flower Gallery"
+- assertVisible: "Flip through our beautiful flower collection"
+- assertVisible: "Flowers viewed: 0"
+- assertVisible: "Tip: Tap the button to flip to a new flower!"
+
+# All season filter buttons are present
+- assertVisible: "All"
+- assertVisible: "Spring"
+- assertVisible: "Summer"
+- assertVisible: "Fall"
+- assertVisible: "Winter"
+
+# Tap Spring season filter
+- tapOn: "Spring"
+
+# Tap Summer season filter
+- tapOn: "Summer"
+
+# Tap Fall season filter
+- tapOn: "Fall"
+
+# Tap Winter season filter
+- tapOn: "Winter"
+
+# Return to All
+- tapOn: "All"
+- assertVisible: "Flowers viewed: 0"

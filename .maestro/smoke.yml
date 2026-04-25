@@ -1,0 +1,20 @@
+# Smoke test: verify app launches and all tab bar items are visible.
+#
+# App IDs:
+#   Dev client (iOS):  com.djscottyb.playinginthesandoxlookingatflowers
+#   Dev client (Android): com.djscottyb.playinginthesandoxlookingatflowers
+#   Expo Go (iOS):     host.exp.Exponent
+#   Expo Go (Android): host.exp.exponent
+#
+# Prerequisites:
+#   - iOS Simulator or Android Emulator is running
+#   - App is already installed (dev client) OR Expo Go is open
+#   - Run: maestro test .maestro/smoke.yml
+appId: com.djscottyb.playinginthesandoxlookingatflowers
+---
+- launchApp
+- assertVisible: "Hello World!!"
+- assertVisible: "Home"
+- assertVisible: "Explore"
+- assertVisible: "Cards"
+- assertVisible: "Flowers"
