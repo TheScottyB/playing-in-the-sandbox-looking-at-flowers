@@ -1,5 +1,20 @@
 ## [Unreleased]
 
+### Changed
+- Upgraded Expo SDK 52 → 55 (52.0.43 → 55.0.17)
+- Upgraded React Native 0.76.9 → 0.83.6 and React 18.3.1 → 19.2.0
+- Upgraded react-native-reanimated 3.16 → 4.2, expo-router 4 → 55, and aligned dev deps
+- Added `react-native-worklets` as required peer dep of Reanimated 4
+- Migrated `useCacheAssets` to `expo-file-system/legacy` to preserve existing caching API
+- Narrowed `useColorScheme` wrapper to return `'light' | 'dark' | null` (RN now surfaces `'unspecified'`)
+- Tightened `IconSymbol` MAPPING typing with `as const satisfies` and added missing
+  `rectangle.stack.fill` and `leaf.fill` fallbacks for Android/web
+
+### Fixed
+- Deduplicated corrupted `FlowerGalleryCard.tsx` (two concatenated copies, broken string
+  literal, invalid apostrophe escape — would have blocked any typecheck/bundle)
+- Added missing `expo-file-system` and `expo-crypto` dependencies used by `useCacheAssets`
+
 ### Added
 - Streamlined iOS hardware build workflow configured for development and production
 - Automatic device installation for hardware testing (UDID: 00008110-000A156A21E2801E)
