@@ -1,8 +1,12 @@
 # Play Store Release Spec: Sandbox Flowers
 
-> **Status:** Draft — Review & Approve before implementation
+> **Status:** In progress — listing copy ready, assets and backfill remain
 > **Updated:** 2026-04-25 (post-pivot to daily AI-generated flower)
 > **Target:** Google Play Store (Android)
+> **Companion docs:**
+> - [PLAYSTORE_LISTING.md](PLAYSTORE_LISTING.md) — drop-in copy and questionnaire answers
+> - [SUBMISSION.md](SUBMISSION.md) — App Store equivalent
+> - [SCREENSHOTS.md](SCREENSHOTS.md) — capture procedure
 
 ---
 
@@ -25,22 +29,18 @@ A React Native / Expo SDK 55 app with a **single screen**: every morning it disp
 ### P0 — Blockers
 
 #### 2.1 Android `targetSdkVersion`
-Google Play requires `targetSdkVersion` 34 or higher (as of August 2024). Verify in `app.json`:
-```json
-"android": {
-  "compileSdkVersion": 35,
-  "targetSdkVersion": 34
-}
-```
-Expo SDK 55 already targets 34 by default.
+✅ Done. Expo SDK 55 targets Android 15 (`compileSdkVersion: 35`,
+`targetSdkVersion: 35`) by default — well above Google's August 2024
+floor of 34.
 
 #### 2.2 Android location permissions
-`expo-location` requires explicit Android permission entries. The plugin block in `app.json` adds these automatically; verify the merged `AndroidManifest.xml` after build:
-- `android.permission.ACCESS_COARSE_LOCATION` — required
-- `android.permission.ACCESS_FINE_LOCATION` — optional (we use `Accuracy.Lowest`, so coarse is enough)
+✅ Done. `expo-location` plugin in `app.json` adds
+`ACCESS_COARSE_LOCATION` automatically. We use `Accuracy.Lowest` so
+fine-location isn't requested.
 
 #### 2.3 Add Google Play submit configuration to `eas.json`
-Currently only iOS submission is configured. Add:
+🟡 In progress (handled separately in the EAS pipeline workstream). The
+target shape:
 ```json
 "submit": {
   "production": {
@@ -53,26 +53,31 @@ Currently only iOS submission is configured. Add:
 ```
 
 #### 2.4 Generate Android adaptive icon variants
-`assets/images/adaptive-icon.png` exists; verify it renders correctly at the required mask sizes (108×108 dp foreground on a 432×432 dp background).
+✅ Done. `assets/images/adaptive-icon.png` is in place; the
+`android.adaptiveIcon` block in `app.json` is configured with the brand
+green background.
 
 ### P1 — Required content
 
-- **Short description** (max 80 chars):
-  > A new native flower every morning, picked for your state and the season.
-- **Full description** (max 4000 chars): adapt from `SUBMISSION.md`
-- **App icon** (512×512 PNG)
-- **Feature graphic** (1024×500 PNG)
-- **Screenshots**: 2-8 screenshots per device class (phone + 7-inch + 10-inch tablet)
-  - Note: existing screenshots are from the deprecated tab UI — recapture against `app/index.tsx`
+| Item | Status | Where it lives |
+|---|---|---|
+| App name (≤ 30 chars) | ✅ | "Sandbox Flowers" |
+| Short description (≤ 80 chars) | ✅ | [PLAYSTORE_LISTING.md](PLAYSTORE_LISTING.md) |
+| Full description (≤ 4000 chars) | ✅ | [PLAYSTORE_LISTING.md](PLAYSTORE_LISTING.md) |
+| App icon (512×512 PNG) | ❌ | Resize from `assets/images/icon.png` |
+| Feature graphic (1024×500) | ❌ | Not yet created — see PLAYSTORE_LISTING.md |
+| Phone screenshots (2–8) | ❌ | Recapture against current single-screen UI |
+| Tablet screenshots (2–8, optional) | ❌ | Optional but improves search |
 
 ### P2 — Compliance
 
-- **Data safety form** — declare:
-  - Approximate location: collected, not shared, used for personalization, **not** transmitted off-device, ephemeral (resolved once → state code stored)
-  - No other data collection
-- **Content rating** (IARC questionnaire): "Everyone" expected
-- **Target audience**: 13+ recommended (covers all use cases without triggering family-policy review)
-- **Privacy policy URL**: https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html
+| Item | Status | Notes |
+|---|---|---|
+| Data safety form answers | ✅ | [PLAYSTORE_LISTING.md → Data safety](PLAYSTORE_LISTING.md#app-content--data-safety) |
+| Content rating (IARC) answers | ✅ | [PLAYSTORE_LISTING.md → IARC](PLAYSTORE_LISTING.md#app-content--content-rating-iarc-questionnaire) |
+| Target audience (13+) | ✅ | documented |
+| Privacy policy URL | ✅ | `app.json` `extra.privacyPolicyUrl` |
+| Government / financial / health declarations | ✅ | All "no" — answers in PLAYSTORE_LISTING.md |
 
 ---
 
@@ -95,14 +100,28 @@ First-time setup also requires:
 
 ## 4. Risk Notes
 
-- **Location prompt phrasing on Android** is controlled by the system, not our `usageDescription` string. Make sure the in-app rationale (currently absent) is wired up before review — Play reviewers will reject if they can't find justification.
-- **First-launch UX with no cached flower for today** — if the cron has not yet run for the user's state, the app shows an error. Pre-generate at least 7 days of buckets before submission and verify the fallback path.
-- **Default bucket fallback** — when a non-US user installs from Google Play (Play distribution is global by default), they hit the `default` bucket. Consider geo-restricting to US in v1.1 if reviews surface confusion.
+- **Location prompt phrasing on Android** is controlled by the system, not our `usageDescription` string. Make sure the in-app rationale (now visible as "Finding flowers in your area…" under the loading spinner) is wired up before review — Play reviewers will reject if they can't find justification.
+- **First-launch UX with no cached flower for today** — when the cron has not yet run for the user's state, the app now shows a friendly "Coming soon to your area" message instead of a raw HTTP error. Pre-generate at least 7 days of buckets before submission and verify the fallback path. The generator's new `--missing-only` flag makes a one-shot backfill cheap.
+- **Default bucket fallback** — when a non-US user installs from Google Play (Play distribution is global by default), they hit the `default` bucket. v1 is gated to US-only via Play Console Distribution settings; revisit after Canadian provinces ship.
+- **Bundle identifier typo** (`playinginthesandoxlookingatflowers` — missing a `b`) is locked in once registered and CANNOT be changed. Lives with us forever; the GH Pages URL has been corrected to use the typo-free form, the package name has not.
 
 ---
 
 ## 5. Open Questions
 
 - Do we want to ship Play Store v1.1.0 in lockstep with iOS, or stagger?
+  Recommended: stagger. iOS first (existing TestFlight pipeline + screenshots), then Play 1–2 weeks later once the daily cron has produced ≥ 7 days of clean data across all 51 buckets.
 - Is the `default` bucket sufficient for non-US installs, or should we restrict country availability?
+  Decision in PLAYSTORE_LISTING.md: **gate to US-only** for v1. Expand once provincial buckets exist for Canada.
 - Donation IAPs from the boilerplate era are deprecated — confirm before configuring Play Billing.
+  Decision: **no Play Billing in v1.** Re-evaluate if/when there's a real donation flow in the UI.
+
+## 6. Sequence to ship
+
+1. **EAS pipeline lands** (separate workstream — owner config, Android submit profile, GitHub Actions integration). Without this, the rest is moot.
+2. **Backfill the data**: Actions → Generate Daily Flowers → Run workflow with no inputs. Verify all 52 buckets have files for today + ≥ 7 prior days.
+3. **Resize app icon to 512×512** + create the **1024×500 feature graphic**.
+4. **Capture Android screenshots** against the dev build on emulator — see SCREENSHOTS.md § Android.
+5. **Create the Play Console app entry**, paste in answers from PLAYSTORE_LISTING.md.
+6. **First production AAB**: `eas build --profile production --platform android` then `eas submit --platform android --profile production --latest`.
+7. **Internal → closed → open → production** rollout ladder per PLAYSTORE_LISTING.md.
