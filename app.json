@@ -9,7 +9,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers",
@@ -26,9 +25,7 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "associatedDomains": [],
-      "primaryCategory": "Entertainment",
-      "secondaryCategory": "Education"
+      "associatedDomains": []
     },
     "android": {
       "adaptiveIcon": {
@@ -77,7 +74,12 @@
       "encryptionDocPath": "./ENCRYPTION_NOTICE.md",
       "dsaCompliancePath": "./DSA_COMPLIANCE.md",
       "privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html",
-      "supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues"
+      "supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues",
+      "appStore": {
+        "primaryCategory": "Entertainment",
+        "secondaryCategory": "Lifestyle",
+        "contentRating": ["4+", "everyone"]
+      }
     },
   "owner": "thescottybe",
     "updates": {
@@ -90,7 +92,6 @@
       "en": "./assets/locales/en.json"
     },
     "platforms": ["ios", "android", "web"],
-    "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandox-looking-at-flowers",
-    "contentRating": ["4+", "everyone"]
+    "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandox-looking-at-flowers"
   }
 }

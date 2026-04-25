@@ -20,7 +20,7 @@
     "expo-constants": "~55.0.15",
     "expo-dev-client": "~55.0.28",
     "expo-linking": "~55.0.14",
-    "expo-location": "~18.1.6",
+    "expo-location": "~55.1.8",
     "expo-router": "~55.0.13",
     "expo-splash-screen": "~55.0.19",
     "expo-status-bar": "~55.0.5",
@@ -43,5 +43,16 @@
     "@babel/core": "^7.25.2",
     "@types/react": "~19.2.0",
     "typescript": "^6.0.0"
+  },
+  "expo": {
+    "install": {
+      "exclude": [
+        "typescript",
+        "react",
+        "react-dom",
+        "react-native-safe-area-context",
+        "react-native-screens"
+      ]
+    }
   }
 }
