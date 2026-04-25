@@ -4,6 +4,11 @@ import * as Location from 'expo-location';
 const STORAGE_KEY = 'region.state.v1';
 const FALLBACK = 'default';
 
+export type RegionResult = {
+  region: string;
+  permissionDenied: boolean;
+};
+
 const US_STATE_CODES = new Set([
   'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
   'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
@@ -13,24 +18,31 @@ const US_STATE_CODES = new Set([
   'DC',
 ]);
 
-/**
- * Returns the user's resolved region bucket. On first call, requests coarse
- * location once and reverse-geocodes it to a US state code. Subsequent calls
- * read from AsyncStorage. Falls back to "default" if permission denied or the
- * user is outside the US.
- */
 export async function getRegion(): Promise<string> {
-  const cached = await AsyncStorage.getItem(STORAGE_KEY);
-  if (cached) return cached;
-
-  const resolved = await resolveRegion();
-  await AsyncStorage.setItem(STORAGE_KEY, resolved);
-  return resolved;
+  const { region } = await getRegionWithStatus();
+  return region;
 }
 
-async function resolveRegion(): Promise<string> {
+export async function getRegionWithStatus(): Promise<RegionResult> {
+  const cached = await AsyncStorage.getItem(STORAGE_KEY);
+  if (cached) {
+    const denied = await isPermissionDenied();
+    return { region: cached, permissionDenied: cached === FALLBACK && denied };
+  }
+
+  const result = await resolveRegion();
+  await AsyncStorage.setItem(STORAGE_KEY, result.region);
+  return result;
+}
+
+async function isPermissionDenied(): Promise<boolean> {
+  const { status } = await Location.getForegroundPermissionsAsync();
+  return status !== 'granted';
+}
+
+async function resolveRegion(): Promise<RegionResult> {
   const { status } = await Location.requestForegroundPermissionsAsync();
-  if (status !== 'granted') return FALLBACK;
+  if (status !== 'granted') return { region: FALLBACK, permissionDenied: true };
 
   const position = await Location.getCurrentPositionAsync({
     accuracy: Location.Accuracy.Lowest,
@@ -42,11 +54,11 @@ async function resolveRegion(): Promise<string> {
 
   const place = places[0];
   if (!place || place.isoCountryCode !== 'US' || !place.region) {
-    return FALLBACK;
+    return { region: FALLBACK, permissionDenied: false };
   }
 
   const code = stateNameToCode(place.region);
-  return code ?? FALLBACK;
+  return { region: code ?? FALLBACK, permissionDenied: false };
 }
 
 const STATE_NAME_TO_CODE: Record<string, string> = {
