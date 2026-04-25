@@ -34,10 +34,12 @@ appId: host.exp.Exponent
 - tapOn: "Change region"
 
 # After re-resolution, "← Yesterday" comes back and "Today →" is gone
-# (dayOffset has been reset to 0).
+# (dayOffset has been reset to 0). The wait is generous (30 s) because
+# resetRegion() clears AsyncStorage, forcing a full GPS → geocode →
+# flower-fetch round-trip which takes longer on the simulator.
 - extendedWaitUntil:
     visible: "← Yesterday"
-    timeout: 20000
+    timeout: 30000
 - assertVisible: "← Yesterday"
 - assertNotVisible: "Today →"
 - assertVisible: "Change region"
