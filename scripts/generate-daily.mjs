@@ -4,15 +4,26 @@
  * and writes them to docs/daily/{state}/{YYYY-MM-DD}.{png,json}.
  *
  * Usage:
- *   GEMINI_API_KEY=... node scripts/generate-daily.mjs [--date YYYY-MM-DD] [--states AL,TX]
+ *   GEMINI_API_KEY=... node scripts/generate-daily.mjs [--date YYYY-MM-DD] [--states AL,TX] [--missing-only]
+ *
+ * Flags:
+ *   --date YYYY-MM-DD  Target date (default: today UTC).
+ *   --states AL,TX     Comma-separated state codes (default: every bucket in species.json).
+ *   --missing-only     Skip states that already have both files for the target date.
+ *                      Lets backfill runs avoid re-paying for completed states.
  *
  * Environment:
  *   GEMINI_API_KEY  Required. Google AI Studio key with Gemini 2.5 Flash access.
  *   DRY_RUN        Set to "1" to skip actual API calls (writes placeholder files).
+ *
+ * Exit codes:
+ *   0  Run completed (whether or not every state succeeded). The workflow's
+ *      commit step still runs so partial progress is persisted.
+ *   1  Hard precondition failure (no API key, missing species.json, etc.).
  */
 
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -31,9 +42,13 @@ function argVal(flag) {
   const i = args.indexOf(flag);
   return i !== -1 ? args[i + 1] : null;
 }
+function argFlag(flag) {
+  return args.includes(flag);
+}
 
 const targetDate = argVal('--date') ?? todayIso();
 const targetStates = argVal('--states')?.split(',') ?? null;
+const missingOnly = argFlag('--missing-only');
 
 function todayIso() {
   const d = new Date();
@@ -66,34 +81,62 @@ async function generateImage(apiKey, species, state) {
   };
 
   const url = `${GEMINI_BASE}/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-  const resp = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
 
-  if (!resp.ok) {
+  // Retry on 429 (rate limit) and 5xx (transient) with exponential backoff.
+  // Free-tier Gemini occasionally rate-limits even at 9 rpm, especially for
+  // image generation, so a short retry is cheaper than waiting until tomorrow.
+  const maxAttempts = 3;
+  let lastErr;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (resp.ok) {
+      const json = await resp.json();
+      const parts = json?.candidates?.[0]?.content?.parts ?? [];
+
+      let imageData = null;
+      let blurb = `A ${species.common} (${species.latin}) blooming in ${month}.`;
+
+      for (const part of parts) {
+        if (part.inlineData?.mimeType?.startsWith('image/')) {
+          imageData = part.inlineData.data;
+        }
+        if (part.text) {
+          blurb = stripPreamble(part.text).slice(0, 280);
+        }
+      }
+
+      if (!imageData) throw new Error('No image in Gemini response');
+      return { imageData, blurb };
+    }
+
     const text = await resp.text();
-    throw new Error(`Gemini image API error ${resp.status}: ${text}`);
+    lastErr = new Error(`Gemini ${resp.status}: ${text.slice(0, 200)}`);
+
+    const retryable = resp.status === 429 || resp.status >= 500;
+    if (!retryable || attempt === maxAttempts) throw lastErr;
+
+    const backoffMs = 5000 * attempt;
+    console.warn(`    retry ${attempt}/${maxAttempts - 1} after ${backoffMs}ms (${resp.status})`);
+    await new Promise(r => setTimeout(r, backoffMs));
   }
+  throw lastErr;
+}
 
-  const json = await resp.json();
-  const parts = json?.candidates?.[0]?.content?.parts ?? [];
-
-  let imageData = null;
-  let blurb = `A ${species.common} (${species.latin}) blooming in ${month}.`;
-
-  for (const part of parts) {
-    if (part.inlineData?.mimeType?.startsWith('image/')) {
-      imageData = part.inlineData.data; // base64
-    }
-    if (part.text) {
-      blurb = part.text.trim().slice(0, 280);
-    }
-  }
-
-  if (!imageData) throw new Error('No image in Gemini response');
-  return { imageData, blurb };
+/**
+ * The model sometimes returns a chatty preamble like
+ * "Here's your highly detailed photorealistic illustration of …:" before the
+ * actual description. Strip common preamble patterns; keep the rest.
+ */
+function stripPreamble(text) {
+  const t = text.trim();
+  // Match openers up to the first colon-then-text or first sentence-final period.
+  const preambleColon = /^(here(?:'s| is)|this is|below is|attached is)[^:.]*:\s*/i;
+  return t.replace(preambleColon, '').trim();
 }
 
 async function run() {
@@ -108,19 +151,38 @@ async function run() {
   const allSpecies = JSON.parse(readFileSync(SPECIES_PATH, 'utf8'));
   const states = targetStates ?? Object.keys(allSpecies);
 
-  console.log(`Generating ${states.length} flowers for ${targetDate}${dryRun ? ' [DRY RUN]' : ''}`);
+  console.log(
+    `Generating ${states.length} flowers for ${targetDate}` +
+    `${dryRun ? ' [DRY RUN]' : ''}${missingOnly ? ' [MISSING ONLY]' : ''}`,
+  );
 
   let ok = 0;
   let skip = 0;
   let fail = 0;
+  const failedStates = [];
 
   for (const state of states) {
     const stateDir = join(DOCS_DIR, state);
     const imgPath = join(stateDir, `${targetDate}.${IMG_EXT}`);
     const jsonPath = join(stateDir, `${targetDate}.json`);
 
-    if (existsSync(imgPath) && existsSync(jsonPath)) {
-      console.log(`  ${state}: already exists, skipping`);
+    // Two skip modes:
+    //
+    //   default ("heal"):     skip iff BOTH files exist AND image is non-zero.
+    //                         Garbage from earlier failed runs gets regenerated.
+    //   --missing-only:       skip if ANY trace exists. Safest for backfills —
+    //                         never overwrites a partial that might be real data.
+    const imgExists = existsSync(imgPath);
+    const jsonExists = existsSync(jsonPath);
+    const imgValid = imgExists && statSync(imgPath).size > 0;
+
+    if (imgValid && jsonExists) {
+      console.log(`  ${state}: already complete, skipping`);
+      skip++;
+      continue;
+    }
+    if (missingOnly && (imgExists || jsonExists)) {
+      console.log(`  ${state}: partial output present, skipping (--missing-only)`);
       skip++;
       continue;
     }
@@ -166,6 +228,7 @@ async function run() {
     } catch (e) {
       console.error(`  ${state}: FAILED — ${e.message}`);
       fail++;
+      failedStates.push(state);
     }
 
     // Avoid hammering the free-tier rate limit (10 rpm)
@@ -173,7 +236,13 @@ async function run() {
   }
 
   console.log(`\nDone: ${ok} generated, ${skip} skipped, ${fail} failed`);
-  if (fail > 0) process.exit(1);
+  if (failedStates.length) {
+    console.log(`Failed states: ${failedStates.join(',')}`);
+    console.log(`Re-run with: --states ${failedStates.join(',')} --missing-only`);
+  }
+  // Exit 0 even on partial failure so the workflow's commit step still runs
+  // and persists whatever did succeed. Hard preconditions (no API key,
+  // missing species.json) already exited 1 above.
 }
 
 run();

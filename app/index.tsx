@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { fetchDailyFlower, type DailyFlower } from '@/lib/dailyFlower';
-import { getRegion } from '@/lib/region';
+import { getRegion, resetRegion } from '@/lib/region';
 
 type State =
   | { status: 'loading' }
@@ -26,6 +26,9 @@ function offsetDate(base: string, days: number): string {
 export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
+  // Bumped to force the load effect to re-run after the user clears their
+  // cached region (re-prompts for location on the next call).
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -46,7 +49,13 @@ export default function HomeScreen() {
 
     load();
     return () => { cancelled = true; };
-  }, [dayOffset]);
+  }, [dayOffset, reloadKey]);
+
+  async function handleChangeRegion() {
+    await resetRegion();
+    setDayOffset(0);
+    setReloadKey(k => k + 1);
+  }
 
   return (
     <SafeAreaView style={styles.root}>
@@ -60,8 +69,17 @@ export default function HomeScreen() {
         <View style={styles.center}>
           <Text style={styles.errorText}>No flower today</Text>
           <Text style={styles.errorSub}>{state.message}</Text>
-          <Pressable style={styles.retryBtn} onPress={() => setDayOffset(0)}>
+          <Pressable
+            style={styles.retryBtn}
+            onPress={() => setReloadKey(k => k + 1)}
+          >
             <Text style={styles.retryLabel}>Try again</Text>
+          </Pressable>
+          <Pressable
+            style={styles.linkBtn}
+            onPress={handleChangeRegion}
+          >
+            <Text style={styles.linkLabel}>Change region</Text>
           </Pressable>
         </View>
       )}
@@ -77,9 +95,14 @@ export default function HomeScreen() {
             <Text style={styles.common}>{state.flower.common}</Text>
             <Text style={styles.latin}>{state.flower.latin}</Text>
             <Text style={styles.blurb}>{state.flower.blurb}</Text>
-            <Text style={styles.meta}>
-              {state.flower.state} · {state.flower.date}
-            </Text>
+            <View style={styles.metaRow}>
+              <Text style={styles.meta}>
+                {state.flower.state} · {state.flower.date}
+              </Text>
+              <Pressable onPress={handleChangeRegion} hitSlop={8}>
+                <Text style={styles.metaLink}>Change region</Text>
+              </Pressable>
+            </View>
           </View>
           <View style={styles.nav}>
             <Pressable
@@ -113,7 +136,14 @@ const styles = StyleSheet.create({
   common: { fontSize: 26, fontWeight: '700', color: '#1a1a1a' },
   latin: { fontSize: 16, fontStyle: 'italic', color: '#555' },
   blurb: { fontSize: 15, color: '#333', marginTop: 8, lineHeight: 22 },
-  meta: { fontSize: 12, color: '#999', marginTop: 8 },
+  meta: { fontSize: 12, color: '#999' },
+  metaRow: {
+    marginTop: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  metaLink: { fontSize: 12, color: '#4CAF50', fontWeight: '600' },
   nav: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -138,4 +168,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   retryLabel: { color: '#fff', fontWeight: '600' },
+  linkBtn: { marginTop: 12, paddingVertical: 8, paddingHorizontal: 12 },
+  linkLabel: { color: '#4CAF50', fontWeight: '600', fontSize: 14 },
 });
