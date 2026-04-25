@@ -10,20 +10,21 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     anyOf:
       - visible: "← Yesterday"
-      - visible: "No flower today"
+      - visible: "Coming soon to your area"
+      - visible: "The flower service is having trouble"
+      - visible: "Couldn't reach the flower service"
     timeout: 20000
 
 # If the error state is shown, verify the retry button is present
 - runFlow:
     when:
-      visible: "No flower today"
+      visible: "Coming soon to your area"
     commands:
-      - assertVisible: "No flower today"
+      - assertVisible: "Coming soon to your area"
       - assertVisible: "Try again"
-      # Retry triggers a re-fetch
       - tapOn: "Try again"
       - extendedWaitUntil:
           anyOf:
             - visible: "← Yesterday"
-            - visible: "No flower today"
+            - visible: "Coming soon to your area"
           timeout: 15000

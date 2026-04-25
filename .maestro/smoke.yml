@@ -13,15 +13,12 @@ appId: host.exp.Exponent
 - launchApp
 # Expo Go opens its home screen — tap the dev server entry to enter our app
 - tapOn: "http://localhost:8081"
-# Loading state: spinner shows while region + flower data fetches
-# Wait up to 15 s for the screen to resolve (ok or error)
+# Wait up to 20 s for the spinner to clear and the screen to resolve.
+# Success: flower loads and "← Yesterday" nav button is visible.
+# 404:     "Coming soon to your area" (no flower published yet for this date).
+# Service: "The flower service is having trouble"
+# Network: "Couldn't reach the flower service"
 - extendedWaitUntil:
-    anyOf:
-      - visible: "← Yesterday"
-      - visible: "No flower today"
-    timeout: 15000
-# Either a flower loaded or we got the expected error state
-- assertVisible:
-    anyOf:
-      - text: "← Yesterday"
-      - text: "No flower today"
+    visible: "← Yesterday"
+    timeout: 20000
+- assertVisible: "← Yesterday"
