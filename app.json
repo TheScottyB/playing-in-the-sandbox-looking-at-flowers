@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Sandbox Playing Flowers",
+    "name": "Sandbox Staring at Flowers",
     "slug": "playing-in-the-sandox-looking-at-flowers",
     "version": "1.1.1",
     "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
@@ -39,8 +39,8 @@
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png",
-      "name": "Sandbox Flowers",
-      "shortName": "Sandbox Flowers",
+      "name": "Sandbox Staring at Flowers",
+      "shortName": "Staring at Flowers",
       "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today.",
       "themeColor": "#ffffff",
       "lang": "en-US"

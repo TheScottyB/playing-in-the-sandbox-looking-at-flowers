@@ -83,7 +83,7 @@ Generated via ImageMagick from `assets/images/icon.png` (1024×1024, 8-bit sRGB,
 
 | Metadata | Value | Status |
 |----------|-------|--------|
-| App Name | "Sandbox Flowers" (max 30 char) | ✅ Complete |
+| App Name | "Sandbox Staring at Flowers" (max 30 char) | ✅ Complete |
 | Subtitle | "A flower a day, native to you" (max 30 char) | ❌ Pending |
 | Category | Primary: Entertainment<br>Secondary: Lifestyle | ❌ Update from Education |
 | Price | Free | ✅ Complete |

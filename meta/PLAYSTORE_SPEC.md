@@ -61,7 +61,7 @@ green background.
 
 | Item | Status | Where it lives |
 |---|---|---|
-| App name (≤ 30 chars) | ✅ | "Sandbox Flowers" |
+| App name (≤ 30 chars) | ✅ | "Sandbox Staring at Flowers" |
 | Short description (≤ 80 chars) | ✅ | [PLAYSTORE_LISTING.md](PLAYSTORE_LISTING.md) |
 | Full description (≤ 4000 chars) | ✅ | [PLAYSTORE_LISTING.md](PLAYSTORE_LISTING.md) |
 | App icon (512×512 PNG) | ❌ | Resize from `assets/images/icon.png` |
