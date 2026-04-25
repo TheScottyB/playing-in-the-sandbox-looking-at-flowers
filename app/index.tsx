@@ -153,7 +153,7 @@ export default function HomeScreen() {
             <Text style={styles.blurb}>{state.flower.blurb}</Text>
             <View style={styles.metaRow}>
               <Text style={styles.meta}>
-                {state.flower.state === 'default' ? 'United States' : state.flower.state} · {state.flower.date}
+                {state.flower.state === 'default' ? 'Your area' : state.flower.state} · {state.flower.date}
               </Text>
               <Pressable onPress={handleChangeRegion} hitSlop={8}>
                 <Text style={styles.metaLink}>Change region</Text>
