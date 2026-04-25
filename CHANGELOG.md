@@ -1,3 +1,50 @@
+## [1.1.1] - 2026-04-25
+
+### Fixed
+- Fixed UTC-vs-local date mismatch that caused 404s for US users after ~5 p.m. Pacific
+  (`todayLocalIso` now uses device-local calendar instead of `toISOString`)
+- Anchored `offsetDate` at noon to dodge DST shifts when navigating previous days
+- Regenerated `pnpm-lock.yaml` so `expo-location@55.1.8` is actually resolved
+  (stale lockfile was pulling 18.1.6, which broke Xcode 26 builds due to
+  implicit-function-declaration errors in the SDK 53-era native module)
+- Replaced generic "No flower today" error screen with three-tier error UX:
+  *unpublished* (404), *service trouble* (5xx), and *network* (offline)
+
+### Changed
+- Hardened `generate-daily.mjs`: 3-attempt retry with exponential backoff for
+  429/5xx, `stripPreamble()` to clean AI chatter from blurbs, `statSync` guard
+  against 0-byte images, `--missing-only` flag with heal/preserve modes
+- Generator no longer `process.exit(1)` on partial failure — workflow commit
+  step always runs so partial successes are not lost
+- Simplified `_layout.tsx`: removed SpaceMono font loading and
+  `SplashScreen.preventAutoHideAsync` (Expo splash-screen plugin handles it)
+- Added "Change region" link to both the flower card meta row and the error
+  screen so users can re-prompt for location without a reinstall
+- Loading screen now reads "Finding flowers in your area…" instead of a bare spinner
+- Removed `assets/fonts/SpaceMono-Regular.ttf` (no longer used)
+
+### Infrastructure
+- Passed `expo doctor` 18/18: removed invalid `newArchEnabled`,
+  `ios.primaryCategory`, `ios.secondaryCategory`, and `contentRating` fields
+  from `app.json`; moved store metadata to `extra.appStore`
+- Added `expo.install.exclude` for intentionally-pinned packages (TypeScript 6,
+  React 19.2, etc.) to silence version-mismatch warnings
+- Added EAS Workflow for OTA updates on push (`.eas/workflows/update-on-push.yml`)
+- Corrected EAS `owner` to `thescottybe` (matches projectId)
+
+### Tests
+- Replaced Jest snapshot tests with Maestro E2E flows
+- Added `change-region.yml` flow: verifies link discoverability, re-fetch
+  round-trip, and dayOffset reset after region change
+- Updated `smoke.yml` and `flowers.yml` for v1.1 three-tier error copy
+- Removed stale `cards.yml` (coverage now split between `flowers.yml` and
+  `change-region.yml`)
+
+### Docs
+- Added `meta/PLAYSTORE_LISTING.md` with drop-in Play Store listing copy
+- Updated `meta/PLAYSTORE_SPEC.md` for post-pivot architecture
+- Updated `README.md` with backfill procedures and workflow_dispatch input table
+
 ## [1.1.0] - 2026-04-25
 
 ### Changed (BREAKING — product pivot)

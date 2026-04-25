@@ -2,12 +2,12 @@
   "expo": {
     "name": "Sandbox Playing Flowers",
     "slug": "playing-in-the-sandox-looking-at-flowers",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
     "primaryColor": "#4CAF50",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "sandbox-flowers",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
@@ -42,7 +42,7 @@
       "favicon": "./assets/images/favicon.png",
       "name": "Sandbox Flowers",
       "shortName": "Sandbox Flowers",
-      "description": "Creative expression in a digital sandbox",
+      "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today.",
       "themeColor": "#ffffff",
       "lang": "en-US"
     },
@@ -81,7 +81,7 @@
         "contentRating": ["4+", "everyone"]
       }
     },
-  "owner": "thescottybe",
+    "owner": "thescottybe",
     "updates": {
       "url": "https://u.expo.dev/ce77dd42-8e41-4320-8eb3-6b96b801b3b6"
     },
