@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Image,
+  Linking,
   Pressable,
   StyleSheet,
   Text,
@@ -15,7 +17,7 @@ import {
   todayLocalIso,
   type DailyFlower,
 } from '@/lib/dailyFlower';
-import { getRegion, resetRegion } from '@/lib/region';
+import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
 
@@ -94,6 +96,18 @@ export default function HomeScreen() {
 
   async function handleChangeRegion() {
     await resetRegion();
+    const { permissionDenied } = await getRegionWithStatus();
+    if (permissionDenied) {
+      Alert.alert(
+        'Location access is off',
+        'To show flowers native to your area, enable location access in Settings.',
+        [
+          { text: 'Not now', style: 'cancel' },
+          { text: 'Open Settings', onPress: () => Linking.openSettings() },
+        ],
+      );
+      return;
+    }
     setDayOffset(0);
     setReloadKey(k => k + 1);
   }
