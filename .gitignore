@@ -32,6 +32,9 @@ yarn-error.*
 # local env files
 .env*.local
 
+# npm lockfile (project uses pnpm)
+package-lock.json
+
 # typescript
 *.tsbuildinfo
 
