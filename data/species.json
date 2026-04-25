@@ -257,6 +257,9 @@
   "default": [
     { "common": "Sunflower", "latin": "Helianthus annuus", "bloomMonths": [6, 7, 8, 9] },
     { "common": "Daisy", "latin": "Leucanthemum vulgare", "bloomMonths": [5, 6, 7, 8] },
-    { "common": "Lavender", "latin": "Lavandula angustifolia", "bloomMonths": [6, 7, 8] }
+    { "common": "Lavender", "latin": "Lavandula angustifolia", "bloomMonths": [6, 7, 8] },
+    { "common": "Common Violet", "latin": "Viola sororia", "bloomMonths": [3, 4, 5] },
+    { "common": "Witch Hazel", "latin": "Hamamelis virginiana", "bloomMonths": [10, 11, 12, 1, 2] },
+    { "common": "Snowdrop", "latin": "Galanthus nivalis", "bloomMonths": [1, 2, 3] }
   ]
 }
