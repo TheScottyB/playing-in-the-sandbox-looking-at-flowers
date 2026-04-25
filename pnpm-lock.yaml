@@ -23,15 +23,12 @@ importers:
       expo-dev-client:
         specifier: ~55.0.28
         version: 55.0.28(expo@55.0.17)
-      expo-font:
-        specifier: ~55.0.6
-        version: 55.0.6(expo@55.0.17)(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       expo-linking:
         specifier: ~55.0.14
         version: 55.0.14(expo@55.0.17)(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)
       expo-location:
-        specifier: ~18.1.6
-        version: 18.1.6(expo@55.0.17)
+        specifier: ~55.1.8
+        version: 55.1.8(expo@55.0.17)(typescript@6.0.3)
       expo-router:
         specifier: ~55.0.13
         version: 55.0.13(56d67bfdcc52a0bdd763dbf200bf0c18)
@@ -1792,8 +1789,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  expo-location@18.1.6:
-    resolution: {integrity: sha512-l5dQQ2FYkrBgNzaZN1BvSmdhhcztFOUucu2kEfDBMV4wSIuTIt/CKsho+F3RnAiWgvui1wb1WTTf80E8zq48hA==}
+  expo-location@55.1.8:
+    resolution: {integrity: sha512-mEExFf84nmWLwi14GFfUsFLrCm10gbcqFn9EPXpuruQ28YMtJWgCD+jJtESYPQkYF44N21fVok3T28fLuCqydA==}
     peerDependencies:
       expo: '*'
 
@@ -5471,9 +5468,13 @@ snapshots:
       - expo
       - supports-color
 
-  expo-location@18.1.6(expo@55.0.17):
+  expo-location@55.1.8(expo@55.0.17)(typescript@6.0.3):
     dependencies:
+      '@expo/image-utils': 0.8.13(typescript@6.0.3)
       expo: 55.0.17(@babel/core@7.29.0)(@expo/dom-webview@55.0.5)(@expo/metro-runtime@55.0.10)(expo-router@55.0.13)(react-dom@19.2.5(react@19.2.5))(react-native-webview@13.16.1(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-native-worklets@0.7.4(@babel/core@7.29.0)(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.5))(react@19.2.5))(react-native@0.83.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.5))(react@19.2.5)(typescript@6.0.3)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   expo-manifests@55.0.16(expo@55.0.17):
     dependencies:
