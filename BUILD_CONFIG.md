@@ -27,7 +27,7 @@ This document provides an overview of the build configuration for the Sandbox Fl
 - Includes Expo development client for hot reloading
 - Uses internal distribution for direct installation on registered devices
 - Enables developer tools and debugging capabilities
-- Optimized for testing animations and haptic feedback
+- Required to exercise the one-shot location prompt and resolved-state cache
 - Expires after 30 days from build date
 
 ### Creating Development Builds
@@ -71,7 +71,7 @@ eas submit --platform ios
 
 - **Apple Team**: Scott Beilfuss (Individual) (ID: 3X872JR6P3)
 - **Bundle Identifier**: com.djscottyb.playinginthesandoxlookingatflowers
-- **Latest Production Build**: 1.0.0 (2)
+- **Latest Production Build**: 1.1.0 (TBD — next build after pivot)
 - **Registered Test Devices**: 2 (1 iPhone, 1 Mac)
 - **EAS Project ID**: ce77dd42-8e41-4320-8eb3-6b96b801b3b6
 
@@ -96,8 +96,8 @@ eas submit --platform ios
 - Free EAS account is limited to 10 iOS builds per month
 - Simulator builds count toward monthly build limit
 - Development builds expire after 30 days
-- Testing haptic feedback requires a physical device
-- Animation performance is best evaluated on target hardware
+- Testing the location prompt requires a physical device
+- Image-fetch performance is best evaluated on cellular networks
 
 ## Troubleshooting
 

@@ -1,17 +1,23 @@
 # Privacy Policy for Sandbox Flowers
 
-**Last Updated:** April 10, 2025
+**Last Updated:** April 25, 2025
 
 ## Introduction
 
 This Privacy Policy explains how Sandbox Flowers ("we", "our", or "us") handles information when you use our mobile application ("App"). We respect your privacy and are committed to protecting it through our compliance with this policy.
 
+## Location Data
+
+The App requests your device's approximate location **once** — the first time you open it — solely to determine your US state. This is used to select flowers native to your region. The resolved state code (e.g. `CA`) is stored on your device and is **never** transmitted to us or any third party. The underlying coordinates are discarded immediately after the state is resolved. You can clear this cache at any time by reinstalling the App or clearing its local storage.
+
+If you decline the location prompt, or if you are outside the United States, the App falls back to a default flower bucket and continues to function normally.
+
 ## Data Collection and Usage
 
-**We do not collect any personal information through our App.** This includes, but is not limited to:
+Beyond the one-time region resolution described above, **we do not collect any personal information through our App.** This includes, but is not limited to:
 
 - Personal identifiers (name, email address, phone number)
-- Location data
+- Precise or persistent location data
 - Financial information
 - Health information
 - Browsing history
@@ -20,7 +26,7 @@ This Privacy Policy explains how Sandbox Flowers ("we", "our", or "us") handles 
 - Usage data
 - Device information
 
-Our App functions locally on your device and does not transmit, store, or process any personal data on external servers.
+The App fetches its daily flower image and sidecar JSON from a static GitHub Pages CDN. These are standard HTTP requests that include no identifying information beyond what your network stack normally provides.
 
 ## Children's Privacy (COPPA Compliance)
 
@@ -43,7 +49,7 @@ We may update our Privacy Policy from time to time. We will notify you of any ch
 If you have any questions or concerns about this Privacy Policy, please contact us at:
 
 - Email: beilsco@gmail.com
-- GitHub Issues: [https://github.com/TheScottyB/sandbox-flowers/issues](https://github.com/TheScottyB/sandbox-flowers/issues)
+- GitHub Issues: [https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues](https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues)
 
 ## California Privacy Rights
 

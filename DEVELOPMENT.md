@@ -3,7 +3,7 @@
 ## Development Environments
 
 ### 1. iOS Hardware Development (Recommended)
-This is the primary development environment for testing the app's native features and custom styling.
+This is the primary development environment. Hardware is required to exercise the one-shot location prompt (`expo-location`) and the resolved-state cache that drives the daily flower fetch.
 
 #### Prerequisites:
 - macOS computer
@@ -95,11 +95,11 @@ npx expo start --web
 1. **Hardware Testing**
    - Always test on physical devices before production builds
    - Pay special attention to:
-     - Custom animations
-     - Native styling
-     - Performance
-     - Touch interactions
-     - Haptic feedback
+     - First-launch location permission prompt
+     - Resolved region matches your actual US state
+     - `docs/daily/{state}/{today}.json` exists on GH Pages before testing
+     - Image fetch + render performance
+     - Offline / no-network behavior
 
 2. **Development Workflow**
    - Use hardware builds for all styling and animation work

@@ -1,6 +1,27 @@
-## [Unreleased]
+## [1.1.0] - 2026-04-25
 
-### Changed
+### Changed (BREAKING — product pivot)
+- Replaced the boilerplate tab gallery with a single-screen daily flower experience
+- App now resolves the user's US state via a one-shot `expo-location` prompt and shows a fresh AI-generated flower image native to that state, matched to the current month
+- `app/index.tsx` is the only screen; the `(tabs)` group has been removed entirely
+
+### Added
+- `lib/region.ts` — one-prompt location → US state code, cached forever in AsyncStorage; falls back to `default` bucket if denied or non-US
+- `lib/dailyFlower.ts` — provider interface for the daily flower (v1 resolves to GH Pages CDN; v2-ready for a Cloudflare Worker swap-in)
+- `data/species.json` — 3 curated native species per state (51 buckets + `default`), each tagged with bloom months
+- `scripts/generate-daily.mjs` — Node 20 generator that picks an in-season species via deterministic `hash(state+date)`, calls Gemini 2.5 Flash Image via REST, and writes `.webp` + sidecar JSON to `docs/daily/{state}/{date}.{webp,json}`
+- `.github/workflows/generate-daily.yml` — daily cron at 04:00 PT plus `workflow_dispatch` with optional `date` and `states` inputs for backfills
+- `NSLocationWhenInUseUsageDescription` and `expo-location` plugin in `app.json`
+- `expo-location` and `@react-native-async-storage/async-storage` dependencies
+- Location-data disclosure in `PRIVACY.md` and `docs/privacy.html`
+
+### Removed
+- `app/(tabs)/` — Home, Explore, Cards, Flowers screens
+- `components/` — `AnimatedCard`, `Collapsible`, `ExternalLink`, `FlowerGalleryCard`, `HapticTab`, `HelloWave`, `ParallaxScrollView`, `IconSymbol`, `TabBarBackground`
+- `hooks/useCacheAssets.ts`
+- `assets/images/partial-react-logo.png`, `react-logo*.png`
+
+### Infrastructure
 - Upgraded Expo SDK 52 → 55 (52.0.43 → 55.0.17)
 - Upgraded React Native 0.76.9 → 0.83.6 and React 18.3.1 → 19.2.0
 - Upgraded react-native-reanimated 3.16 → 4.2, expo-router 4 → 55, and aligned dev deps
@@ -15,21 +36,6 @@
   literal, invalid apostrophe escape — would have blocked any typecheck/bundle)
 - Added missing `expo-file-system` and `expo-crypto` dependencies used by `useCacheAssets`
 
-### Added
-- Streamlined iOS hardware build workflow configured for development and production
-- Automatic device installation for hardware testing (UDID: 00008110-000A156A21E2801E)
-- Secure handling of all build credentials through GitHub Secrets
-- Integration with App Store Connect API for TestFlight deployment
-
-### Changed
-- Simplified CI/CD pipeline to focus on iOS hardware builds
-- Updated workflow triggers to use gh-pages branch
-- Reorganized App Store preparation documentation
-
-### Infrastructure
-- Configured GitHub Actions secrets for secure credential management
-- Set up comprehensive build environment variables
-- Added build caching for improved performance
 ## [1.0.0] - 2025-04-11
 
 ### Features

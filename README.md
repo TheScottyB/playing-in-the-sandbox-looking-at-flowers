@@ -1,91 +1,74 @@
 # Sandbox Flowers
 
-An interactive app for creative expression and exploration with immersive iOS-native experiences.
+A daily ritual app: every morning, a fresh AI-generated picture of a flower native to your US state — matched to what's blooming this month.
 
-## Features
+## How it works
 
-- **NEW! Animated Card Interactions** - Expandable cards with fluid spring animations
-- **NEW! Haptic Feedback Integration** - Tactile response on card interactions and tab changes
-- **NEW! Tabbed Navigation Structure** - Home, Explore, and Cards sections
-- Native iOS styling with blur effects and translucency
-- iOS-optimized performance and animations
-- Responsive parallax scrolling
-- Adaptive light/dark theme support
+1. On first launch, the app asks for your location once and resolves it to a US state code (e.g. `CA`). The state is cached locally; no coordinates are stored or sent anywhere.
+2. Each night at 04:00 PT, a GitHub Actions cron picks one in-season native species per state from `data/species.json`, generates an image with Gemini 2.5 Flash Image, and commits the `.webp` + sidecar JSON to `docs/daily/{state}/{YYYY-MM-DD}.{webp,json}`.
+3. GitHub Pages serves those files as a free static CDN. The app fetches today's flower for your state and displays it full-bleed with the common name, latin name, and a short blurb.
 
-## Development Setup
+If permission is denied, or you're outside the US, the app falls back to a curated `default` bucket.
 
-**Important**: This app requires iOS hardware testing for proper development. Web and simulator environments may not accurately represent the final product, especially haptic feedback and animation performance.
-
-For detailed development instructions, see [DEVELOPMENT.md](DEVELOPMENT.md).
-
-### Quick Start
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. For iOS hardware development (recommended):
-   ```bash
-   npx expo install expo-dev-client
-   eas build --profile development --platform ios
-   npx expo start --dev-client
-   ```
-
-3. For quick testing in simulator:
-   ```bash
-   npx expo start --ios
-   ```
-
-## Navigation Structure
-
-The app features a tab-based navigation system:
-
-- **Home** - Welcome screen with parallax effect and getting started guide
-- **Explore** - Discover features and capabilities of the app
-- **Cards** - Interactive animated cards with expand/collapse animations and haptic feedback
-
-## Requirements
-
-- macOS computer
-- Xcode 15.0 or later
-- Apple Developer Account
-- Physical iOS device (required for haptic feedback testing)
-- Node.js 16 or later
-
-## Project Structure
+## Repo layout
 
 ```
-├── app/                   # Main application screens
-│   ├── (tabs)/            # Tab-based navigation screens
-│   └── _layout.tsx        # Main navigation layout
-├── components/            # Reusable components
-│   ├── AnimatedCard.tsx   # Spring-animated card component
-│   ├── HapticTab.tsx      # Tactile feedback tab buttons
-│   └── ui/                # UI primitives and styled components
-├── assets/                # Images and other assets
-├── constants/             # App constants
-├── docs/                  # GitHub Pages documentation
-│   ├── index.html         # Documentation landing page
-│   └── privacy.html       # Privacy policy for App Store
-├── hooks/                 # Custom React hooks
-└── scripts/               # Build and utility scripts
+├── app/
+│   ├── _layout.tsx            # Bare Stack: index + +not-found
+│   ├── index.tsx              # Single-screen flower card UI
+│   └── +not-found.tsx
+├── lib/
+│   ├── region.ts              # One-prompt expo-location → state, cached in AsyncStorage
+│   └── dailyFlower.ts         # Provider: fetches sidecar JSON + image URL from GH Pages
+├── data/
+│   └── species.json           # 3 native species per state (51 buckets + default)
+├── scripts/
+│   └── generate-daily.mjs     # Gemini 2.5 Flash Image generator (Node 20)
+├── .github/workflows/
+│   └── generate-daily.yml     # Cron 0 11 * * * UTC = 04:00 PT
+├── docs/                      # GitHub Pages site (privacy + daily/ CDN tree)
+│   ├── daily/{state}/{date}.webp
+│   ├── daily/{state}/{date}.json
+│   ├── index.html
+│   └── privacy.html
+└── meta/                      # Internal docs (submission, dev, compliance)
 ```
 
-> **Note on GitHub Pages**: The project uses GitHub Pages to host the [privacy policy](https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html) required for App Store submission. To enable or update GitHub Pages, go to the repository settings under Pages and set the source to the `main` branch and `/docs` folder.
+## Quick start
 
-## iOS-Specific Optimizations
+```bash
+npm install
+npx expo start
+```
 
-- Native blur effects in tab bar
-- iOS-specific haptic feedback patterns
-- Optimized spring animations for iOS devices
-- Adaptive styling based on device capabilities
+For iOS hardware development with location prompts working correctly:
 
-## Building for Production
+```bash
+npx expo install expo-dev-client
+eas build --profile development --platform ios
+npx expo start --dev-client
+```
 
-See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed instructions on creating production builds.
+## Architecture
+
+`lib/dailyFlower.ts` exposes a provider interface. v1 resolves to a static GitHub Pages URL. v2 can swap in a Cloudflare Worker (IP-based geo + on-demand generation) without touching any caller. v3 could move generation on-device once Gemini Nano ships in Expo.
+
+## Cron operations
+
+The daily generator needs:
+
+1. `GEMINI_API_KEY` repo secret (Settings → Secrets → Actions)
+2. GitHub Pages enabled from `docs/` on `main` (Settings → Pages)
+
+Manual run: Actions → "Generate Daily Flowers" → Run workflow. Optional inputs: `date` (YYYY-MM-DD) and `states` (comma-separated codes) for backfills.
+
+## Documentation
+
+- **[CHANGELOG.md](CHANGELOG.md)** — release history
+- **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** — local dev setup
+- **[meta/SUBMISSION.md](meta/SUBMISSION.md)** — App Store submission reference
+- **[meta/PRIVACY.md](meta/PRIVACY.md)** — privacy policy (also at [docs/privacy.html](docs/privacy.html))
 
 ## Support
 
-For development issues, refer to [DEVELOPMENT.md](DEVELOPMENT.md).
-For other questions, open an issue in the GitHub repository.
+Open an issue: https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues
