@@ -12,7 +12,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers",
-      "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "LSApplicationCategoryType": "public.app-category.entertainment",
@@ -85,9 +84,7 @@
     "updates": {
       "url": "https://u.expo.dev/ce77dd42-8e41-4320-8eb3-6b96b801b3b6"
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.1.1",
     "locales": {
       "en": "./assets/locales/en.json"
     },
