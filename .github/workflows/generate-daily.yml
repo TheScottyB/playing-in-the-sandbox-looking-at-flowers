@@ -12,6 +12,10 @@ on:
       states:
         description: 'Comma-separated state codes to regenerate (default: all)'
         required: false
+      dry_run:
+        description: 'Skip Gemini API calls, write placeholder files (true/false)'
+        required: false
+        default: 'false'
 
 permissions:
   contents: write
@@ -31,6 +35,7 @@ jobs:
       - name: Generate flower images
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
         run: |
           DATE_ARG=""
           STATES_ARG=""
