@@ -13,7 +13,7 @@ This document tracks all requirements for submitting "Sandbox Playing Flowers" t
 - [x] **Keywords**: Implemented in app.json
 - [x] **Support URL**: GitHub issues page
 - [x] **Marketing URL**: N/A (optional)
-- [x] **Privacy Policy URL**: GitHub Pages hosted policy
+- [x] **Privacy Policy URL**: https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html (enter in App Store Connect → App Privacy)
 
 ## Compliance Documentation
 
@@ -135,8 +135,15 @@ This document tracks all requirements for submitting "Sandbox Playing Flowers" t
 - App has been tested with the latest iOS version
 - All code changes have been reviewed and committed to the main branch
 - The app does not collect any user data and this is properly declared
+- Upgraded to Expo SDK 55 / React Native 0.83.6 / React 19.2 on April 25, 2026
+- **Remaining blockers before submission:**
+  1. Capture 5 screenshots each at 6.5" iPhone, 5.5" iPhone, and 12.9" iPad sizes (requires physical device or simulator) — see SCREENSHOTS.md
+  2. VoiceOver / accessibility pass on `FlowerGalleryCard`, tab bar, and card flip interactions
+  3. Verify app.json icon renders correctly on light and dark device wallpapers
+  4. Run production EAS build and test on physical iPhone before uploading to App Store Connect
+  5. Enter privacy URL, keywords, and screenshots in App Store Connect dashboard (these are metadata, not in app.json)
 
 ---
 
-Last Updated: April 11, 2025
+Last Updated: April 25, 2026
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Image, Platform } from 'react-native';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as Crypto from 'expo-crypto';
 
 interface CacheOptions {
@@ -106,10 +106,12 @@ export function useCacheAssets(
       if (!fileInfo.exists) return false;
 
       // Check expiration if the file exists
-      if (mergedOptions.expirationTime) {
-        const now = new Date().getTime();
-        const { modificationTime } = await FileSystem.getInfoAsync(path, { md5: false });
-        return modificationTime && (now - modificationTime) < mergedOptions.expirationTime;
+      if (mergedOptions.expirationTime && fileInfo.exists) {
+        const now = Date.now();
+        const modTime = (fileInfo as any).modificationTime as number | undefined;
+        if (modTime) {
+          return (now - modTime * 1000) < mergedOptions.expirationTime;
+        }
       }
       
       return true;
@@ -127,12 +129,12 @@ export function useCacheAssets(
 
       // For web, we don't need to cache locally
       if (Platform.OS === 'web') {
-        // Use Image prefetch for browser caching
-        await new Promise<void>((resolve) => {
-          const img = new Image();
+        // Use browser Image constructor for web caching
+        await new Promise<void>((resolve, reject) => {
+          const img = new (globalThis as any).Image();
           img.onload = () => resolve();
           img.onerror = () => {
-            throw new Error(`Failed to load image: ${uri}`);
+            reject(new Error(`Failed to load image: ${uri}`));
           };
           img.src = uri;
         });
@@ -195,9 +197,10 @@ export function useCacheAssets(
         }
       } else {
         // Parallel prefetching with concurrency limit
+        const concurrency = mergedOptions.concurrentRequests ?? 3;
         const chunks = [];
-        for (let i = 0; i < imageUris.length; i += mergedOptions.concurrentRequests) {
-          chunks.push(imageUris.slice(i, i + mergedOptions.concurrentRequests));
+        for (let i = 0; i < imageUris.length; i += concurrency) {
+          chunks.push(imageUris.slice(i, i + concurrency));
         }
 
         for (const chunk of chunks) {

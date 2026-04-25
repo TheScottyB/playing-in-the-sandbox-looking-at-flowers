@@ -13,12 +13,9 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-} as Partial<
-  Record<
-    import('expo-symbols').SymbolViewProps['name'],
-    React.ComponentProps<typeof MaterialIcons>['name']
-  >
->;
+  'rectangle.stack.fill': 'layers',
+  'leaf.fill': 'eco',
+} as const satisfies Record<string, React.ComponentProps<typeof MaterialIcons>['name']>;
 
 export type IconSymbolName = keyof typeof MAPPING;
 
