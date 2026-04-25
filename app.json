@@ -4,7 +4,7 @@
     "slug": "playing-in-the-sandox-looking-at-flowers",
     "version": "1.0.0",
     "privacy": "public",
-    "description": "An interactive flower gallery with beautiful animations and seasonal collections. Flip through various flower types with immersive haptic feedback.",
+    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
     "primaryColor": "#4CAF50",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -20,6 +20,7 @@
         "LSApplicationCategoryType": "public.app-category.entertainment",
         "CFBundleLocalizations": ["en"],
         "UIRequiredDeviceCapabilities": ["arm64"],
+        "NSLocationWhenInUseUsageDescription": "Your region is used once to show flowers native to your area. It is never shared.",
         "UIBackgroundModes": [],
         "UIViewControllerBasedStatusBarAppearance": true
       },
@@ -51,6 +52,12 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Your region is used once to show flowers native to your area. It is never shared."
+        }
+      ],
       [
         "expo-splash-screen",
         {

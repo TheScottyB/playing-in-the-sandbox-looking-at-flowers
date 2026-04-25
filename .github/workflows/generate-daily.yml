@@ -1,0 +1,55 @@
+name: Generate Daily Flowers
+
+on:
+  schedule:
+    # 04:00 Pacific (11:00 UTC) every day
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date to generate (YYYY-MM-DD, default: today)'
+        required: false
+      states:
+        description: 'Comma-separated state codes to regenerate (default: all)'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate flower images
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          DATE_ARG=""
+          STATES_ARG=""
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            DATE_ARG="--date ${{ github.event.inputs.date }}"
+          fi
+          if [ -n "${{ github.event.inputs.states }}" ]; then
+            STATES_ARG="--states ${{ github.event.inputs.states }}"
+          fi
+          node scripts/generate-daily.mjs $DATE_ARG $STATES_ARG
+
+      - name: Commit generated files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/daily/
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "chore: daily flowers $(date -u +%Y-%m-%d)"
+            git push
+          fi
