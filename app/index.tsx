@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  ImageBackground,
   Linking,
   Platform,
   Pressable,
@@ -14,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Image } from 'expo-image';
 import FlipCard from 'react-native-flip-card';
 
 import {
@@ -76,7 +76,6 @@ export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
   const [reloadKey, setReloadKey] = useState(0);
-  const [flipped, setFlipped] = useState(false);
 
   const { width: winW, height: winH } = useWindowDimensions();
   // Portrait card sized to the screen: leaves room for the eyebrow at the top
@@ -93,10 +92,7 @@ export default function HomeScreen() {
         const region = await getRegion();
         const date = offsetDate(todayLocalIso(), dayOffset);
         const flower = await fetchDailyFlower(region, date);
-        if (!cancelled) {
-          setState({ status: 'ok', flower });
-          setFlipped(false);
-        }
+        if (!cancelled) setState({ status: 'ok', flower });
       } catch (e) {
         if (cancelled) return;
         console.error('Flower fetch failed:', e);
@@ -178,31 +174,32 @@ export default function HomeScreen() {
 
           {state.status === 'ok' && (
             <FlipCard
+              key={state.flower.date + ':' + state.flower.state}
               style={{ width: cardW, height: cardH }}
               friction={6}
               perspective={1000}
               flipHorizontal
               flipVertical={false}
-              flip={flipped}
               clickable
               useNativeDriver={Platform.OS !== 'web'}
-              onFlipEnd={(isFlipped: boolean) => setFlipped(isFlipped)}
             >
               {/* Front: image */}
               <View style={styles.face}>
-                <ImageBackground
-                  source={{ uri: state.flower.imageUrl }}
-                  style={styles.imageFill}
-                  imageStyle={styles.imageRadius}
-                  resizeMode="cover"
-                >
-                  <LinearGradient
-                    pointerEvents="none"
-                    colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)']}
-                    style={styles.hintScrim}
-                  />
-                  <Text style={styles.hint}>TAP TO READ</Text>
-                </ImageBackground>
+                <Image
+                  source={state.flower.imageUrl}
+                  style={[StyleSheet.absoluteFillObject, styles.imageRadius]}
+                  contentFit="cover"
+                  cachePolicy="memory-disk"
+                  transition={400}
+                  preferHighDynamicRange
+                  accessibilityLabel={state.flower.common}
+                />
+                <LinearGradient
+                  pointerEvents="none"
+                  colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)']}
+                  style={styles.hintScrim}
+                />
+                <Text style={styles.hint}>TAP TO READ</Text>
               </View>
 
               {/* Back: serif info panel */}
@@ -218,9 +215,7 @@ export default function HomeScreen() {
                   <Text style={styles.latin}>{state.flower.latin}</Text>
                   <View style={styles.rule} />
                   <Text style={styles.blurb}>{state.flower.blurb}</Text>
-                  <View style={styles.backFooter}>
-                    <Text style={styles.hint}>TAP TO FLIP BACK</Text>
-                  </View>
+                  <Text style={[styles.hint, styles.hintBack]}>TAP TO FLIP BACK</Text>
                 </LinearGradient>
               </View>
             </FlipCard>
@@ -292,10 +287,6 @@ const styles = StyleSheet.create({
     shadowRadius: 28,
     elevation: 12,
   },
-  imageFill: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
   imageRadius: {
     borderRadius: 18,
   },
@@ -307,12 +298,21 @@ const styles = StyleSheet.create({
     height: 120,
   },
   hint: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
     color: 'rgba(255,255,255,0.85)',
     fontSize: 10,
     letterSpacing: 2.8,
     fontWeight: '600',
     textAlign: 'center',
     paddingVertical: 18,
+  },
+  hintBack: {
+    position: 'relative',
+    marginTop: 'auto',
+    paddingTop: 24,
   },
 
   back: {
@@ -354,10 +354,6 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     color: 'rgba(255,255,255,0.88)',
   },
-  backFooter: {
-    marginTop: 'auto',
-  },
-
   nav: {
     flexDirection: 'row',
     justifyContent: 'space-between',
