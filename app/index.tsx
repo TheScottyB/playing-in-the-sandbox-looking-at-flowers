@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
   Image,
   Linking,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 import {
   fetchDailyFlower,
@@ -41,10 +43,16 @@ const ERROR_COPY: Record<ErrorKind, { title: string; sub: string }> = {
   },
 };
 
+const SERIF = Platform.select({ ios: 'Georgia', android: 'serif', default: 'Georgia' });
+
+const MONTH_SHORT = [
+  'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
+  'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
+];
+
 /**
  * Add `days` to a `YYYY-MM-DD` string in the user's local calendar (anchored
- * at noon to dodge DST shifts). The original implementation used toISOString,
- * which silently shifted the date by a day for users east of UTC.
+ * at noon to dodge DST shifts).
  */
 function offsetDate(base: string, days: number): string {
   const d = new Date(base + 'T12:00:00');
@@ -55,11 +63,49 @@ function offsetDate(base: string, days: number): string {
   return `${yyyy}-${mm}-${dd}`;
 }
 
+function formatDateLabel(iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  if (!y || !m || !d) return iso;
+  return `${MONTH_SHORT[m - 1]} ${d} ${y}`;
+}
+
+/**
+ * Stacked-view gradient scrim. expo-linear-gradient isn't installed and we
+ * don't need the dep for a single static fade — a handful of semi-transparent
+ * slabs approximate it well enough at this scale.
+ */
+function ScrimBottom() {
+  const stops = [0, 0.04, 0.1, 0.2, 0.34, 0.5, 0.66, 0.82];
+  return (
+    <View pointerEvents="none" style={styles.scrimBottom}>
+      {stops.map((opacity, i) => (
+        <View
+          key={i}
+          style={{ flex: 1, backgroundColor: `rgba(0,0,0,${opacity})` }}
+        />
+      ))}
+      <View style={{ height: 240, backgroundColor: 'rgba(0,0,0,0.88)' }} />
+    </View>
+  );
+}
+
+function ScrimTop() {
+  const stops = [0.55, 0.32, 0.16, 0.06, 0];
+  return (
+    <View pointerEvents="none" style={styles.scrimTop}>
+      {stops.map((opacity, i) => (
+        <View
+          key={i}
+          style={{ flex: 1, backgroundColor: `rgba(0,0,0,${opacity})` }}
+        />
+      ))}
+    </View>
+  );
+}
+
 export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
-  // Bumped to force the load effect to re-run after the user clears their
-  // cached region (re-prompts for location on the next call).
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
@@ -74,8 +120,6 @@ export default function HomeScreen() {
         if (!cancelled) setState({ status: 'ok', flower });
       } catch (e) {
         if (cancelled) return;
-        // Keep the technical detail in the console for debug, show the user
-        // a friendly message based on what kind of failure happened.
         console.error('Flower fetch failed:', e);
         if (e instanceof FlowerFetchError) {
           const kind: ErrorKind = e.status === 404 ? 'unpublished' : 'service';
@@ -112,119 +156,232 @@ export default function HomeScreen() {
     setReloadKey(k => k + 1);
   }
 
+  const dateLabel = useMemo(() => {
+    if (state.status === 'ok') return formatDateLabel(state.flower.date);
+    return formatDateLabel(offsetDate(todayLocalIso(), dayOffset));
+  }, [state, dayOffset]);
+
   return (
-    <SafeAreaView style={styles.root}>
+    <View style={styles.root}>
+      <StatusBar style="light" />
+
       {state.status === 'loading' && (
-        <View style={styles.center}>
-          <ActivityIndicator size="large" color="#4CAF50" />
-          <Text style={styles.loadingLabel}>Finding flowers in your area…</Text>
-        </View>
+        <SafeAreaView style={styles.fill}>
+          <View style={styles.center}>
+            <ActivityIndicator size="small" color="rgba(255,255,255,0.6)" />
+            <Text style={styles.loadingLabel}>FINDING TODAY'S BLOOM</Text>
+          </View>
+        </SafeAreaView>
       )}
 
       {state.status === 'error' && (
-        <View style={styles.center}>
-          <Text style={styles.errorText}>{ERROR_COPY[state.kind].title}</Text>
-          <Text style={styles.errorSub}>{state.message}</Text>
-          <Pressable
-            style={styles.retryBtn}
-            onPress={() => setReloadKey(k => k + 1)}
-          >
-            <Text style={styles.retryLabel}>Try again</Text>
-          </Pressable>
-          <Pressable
-            style={styles.linkBtn}
-            onPress={handleChangeRegion}
-          >
-            <Text style={styles.linkLabel}>Change region</Text>
-          </Pressable>
-        </View>
+        <SafeAreaView style={styles.fill}>
+          <View style={styles.center}>
+            <Text style={styles.errorTitle}>{ERROR_COPY[state.kind].title}</Text>
+            <Text style={styles.errorSub}>{state.message}</Text>
+            <Pressable
+              style={styles.primaryBtn}
+              onPress={() => setReloadKey(k => k + 1)}
+            >
+              <Text style={styles.primaryBtnLabel}>Try again</Text>
+            </Pressable>
+            <Pressable style={styles.ghostBtn} onPress={handleChangeRegion}>
+              <Text style={styles.ghostBtnLabel}>Change region</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
       )}
 
       {state.status === 'ok' && (
-        <View style={styles.card}>
+        <>
           <Image
             source={{ uri: state.flower.imageUrl }}
-            style={styles.image}
+            style={StyleSheet.absoluteFill}
             resizeMode="cover"
           />
-          <View style={styles.info}>
-            <Text style={styles.common}>{state.flower.common}</Text>
-            <Text style={styles.latin}>{state.flower.latin}</Text>
-            <Text style={styles.blurb}>{state.flower.blurb}</Text>
-            <View style={styles.metaRow}>
-              <Text style={styles.meta}>
-                {state.flower.state === 'default' ? 'Your area' : state.flower.state} · {state.flower.date}
+
+          <ScrimTop />
+          <ScrimBottom />
+
+          <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
+            <View style={styles.topBar}>
+              <Text style={styles.eyebrow}>
+                {(state.flower.state === 'default' ? 'YOUR AREA' : state.flower.state)} · {dateLabel}
               </Text>
-              <Pressable onPress={handleChangeRegion} hitSlop={8}>
-                <Text style={styles.metaLink}>Change region</Text>
-              </Pressable>
             </View>
-          </View>
-          <View style={styles.nav}>
-            <Pressable
-              style={[styles.navBtn, dayOffset <= -6 && styles.navBtnDisabled]}
-              onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
-              disabled={dayOffset <= -6}
-            >
-              <Text style={styles.navLabel}>← Yesterday</Text>
-            </Pressable>
-            {dayOffset < 0 && (
-              <Pressable style={styles.navBtn} onPress={() => setDayOffset(0)}>
-                <Text style={styles.navLabel}>Today →</Text>
-              </Pressable>
-            )}
-          </View>
-        </View>
+
+            <View style={styles.bottomPanel}>
+              <Text style={styles.common}>{state.flower.common}</Text>
+              <Text style={styles.latin}>{state.flower.latin}</Text>
+              <View style={styles.rule} />
+              <Text style={styles.blurb}>{state.flower.blurb}</Text>
+
+              <View style={styles.nav}>
+                <Pressable
+                  style={[styles.navBtn, dayOffset <= -6 && styles.navBtnDisabled]}
+                  onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
+                  disabled={dayOffset <= -6}
+                  hitSlop={8}
+                >
+                  <Text style={styles.navLabel}>← Yesterday</Text>
+                </Pressable>
+
+                {dayOffset < 0 ? (
+                  <Pressable
+                    style={styles.navBtn}
+                    onPress={() => setDayOffset(0)}
+                    hitSlop={8}
+                  >
+                    <Text style={styles.navLabel}>Today →</Text>
+                  </Pressable>
+                ) : (
+                  <Pressable onPress={handleChangeRegion} hitSlop={8}>
+                    <Text style={styles.navSubtle}>Change region</Text>
+                  </Pressable>
+                )}
+              </View>
+            </View>
+          </SafeAreaView>
+        </>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#fff' },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-  loadingLabel: { marginTop: 16, color: '#666', fontSize: 14 },
-  card: { flex: 1 },
-  image: { flex: 1 },
-  info: {
-    padding: 20,
-    gap: 4,
+  root: { flex: 1, backgroundColor: '#0a0a0a' },
+  fill: { flex: 1 },
+
+  scrimTop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 180,
   },
-  common: { fontSize: 26, fontWeight: '700', color: '#1a1a1a' },
-  latin: { fontSize: 16, fontStyle: 'italic', color: '#555' },
-  blurb: { fontSize: 15, color: '#333', marginTop: 8, lineHeight: 22 },
-  meta: { fontSize: 12, color: '#999' },
-  metaRow: {
-    marginTop: 8,
+  scrimBottom: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '62%',
+    justifyContent: 'flex-end',
+  },
+
+  topBar: {
+    paddingHorizontal: 24,
+    paddingTop: 16,
+  },
+  eyebrow: {
+    fontSize: 11,
+    letterSpacing: 2.4,
+    color: 'rgba(255,255,255,0.85)',
+    fontWeight: '600',
+  },
+
+  bottomPanel: {
+    marginTop: 'auto',
+    paddingHorizontal: 24,
+    paddingBottom: 20,
+  },
+  common: {
+    fontFamily: SERIF,
+    fontSize: 36,
+    lineHeight: 42,
+    color: '#fff',
+    letterSpacing: 0.2,
+  },
+  latin: {
+    fontFamily: SERIF,
+    fontStyle: 'italic',
+    fontSize: 16,
+    color: 'rgba(255,255,255,0.7)',
+    marginTop: 6,
+    letterSpacing: 0.3,
+  },
+  rule: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    marginTop: 18,
+    marginBottom: 16,
+    width: 56,
+  },
+  blurb: {
+    fontSize: 15,
+    lineHeight: 23,
+    color: 'rgba(255,255,255,0.9)',
+  },
+
+  nav: {
+    marginTop: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  metaLink: { fontSize: 12, color: '#4CAF50', fontWeight: '600' },
-  nav: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingBottom: 12,
-  },
   navBtn: {
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 20,
+    paddingHorizontal: 14,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.45)',
+    backgroundColor: 'rgba(255,255,255,0.06)',
   },
-  navBtnDisabled: { opacity: 0.3 },
-  navLabel: { fontSize: 14, color: '#333' },
-  errorText: { fontSize: 20, fontWeight: '600', color: '#333', textAlign: 'center' },
-  errorSub: { fontSize: 13, color: '#999', marginTop: 8, textAlign: 'center', lineHeight: 18 },
-  retryBtn: {
-    marginTop: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 24,
-    backgroundColor: '#4CAF50',
-    borderRadius: 20,
+  navBtnDisabled: { opacity: 0.25 },
+  navLabel: {
+    fontSize: 13,
+    color: '#fff',
+    letterSpacing: 0.3,
   },
-  retryLabel: { color: '#fff', fontWeight: '600' },
-  linkBtn: { marginTop: 12, paddingVertical: 8, paddingHorizontal: 12 },
-  linkLabel: { color: '#4CAF50', fontWeight: '600', fontSize: 14 },
+  navSubtle: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.7)',
+    letterSpacing: 1.4,
+    textTransform: 'uppercase',
+    fontWeight: '600',
+  },
+
+  center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
+  loadingLabel: {
+    marginTop: 18,
+    color: 'rgba(255,255,255,0.55)',
+    fontSize: 11,
+    letterSpacing: 2.4,
+    fontWeight: '600',
+  },
+  errorTitle: {
+    fontFamily: SERIF,
+    fontSize: 24,
+    lineHeight: 30,
+    color: '#fff',
+    textAlign: 'center',
+  },
+  errorSub: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.6)',
+    marginTop: 10,
+    textAlign: 'center',
+    lineHeight: 20,
+    maxWidth: 320,
+  },
+  primaryBtn: {
+    marginTop: 28,
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+    borderRadius: 999,
+    backgroundColor: '#fff',
+  },
+  primaryBtnLabel: {
+    color: '#0a0a0a',
+    fontWeight: '600',
+    fontSize: 14,
+    letterSpacing: 0.4,
+  },
+  ghostBtn: { marginTop: 14, paddingVertical: 8, paddingHorizontal: 12 },
+  ghostBtnLabel: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 12,
+    letterSpacing: 1.4,
+    textTransform: 'uppercase',
+    fontWeight: '600',
+  },
 });
