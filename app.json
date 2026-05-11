@@ -3,7 +3,7 @@
     "name": "Sandbox Staring at Flowers",
     "slug": "playing-in-the-sandbox-staring-at-flowers",
     "version": "1.1.1",
-    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
+    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture \u2014 matched to your US state and the current season.",
     "primaryColor": "#4CAF50",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,8 +15,12 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "LSApplicationCategoryType": "public.app-category.entertainment",
-        "CFBundleLocalizations": ["en"],
-        "UIRequiredDeviceCapabilities": ["arm64"],
+        "CFBundleLocalizations": [
+          "en"
+        ],
+        "UIRequiredDeviceCapabilities": [
+          "arm64"
+        ],
         "NSLocationWhenInUseUsageDescription": "Your region is used once to show flowers native to your area. It is never shared.",
         "UIBackgroundModes": [],
         "UIViewControllerBasedStatusBarAppearance": true
@@ -33,7 +37,11 @@
       },
       "package": "com.djscottyb.playinginthesandoxlookingatflowers",
       "versionCode": 1,
-      "permissions": ["INTERNET"]
+      "permissions": [
+        "INTERNET",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -77,8 +85,14 @@
       "appStore": {
         "primaryCategory": "Entertainment",
         "secondaryCategory": "Lifestyle",
-        "contentRating": ["4+", "everyone"]
-      }
+        "contentRating": [
+          "4+",
+          "everyone",
+          "4+",
+          "everyone"
+        ]
+      },
+      "router": {}
     },
     "owner": "thescottybe",
     "updates": {
@@ -88,7 +102,11 @@
     "locales": {
       "en": "./assets/locales/en.json"
     },
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers"
   }
 }
