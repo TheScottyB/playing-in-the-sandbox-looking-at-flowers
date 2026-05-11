@@ -5,7 +5,7 @@
  */
 
 const PAGES_BASE_URL =
-  'https://thescottyb.github.io/playing-in-the-sandbox-looking-at-flowers/daily';
+  'https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/daily';
 
 export interface DailyFlower {
   imageUrl: string;

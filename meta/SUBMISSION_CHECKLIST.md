@@ -1,10 +1,10 @@
 # App Store Submission Checklist
 
-This document tracks all requirements for submitting "Sandbox Flowers" to the App Store. Updated for v1.1.0 (daily AI-generated native flower).
+This document tracks all requirements for submitting "Sandbox Staring at Flowers" to the App Store. Updated for v1.1.0 (daily AI-generated native flower).
 
 ## App Store Metadata Requirements
 
-- [x] **App Name**: "Sandbox Flowers"
+- [x] **App Name**: "Sandbox Staring at Flowers"
 - [x] **Bundle ID**: com.djscottyb.playinginthesandoxlookingatflowers
 - [x] **Primary Category**: Entertainment
 - [ ] **Secondary Category**: Lifestyle (change from Education)
@@ -13,7 +13,7 @@ This document tracks all requirements for submitting "Sandbox Flowers" to the Ap
 - [ ] **Keywords**: Update to "flowers,native,daily,wildflowers,bloom,nature,seasons,states"
 - [x] **Support URL**: GitHub issues page
 - [x] **Marketing URL**: N/A (optional)
-- [x] **Privacy Policy URL**: https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html (now includes location-data disclosure)
+- [x] **Privacy Policy URL**: https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html (now includes location-data disclosure)
 
 ## Permissions
 
@@ -100,7 +100,7 @@ This document tracks all requirements for submitting "Sandbox Flowers" to the Ap
 - [ ] **GitHub Pages** enabled from `docs/` on `main`
 - [ ] **First 7 days** of flowers pre-generated for all 51 buckets (avoid 404 on launch day)
 - [ ] **Cron job** verified: at least 3 successful daily runs
-- [ ] **Pages CDN URL** verified: `https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/daily/{state}/{date}.{webp,json}` resolves
+- [ ] **Pages CDN URL** verified: `https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/daily/{state}/{date}.{webp,json}` resolves
 
 ## Build and Submission
 

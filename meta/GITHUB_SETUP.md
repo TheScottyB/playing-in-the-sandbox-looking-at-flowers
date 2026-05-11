@@ -1,10 +1,10 @@
 # GitHub Setup Documentation
 
-This document outlines the GitHub repository structure, branch management, and workflow processes for the Sandbox Flowers project.
+This document outlines the GitHub repository structure, branch management, and workflow processes for the Sandbox Staring at Flowers project.
 
 ## Repository Configuration
 
-- **Repository URL**: [github.com:TheScottyB/playing-in-the-sandox-looking-at-flowers](https://github.com/TheScottyB/playing-in-the-sandox-looking-at-flowers)
+- **Repository URL**: [github.com:TheScottyB/playing-in-the-sandbox-staring-at-flowers](https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers)
 - **Authentication**: SSH protocol with GitHub CLI integration
 - **Primary Maintainer**: TheScottyB (scottybe@tbdstud.io)
 
@@ -18,7 +18,7 @@ The repository maintains the following branch structure:
   - Tracked by `origin/main`
 
 - **`gh-pages`** - Documentation and static content branch
-  - Hosts the [privacy policy](https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html) for App Store submission
+  - Hosts the [privacy policy](https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html) for App Store submission
   - Contains iOS Developer Mode guides and build configuration documentation
   - Tracked by `origin/gh-pages`
 

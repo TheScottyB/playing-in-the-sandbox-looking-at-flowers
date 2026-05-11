@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "Sandbox Staring at Flowers",
-    "slug": "playing-in-the-sandox-looking-at-flowers",
+    "slug": "playing-in-the-sandbox-staring-at-flowers",
     "version": "1.1.1",
     "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
     "primaryColor": "#4CAF50",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "sandbox-flowers",
+    "scheme": "staring-at-flowers",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
@@ -72,8 +72,8 @@
       },
       "encryptionDocPath": "./ENCRYPTION_NOTICE.md",
       "dsaCompliancePath": "./DSA_COMPLIANCE.md",
-      "privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html",
-      "supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues",
+      "privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html",
+      "supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues",
       "appStore": {
         "primaryCategory": "Entertainment",
         "secondaryCategory": "Lifestyle",
@@ -89,6 +89,6 @@
       "en": "./assets/locales/en.json"
     },
     "platforms": ["ios", "android", "web"],
-    "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandox-looking-at-flowers"
+    "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers"
   }
 }

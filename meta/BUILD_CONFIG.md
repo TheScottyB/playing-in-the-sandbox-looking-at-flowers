@@ -1,6 +1,6 @@
-# Build Configuration for Sandbox Flowers
+# Build Configuration for Sandbox Staring at Flowers
 
-This document provides an overview of the build configuration for the Sandbox Flowers app, including development and production build profiles.
+This document provides an overview of the build configuration for the Sandbox Staring at Flowers app, including development and production build profiles.
 
 ## Build Profiles Overview
 

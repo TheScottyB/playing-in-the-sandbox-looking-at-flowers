@@ -1,4 +1,4 @@
-# Play Store Release Spec: Sandbox Flowers
+# Play Store Release Spec: Sandbox Staring at Flowers
 
 > **Status:** In progress — listing copy ready, assets and backfill remain
 > **Updated:** 2026-04-25 (post-pivot to daily AI-generated flower)

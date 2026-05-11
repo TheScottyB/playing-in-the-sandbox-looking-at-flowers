@@ -1,9 +1,9 @@
-# App Store Submission Reference for Sandbox Flowers
+# App Store Submission Reference for Sandbox Staring at Flowers
 
 ## Critical App Information
 | Field | Value |
 |-------|-------|
-| App Name | Sandbox Flowers |
+| App Name | Sandbox Staring at Flowers |
 | Bundle ID | com.djscottyb.playinginthesandoxlookingatflowers |
 | SKU | EX1744334003092 |
 | Apple ID | 6744488642 |
@@ -13,8 +13,8 @@
 ## Required URLs
 | URL Type | Value |
 |----------|-------|
-| Privacy Policy URL | https://thescottyb.github.io/playing-in-the-sandox-looking-at-flowers/privacy.html |
-| Support URL | https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues |
+| Privacy Policy URL | https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html |
+| Support URL | https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues |
 | Marketing URL (Optional) | - |
 | User Privacy Choices URL (Optional) | - |
 

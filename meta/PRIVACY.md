@@ -1,10 +1,10 @@
-# Privacy Policy for Sandbox Flowers
+# Privacy Policy for Sandbox Staring at Flowers
 
 **Last Updated:** April 25, 2025
 
 ## Introduction
 
-This Privacy Policy explains how Sandbox Flowers ("we", "our", or "us") handles information when you use our mobile application ("App"). We respect your privacy and are committed to protecting it through our compliance with this policy.
+This Privacy Policy explains how Sandbox Staring at Flowers ("we", "our", or "us") handles information when you use our mobile application ("App"). We respect your privacy and are committed to protecting it through our compliance with this policy.
 
 ## Location Data
 
@@ -49,7 +49,7 @@ We may update our Privacy Policy from time to time. We will notify you of any ch
 If you have any questions or concerns about this Privacy Policy, please contact us at:
 
 - Email: beilsco@gmail.com
-- GitHub Issues: [https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues](https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues)
+- GitHub Issues: [https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues](https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues)
 
 ## California Privacy Rights
 

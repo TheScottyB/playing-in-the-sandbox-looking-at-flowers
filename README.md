@@ -1,4 +1,4 @@
-# Sandbox Flowers
+# Sandbox Staring at Flowers
 
 A daily ritual app: every morning, a fresh AI-generated picture of a flower native to your US state — matched to what's blooming this month.
 
@@ -65,7 +65,7 @@ Repo → Settings → Secrets and variables → Actions → **New repository sec
 
 Repo → Settings → Pages → Source: **Deploy from a branch** → Branch: `main`, folder: `/docs` → Save.
 
-The CDN root will be `https://<owner>.github.io/playing-in-the-sandbox-looking-at-flowers/`.
+The CDN root will be `https://<owner>.github.io/playing-in-the-sandbox-staring-at-flowers/`.
 Make sure that matches `BASE_URL` in `lib/dailyFlower.ts`.
 
 **3. Smoke-test with a dry run**
@@ -125,4 +125,4 @@ run so you can resume without re-paying for the states that already worked.
 
 ## Support
 
-Open an issue: https://github.com/TheScottyB/playing-in-the-sandbox-looking-at-flowers/issues
+Open an issue: https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues
