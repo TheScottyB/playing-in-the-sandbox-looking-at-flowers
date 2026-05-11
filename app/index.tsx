@@ -76,7 +76,6 @@ export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
   const [reloadKey, setReloadKey] = useState(0);
-  const [flipped, setFlipped] = useState(false);
 
   const { width: winW, height: winH } = useWindowDimensions();
   // Portrait card sized to the screen: leaves room for the eyebrow at the top
@@ -93,10 +92,7 @@ export default function HomeScreen() {
         const region = await getRegion();
         const date = offsetDate(todayLocalIso(), dayOffset);
         const flower = await fetchDailyFlower(region, date);
-        if (!cancelled) {
-          setState({ status: 'ok', flower });
-          setFlipped(false);
-        }
+        if (!cancelled) setState({ status: 'ok', flower });
       } catch (e) {
         if (cancelled) return;
         console.error('Flower fetch failed:', e);
@@ -178,15 +174,14 @@ export default function HomeScreen() {
 
           {state.status === 'ok' && (
             <FlipCard
+              key={state.flower.date + ':' + state.flower.state}
               style={{ width: cardW, height: cardH }}
               friction={6}
               perspective={1000}
               flipHorizontal
               flipVertical={false}
-              flip={flipped}
               clickable
               useNativeDriver={Platform.OS !== 'web'}
-              onFlipEnd={(isFlipped: boolean) => setFlipped(isFlipped)}
             >
               {/* Front: image */}
               <View style={styles.face}>
