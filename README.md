@@ -49,6 +49,33 @@ eas build --profile development --platform ios
 npx expo start --dev-client
 ```
 
+## First-time setup
+
+Before the cron fires for the first time, complete these three steps in order:
+
+**1. Add the Gemini API key secret**
+
+Repo → Settings → Secrets and variables → Actions → **New repository secret**
+
+| Name | Value |
+|---|---|
+| `GEMINI_API_KEY` | Your Google AI Studio key with Gemini 2.5 Flash Image access |
+
+**2. Enable GitHub Pages**
+
+Repo → Settings → Pages → Source: **Deploy from a branch** → Branch: `main`, folder: `/docs` → Save.
+
+The CDN root will be `https://<owner>.github.io/playing-in-the-sandbox-looking-at-flowers/`.
+Make sure that matches `BASE_URL` in `lib/dailyFlower.ts`.
+
+**3. Smoke-test with a dry run**
+
+Actions → "Generate Daily Flowers" → **Run workflow** → set `dry_run` to `true` → Run.
+
+The workflow should complete in under a minute, commit placeholder files, and report
+`52 generated, 0 skipped, 0 failed`. Merge or discard that commit before the first
+real cron at 04:00 PT.
+
 ## Architecture
 
 `lib/dailyFlower.ts` exposes a provider interface. v1 resolves to a static GitHub Pages URL. v2 can swap in a Cloudflare Worker (IP-based geo + on-demand generation) without touching any caller. v3 could move generation on-device once Gemini Nano ships in Expo.
