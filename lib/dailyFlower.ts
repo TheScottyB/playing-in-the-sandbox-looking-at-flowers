@@ -4,16 +4,26 @@
  * (on-demand generation) or on-device generation without changing callers.
  */
 
+import type { ImageSourcePropType } from 'react-native';
+
+import { DEFAULT_FLOWER, pickVariant, type TimeOfDay } from '@/data/defaults';
+
 const PAGES_BASE_URL =
   'https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/daily';
 
 export interface DailyFlower {
-  imageUrl: string;
+  /** Accepts both `{ uri }` and `require(...)` so a single field covers
+   *  remote and bundled images. */
+  imageSource: ImageSourcePropType;
   common: string;
   latin: string;
   blurb: string;
   state: string;
   date: string;
+  /** Set when this entry came from the bundled fallback, not the CDN. */
+  isDefault?: boolean;
+  /** Only present for fallback entries. */
+  timeOfDay?: TimeOfDay;
 }
 
 export interface DailyFlowerSidecar {
@@ -59,11 +69,29 @@ export async function fetchDailyFlower(state: string, date: string = todayLocalI
   }
   const meta = (await sidecar.json()) as DailyFlowerSidecar;
   return {
-    imageUrl: imageUrlFor(state, date),
+    imageSource: { uri: imageUrlFor(state, date) },
     common: meta.common,
     latin: meta.latin,
     blurb: meta.blurb,
     state,
     date,
+  };
+}
+
+/**
+ * Returns a bundled fallback flower whose variant matches the local hour.
+ * Used when the CDN is unreachable or hasn't published yet.
+ */
+export function getDefaultFlower(date: string = todayLocalIso()): DailyFlower {
+  const variant = pickVariant();
+  return {
+    imageSource: variant.image,
+    common: DEFAULT_FLOWER.common,
+    latin: DEFAULT_FLOWER.latin,
+    blurb: DEFAULT_FLOWER.blurb,
+    state: 'default',
+    date,
+    isDefault: true,
+    timeOfDay: variant.time,
   };
 }

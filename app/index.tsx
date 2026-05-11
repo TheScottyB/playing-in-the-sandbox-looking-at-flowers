@@ -19,6 +19,7 @@ import FlipCard from 'react-native-flip-card';
 import {
   fetchDailyFlower,
   FlowerFetchError,
+  getDefaultFlower,
   todayLocalIso,
   type DailyFlower,
 } from '@/lib/dailyFlower';
@@ -88,23 +89,22 @@ export default function HomeScreen() {
 
     async function load() {
       setState({ status: 'loading' });
+      const date = offsetDate(todayLocalIso(), dayOffset);
       try {
         const region = await getRegion();
-        const date = offsetDate(todayLocalIso(), dayOffset);
         const flower = await fetchDailyFlower(region, date);
         if (!cancelled) setState({ status: 'ok', flower });
       } catch (e) {
         if (cancelled) return;
         console.error('Flower fetch failed:', e);
-        if (e instanceof FlowerFetchError) {
-          const kind: ErrorKind = e.status === 404 ? 'unpublished' : 'service';
-          setState({ status: 'error', kind, message: ERROR_COPY[kind].sub });
+        // 404 is a legitimate "coming soon" — keep the error treatment so the
+        // user knows we don't have a flower for that exact date. For service
+        // outages and network failures, fall through to the bundled default
+        // so the app always shows something instead of an error wall.
+        if (e instanceof FlowerFetchError && e.status === 404) {
+          setState({ status: 'error', kind: 'unpublished', message: ERROR_COPY.unpublished.sub });
         } else {
-          setState({
-            status: 'error',
-            kind: 'network',
-            message: ERROR_COPY.network.sub,
-          });
+          setState({ status: 'ok', flower: getDefaultFlower(date) });
         }
       }
     }
@@ -186,7 +186,7 @@ export default function HomeScreen() {
               {/* Front: image */}
               <View style={styles.face}>
                 <Image
-                  source={state.flower.imageUrl}
+                  source={state.flower.imageSource}
                   style={[StyleSheet.absoluteFillObject, styles.imageRadius]}
                   contentFit="cover"
                   cachePolicy="memory-disk"
@@ -194,6 +194,11 @@ export default function HomeScreen() {
                   preferHighDynamicRange
                   accessibilityLabel={state.flower.common}
                 />
+                {state.flower.isDefault && (
+                  <View style={styles.fallbackBadge}>
+                    <Text style={styles.fallbackBadgeText}>OFFLINE · ARCHIVE</Text>
+                  </View>
+                )}
                 <LinearGradient
                   pointerEvents="none"
                   colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)']}
@@ -281,11 +286,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     overflow: 'hidden',
     backgroundColor: '#0a0a0a',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 16 },
-    shadowOpacity: 0.45,
-    shadowRadius: 28,
-    elevation: 12,
+    boxShadow: '0px 16px 28px rgba(0,0,0,0.45)',
   },
   imageRadius: {
     borderRadius: 18,
@@ -313,6 +314,23 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginTop: 'auto',
     paddingTop: 24,
+  },
+  fallbackBadge: {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    backgroundColor: 'rgba(0,0,0,0.55)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.35)',
+  },
+  fallbackBadgeText: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 9,
+    letterSpacing: 2,
+    fontWeight: '600',
   },
 
   back: {
