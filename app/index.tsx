@@ -2,16 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Image,
+  ImageBackground,
   Linking,
   Platform,
   Pressable,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
+import FlipCard from 'react-native-flip-card';
 
 import {
   fetchDailyFlower,
@@ -69,44 +72,17 @@ function formatDateLabel(iso: string): string {
   return `${MONTH_SHORT[m - 1]} ${d} ${y}`;
 }
 
-/**
- * Stacked-view gradient scrim. expo-linear-gradient isn't installed and we
- * don't need the dep for a single static fade — a handful of semi-transparent
- * slabs approximate it well enough at this scale.
- */
-function ScrimBottom() {
-  const stops = [0, 0.04, 0.1, 0.2, 0.34, 0.5, 0.66, 0.82];
-  return (
-    <View pointerEvents="none" style={styles.scrimBottom}>
-      {stops.map((opacity, i) => (
-        <View
-          key={i}
-          style={{ flex: 1, backgroundColor: `rgba(0,0,0,${opacity})` }}
-        />
-      ))}
-      <View style={{ height: 240, backgroundColor: 'rgba(0,0,0,0.88)' }} />
-    </View>
-  );
-}
-
-function ScrimTop() {
-  const stops = [0.55, 0.32, 0.16, 0.06, 0];
-  return (
-    <View pointerEvents="none" style={styles.scrimTop}>
-      {stops.map((opacity, i) => (
-        <View
-          key={i}
-          style={{ flex: 1, backgroundColor: `rgba(0,0,0,${opacity})` }}
-        />
-      ))}
-    </View>
-  );
-}
-
 export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
   const [reloadKey, setReloadKey] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+
+  const { width: winW, height: winH } = useWindowDimensions();
+  // Portrait card sized to the screen: leaves room for the eyebrow at the top
+  // and the nav row at the bottom. Caps width on tablets/desktop.
+  const cardW = Math.min(winW - 48, 440);
+  const cardH = Math.min(cardW * 1.35, winH - 220);
 
   useEffect(() => {
     let cancelled = false;
@@ -117,7 +93,10 @@ export default function HomeScreen() {
         const region = await getRegion();
         const date = offsetDate(todayLocalIso(), dayOffset);
         const flower = await fetchDailyFlower(region, date);
-        if (!cancelled) setState({ status: 'ok', flower });
+        if (!cancelled) {
+          setState({ status: 'ok', flower });
+          setFlipped(false);
+        }
       } catch (e) {
         if (cancelled) return;
         console.error('Flower fetch failed:', e);
@@ -138,7 +117,7 @@ export default function HomeScreen() {
     return () => { cancelled = true; };
   }, [dayOffset, reloadKey]);
 
-  async function handleChangeRegion() {
+  async function handleUpdateLocation() {
     await resetRegion();
     const { permissionDenied } = await getRegionWithStatus();
     if (permissionDenied) {
@@ -161,89 +140,118 @@ export default function HomeScreen() {
     return formatDateLabel(offsetDate(todayLocalIso(), dayOffset));
   }, [state, dayOffset]);
 
+  const eyebrowRegion =
+    state.status === 'ok'
+      ? state.flower.state === 'default' ? 'YOUR AREA' : state.flower.state
+      : 'YOUR AREA';
+
   return (
     <View style={styles.root}>
       <StatusBar style="light" />
+      <SafeAreaView style={styles.fill}>
+        <View style={styles.topBar}>
+          <Text style={styles.eyebrow}>
+            {eyebrowRegion} · {dateLabel}
+          </Text>
+        </View>
 
-      {state.status === 'loading' && (
-        <SafeAreaView style={styles.fill}>
-          <View style={styles.center}>
-            <ActivityIndicator size="small" color="rgba(255,255,255,0.6)" />
-            <Text style={styles.loadingLabel}>FINDING TODAY'S BLOOM</Text>
-          </View>
-        </SafeAreaView>
-      )}
+        <View style={styles.stage}>
+          {state.status === 'loading' && (
+            <View style={[styles.placeholder, { width: cardW, height: cardH }]}>
+              <ActivityIndicator size="small" color="rgba(255,255,255,0.5)" />
+              <Text style={styles.loadingLabel}>FINDING TODAY'S BLOOM</Text>
+            </View>
+          )}
 
-      {state.status === 'error' && (
-        <SafeAreaView style={styles.fill}>
-          <View style={styles.center}>
-            <Text style={styles.errorTitle}>{ERROR_COPY[state.kind].title}</Text>
-            <Text style={styles.errorSub}>{state.message}</Text>
-            <Pressable
-              style={styles.primaryBtn}
-              onPress={() => setReloadKey(k => k + 1)}
+          {state.status === 'error' && (
+            <View style={[styles.placeholder, { width: cardW, height: cardH }]}>
+              <Text style={styles.errorTitle}>{ERROR_COPY[state.kind].title}</Text>
+              <Text style={styles.errorSub}>{state.message}</Text>
+              <Pressable
+                style={styles.primaryBtn}
+                onPress={() => setReloadKey(k => k + 1)}
+              >
+                <Text style={styles.primaryBtnLabel}>Try again</Text>
+              </Pressable>
+            </View>
+          )}
+
+          {state.status === 'ok' && (
+            <FlipCard
+              style={{ width: cardW, height: cardH }}
+              friction={6}
+              perspective={1000}
+              flipHorizontal
+              flipVertical={false}
+              flip={flipped}
+              clickable
+              useNativeDriver={Platform.OS !== 'web'}
+              onFlipEnd={(isFlipped: boolean) => setFlipped(isFlipped)}
             >
-              <Text style={styles.primaryBtnLabel}>Try again</Text>
-            </Pressable>
-            <Pressable style={styles.ghostBtn} onPress={handleChangeRegion}>
-              <Text style={styles.ghostBtnLabel}>Change region</Text>
-            </Pressable>
-          </View>
-        </SafeAreaView>
-      )}
-
-      {state.status === 'ok' && (
-        <>
-          <Image
-            source={{ uri: state.flower.imageUrl }}
-            style={StyleSheet.absoluteFill}
-            resizeMode="cover"
-          />
-
-          <ScrimTop />
-          <ScrimBottom />
-
-          <SafeAreaView style={styles.fill} edges={['top', 'bottom']}>
-            <View style={styles.topBar}>
-              <Text style={styles.eyebrow}>
-                {(state.flower.state === 'default' ? 'YOUR AREA' : state.flower.state)} · {dateLabel}
-              </Text>
-            </View>
-
-            <View style={styles.bottomPanel}>
-              <Text style={styles.common}>{state.flower.common}</Text>
-              <Text style={styles.latin}>{state.flower.latin}</Text>
-              <View style={styles.rule} />
-              <Text style={styles.blurb}>{state.flower.blurb}</Text>
-
-              <View style={styles.nav}>
-                <Pressable
-                  style={[styles.navBtn, dayOffset <= -6 && styles.navBtnDisabled]}
-                  onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
-                  disabled={dayOffset <= -6}
-                  hitSlop={8}
+              {/* Front: image */}
+              <View style={styles.face}>
+                <ImageBackground
+                  source={{ uri: state.flower.imageUrl }}
+                  style={styles.imageFill}
+                  imageStyle={styles.imageRadius}
+                  resizeMode="cover"
                 >
-                  <Text style={styles.navLabel}>← Yesterday</Text>
-                </Pressable>
-
-                {dayOffset < 0 ? (
-                  <Pressable
-                    style={styles.navBtn}
-                    onPress={() => setDayOffset(0)}
-                    hitSlop={8}
-                  >
-                    <Text style={styles.navLabel}>Today →</Text>
-                  </Pressable>
-                ) : (
-                  <Pressable onPress={handleChangeRegion} hitSlop={8}>
-                    <Text style={styles.navSubtle}>Change region</Text>
-                  </Pressable>
-                )}
+                  <LinearGradient
+                    pointerEvents="none"
+                    colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)']}
+                    style={styles.hintScrim}
+                  />
+                  <Text style={styles.hint}>TAP TO READ</Text>
+                </ImageBackground>
               </View>
-            </View>
-          </SafeAreaView>
-        </>
-      )}
+
+              {/* Back: serif info panel */}
+              <View style={styles.face}>
+                <LinearGradient
+                  colors={['#1a1a1a', '#0a0a0a']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 1 }}
+                  style={[styles.back, styles.imageRadius]}
+                >
+                  <Text style={styles.backEyebrow}>SPECIES</Text>
+                  <Text style={styles.common}>{state.flower.common}</Text>
+                  <Text style={styles.latin}>{state.flower.latin}</Text>
+                  <View style={styles.rule} />
+                  <Text style={styles.blurb}>{state.flower.blurb}</Text>
+                  <View style={styles.backFooter}>
+                    <Text style={styles.hint}>TAP TO FLIP BACK</Text>
+                  </View>
+                </LinearGradient>
+              </View>
+            </FlipCard>
+          )}
+        </View>
+
+        <View style={styles.nav}>
+          <Pressable
+            style={[styles.navBtn, dayOffset <= -6 && styles.navBtnDisabled]}
+            onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
+            disabled={dayOffset <= -6}
+            hitSlop={8}
+          >
+            <Text style={styles.navLabel}>← Yesterday</Text>
+          </Pressable>
+
+          {dayOffset < 0 ? (
+            <Pressable
+              style={styles.navBtn}
+              onPress={() => setDayOffset(0)}
+              hitSlop={8}
+            >
+              <Text style={styles.navLabel}>Today →</Text>
+            </Pressable>
+          ) : (
+            <Pressable onPress={handleUpdateLocation} hitSlop={8}>
+              <Text style={styles.navSubtle}>Update location</Text>
+            </Pressable>
+          )}
+        </View>
+      </SafeAreaView>
     </View>
   );
 }
@@ -252,42 +260,77 @@ const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#0a0a0a' },
   fill: { flex: 1 },
 
-  scrimTop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 180,
-  },
-  scrimBottom: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: '62%',
-    justifyContent: 'flex-end',
-  },
-
   topBar: {
     paddingHorizontal: 24,
-    paddingTop: 16,
+    paddingTop: 12,
+    paddingBottom: 8,
   },
   eyebrow: {
     fontSize: 11,
     letterSpacing: 2.4,
-    color: 'rgba(255,255,255,0.85)',
+    color: 'rgba(255,255,255,0.75)',
     fontWeight: '600',
   },
 
-  bottomPanel: {
-    marginTop: 'auto',
+  stage: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 24,
-    paddingBottom: 20,
+  },
+
+  face: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    borderRadius: 18,
+    overflow: 'hidden',
+    backgroundColor: '#0a0a0a',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.45,
+    shadowRadius: 28,
+    elevation: 12,
+  },
+  imageFill: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  imageRadius: {
+    borderRadius: 18,
+  },
+  hintScrim: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 120,
+  },
+  hint: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 10,
+    letterSpacing: 2.8,
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingVertical: 18,
+  },
+
+  back: {
+    flex: 1,
+    padding: 26,
+    justifyContent: 'flex-start',
+  },
+  backEyebrow: {
+    fontSize: 10,
+    letterSpacing: 2.8,
+    color: 'rgba(255,255,255,0.5)',
+    fontWeight: '600',
+    marginBottom: 12,
   },
   common: {
     fontFamily: SERIF,
-    fontSize: 36,
-    lineHeight: 42,
+    fontSize: 32,
+    lineHeight: 38,
     color: '#fff',
     letterSpacing: 0.2,
   },
@@ -296,12 +339,12 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 16,
     color: 'rgba(255,255,255,0.7)',
-    marginTop: 6,
+    marginTop: 4,
     letterSpacing: 0.3,
   },
   rule: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: 'rgba(255,255,255,0.25)',
+    backgroundColor: 'rgba(255,255,255,0.22)',
     marginTop: 18,
     marginBottom: 16,
     width: 56,
@@ -309,14 +352,19 @@ const styles = StyleSheet.create({
   blurb: {
     fontSize: 15,
     lineHeight: 23,
-    color: 'rgba(255,255,255,0.9)',
+    color: 'rgba(255,255,255,0.88)',
+  },
+  backFooter: {
+    marginTop: 'auto',
   },
 
   nav: {
-    marginTop: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingBottom: 16,
+    paddingTop: 12,
   },
   navBtn: {
     paddingVertical: 8,
@@ -340,7 +388,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
+  placeholder: {
+    borderRadius: 18,
+    backgroundColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 28,
+  },
   loadingLabel: {
     marginTop: 18,
     color: 'rgba(255,255,255,0.55)',
@@ -350,8 +404,8 @@ const styles = StyleSheet.create({
   },
   errorTitle: {
     fontFamily: SERIF,
-    fontSize: 24,
-    lineHeight: 30,
+    fontSize: 22,
+    lineHeight: 28,
     color: '#fff',
     textAlign: 'center',
   },
@@ -364,7 +418,7 @@ const styles = StyleSheet.create({
     maxWidth: 320,
   },
   primaryBtn: {
-    marginTop: 28,
+    marginTop: 22,
     paddingVertical: 12,
     paddingHorizontal: 28,
     borderRadius: 999,
@@ -375,13 +429,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
     letterSpacing: 0.4,
-  },
-  ghostBtn: { marginTop: 14, paddingVertical: 8, paddingHorizontal: 12 },
-  ghostBtnLabel: {
-    color: 'rgba(255,255,255,0.7)',
-    fontSize: 12,
-    letterSpacing: 1.4,
-    textTransform: 'uppercase',
-    fontWeight: '600',
   },
 });
