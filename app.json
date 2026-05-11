@@ -3,7 +3,7 @@
     "name": "Sandbox Staring at Flowers",
     "slug": "playing-in-the-sandbox-staring-at-flowers",
     "version": "1.1.1",
-    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture \u2014 matched to your US state and the current season.",
+    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
     "primaryColor": "#4CAF50",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -69,7 +69,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#4CAF50"
         }
-      ]
+      ],
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true
