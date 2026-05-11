@@ -76,7 +76,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ce77dd42-8e41-4320-8eb3-6b96b801b3b6"
+        "projectId": "e8192c1a-82b3-4aa0-bca3-65437def1fc6"
       },
       "encryptionDocPath": "./ENCRYPTION_NOTICE.md",
       "dsaCompliancePath": "./DSA_COMPLIANCE.md",
@@ -89,15 +89,16 @@
           "4+",
           "everyone",
           "4+",
+          "everyone",
+          "4+",
+          "everyone",
+          "4+",
           "everyone"
         ]
       },
       "router": {}
     },
     "owner": "thescottybe",
-    "updates": {
-      "url": "https://u.expo.dev/ce77dd42-8e41-4320-8eb3-6b96b801b3b6"
-    },
     "runtimeVersion": "1.1.1",
     "locales": {
       "en": "./assets/locales/en.json"
@@ -107,6 +108,9 @@
       "android",
       "web"
     ],
-    "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers"
+    "githubUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers",
+    "updates": {
+      "url": "https://u.expo.dev/e8192c1a-82b3-4aa0-bca3-65437def1fc6"
+    }
   }
 }
