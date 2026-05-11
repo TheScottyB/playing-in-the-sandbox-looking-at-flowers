@@ -1,0 +1,27 @@
+# Version control
+.git
+.github
+
+# Build output (re-generated during build)
+dist/
+.expo/
+
+# Local dev / test artifacts
+*.log
+*.local
+coverage/
+.nyc_output/
+
+# Editor / OS noise
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+
+# Docs / scripts not needed for build
+*.md
+!README.md
+scripts/
+docs/
