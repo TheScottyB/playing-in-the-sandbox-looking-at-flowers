@@ -12,9 +12,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Image } from 'expo-image';
-import FlipCard from 'react-native-flip-card';
+// LinearGradient and Image (expo-image) imports removed; they will return when
+// the Skia iridescent specimen card replaces the stubbed placeholder.
 
 import {
   fetchDailyFlower,
@@ -173,6 +172,12 @@ export default function HomeScreen() {
           )}
 
           {state.status === 'ok' && (
+            // TODO(iridescent-card): replace placeholder with Skia iridescent
+            // specimen card. Original FlipCard block kept below as reference for
+            // the front/back layout we still need (image, eyebrow, common name,
+            // latin, blurb).
+            <View style={[styles.face, { width: cardW, height: cardH }]} />
+            /*
             <FlipCard
               key={state.flower.date + ':' + state.flower.state}
               style={{ width: cardW, height: cardH }}
@@ -183,7 +188,7 @@ export default function HomeScreen() {
               clickable
               useNativeDriver={Platform.OS !== 'web'}
             >
-              {/* Front: image */}
+              // Front: image
               <View style={styles.face}>
                 <Image
                   source={state.flower.imageSource}
@@ -207,7 +212,7 @@ export default function HomeScreen() {
                 <Text style={styles.hint}>TAP TO READ</Text>
               </View>
 
-              {/* Back: serif info panel */}
+              // Back: serif info panel
               <View style={styles.face}>
                 <LinearGradient
                   colors={['#1a1a1a', '#0a0a0a']}
@@ -224,6 +229,7 @@ export default function HomeScreen() {
                 </LinearGradient>
               </View>
             </FlipCard>
+            */
           )}
         </View>
 
