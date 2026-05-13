@@ -10,6 +10,7 @@ import Animated, {
 
 import { type DailyFlower } from '@/lib/dailyFlower';
 
+import { CardEffects } from './CardEffects';
 import { CardFace } from './CardFace';
 import { TOKENS } from './tokens';
 import { useCardTilt } from './useCardTilt';
@@ -89,6 +90,15 @@ export const IridescentCard = memo(function IridescentCard({
             cornerGlyph={cornerGlyph}
             footer={frontFooter}
           />
+          <View style={StyleSheet.absoluteFill} pointerEvents="none">
+            <CardEffects
+              width={width}
+              height={height}
+              x={x}
+              y={y}
+              hov={hov}
+            />
+          </View>
         </Animated.View>
       </GestureDetector>
     </View>
