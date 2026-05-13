@@ -15,12 +15,17 @@ on:
       missing_only:
         description: 'Skip states that already have valid files for the date'
         required: false
-        default: 'false'
+        default: false
         type: boolean
       dry_run:
-        description: 'Skip Gemini API calls, write placeholder files (true/false)'
+        description: 'Skip Gemini API calls, write placeholder files'
         required: false
-        default: 'false'
+        default: false
+        type: boolean
+
+concurrency:
+  group: daily-flowers
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -38,36 +43,56 @@ jobs:
           node-version: '22'
 
       - name: Generate flower images
+        id: gen
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+          DRY_RUN: ${{ inputs.dry_run == true && '1' || '0' }}
+          INPUT_DATE: ${{ inputs.date }}
+          INPUT_STATES: ${{ inputs.states }}
+          INPUT_MISSING_ONLY: ${{ inputs.missing_only }}
         run: |
-          DATE_ARG=""
-          STATES_ARG=""
-          MISSING_ARG=""
-          if [ -n "${{ github.event.inputs.date }}" ]; then
-            DATE_ARG="--date ${{ github.event.inputs.date }}"
+          ARGS=""
+          if [ -n "$INPUT_DATE" ]; then
+            ARGS="$ARGS --date $INPUT_DATE"
           fi
-          if [ -n "${{ github.event.inputs.states }}" ]; then
-            STATES_ARG="--states ${{ github.event.inputs.states }}"
+          if [ -n "$INPUT_STATES" ]; then
+            ARGS="$ARGS --states $INPUT_STATES"
           fi
-          # Cron uses default "heal" mode: regenerate any incomplete state.
-          # Manual dispatch can opt into --missing-only to never overwrite
-          # existing partials (safer for backfills).
-          if [ "${{ github.event.inputs.missing_only }}" = "true" ]; then
-            MISSING_ARG="--missing-only"
+          if [ "$INPUT_MISSING_ONLY" = "true" ]; then
+            ARGS="$ARGS --missing-only"
           fi
-          node scripts/generate-daily.mjs $DATE_ARG $STATES_ARG $MISSING_ARG
+          node scripts/generate-daily.mjs $ARGS 2>&1 | tee generate.log
+          echo "log<<GENEOF" >> "$GITHUB_OUTPUT"
+          tail -5 generate.log >> "$GITHUB_OUTPUT"
+          echo "GENEOF" >> "$GITHUB_OUTPUT"
 
-      - name: Commit generated files
+      - name: Commit and push
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/daily/
           if git diff --cached --quiet; then
             echo "Nothing to commit."
-          else
-            git commit -m "chore: daily flowers $(date -u +%Y-%m-%d)"
-            git pull --rebase origin main
-            git push
+            exit 0
           fi
+          git commit -m "chore: daily flowers $(date -u +%Y-%m-%d)"
+          # Retry push with rebase up to 3 times to handle concurrent commits
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Push succeeded on attempt $attempt"
+              exit 0
+            fi
+            echo "Push failed (attempt $attempt/3), rebasing..."
+            git pull --rebase origin main
+          done
+          echo "::error::Push failed after 3 attempts"
+          exit 1
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## Daily Flowers Generation" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          tail -5 generate.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "No generation log" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

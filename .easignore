@@ -20,8 +20,9 @@ coverage/
 *.swo
 Thumbs.db
 
-# Docs / scripts not needed for build
+# Docs / scripts / tests not needed for build
 *.md
 !README.md
 scripts/
 docs/
+.maestro/

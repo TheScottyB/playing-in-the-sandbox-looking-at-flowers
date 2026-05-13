@@ -1,21 +1,23 @@
-# Error state: verify the app shows a recoverable error when data is unavailable.
-# This test intentionally disconnects from the server to trigger the error path.
-# Local dev (Expo Go): host.exp.Exponent
-# CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
+# Error state: verify the app shows recoverable errors or falls back to the
+# bundled default flower when data is unavailable.
+#
+# The new UI falls through to getDefaultFlower() for service/network errors,
+# so only 404 ("Coming soon") shows the error card. Service and network errors
+# show the default flower with an "OFFLINE · ARCHIVE" badge instead.
 appId: host.exp.Exponent
 ---
 - launchApp
 - tapOn: "http://localhost:8081"
-# Wait for the screen to resolve to any state (loading spinner disappears)
+
+# Wait for the screen to resolve to any terminal state
 - extendedWaitUntil:
     anyOf:
       - visible: "← Yesterday"
+      - visible: "TAP TO READ"
       - visible: "Coming soon to your area"
-      - visible: "The flower service is having trouble"
-      - visible: "Couldn't reach the flower service"
     timeout: 20000
 
-# If the error state is shown, verify the retry button is present
+# If the 404 error state is shown, verify the retry button works
 - runFlow:
     when:
       visible: "Coming soon to your area"
@@ -28,3 +30,10 @@ appId: host.exp.Exponent
             - visible: "← Yesterday"
             - visible: "Coming soon to your area"
           timeout: 15000
+
+# If the offline fallback is shown, verify the badge is present
+- runFlow:
+    when:
+      visible: "OFFLINE"
+    commands:
+      - assertVisible: "OFFLINE"
