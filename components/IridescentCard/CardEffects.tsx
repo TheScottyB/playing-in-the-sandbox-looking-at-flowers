@@ -3,10 +3,12 @@
 // Layer order (back → front): TBD as layers are added.
 import { memo } from 'react';
 import {
+  Blur,
   Canvas,
   Group,
   RadialGradient,
   RoundedRect,
+  SweepGradient,
   vec,
 } from '@shopify/react-native-skia';
 import { useDerivedValue, type SharedValue } from 'react-native-reanimated';
@@ -68,12 +70,43 @@ export const CardEffects = memo(function CardEffects({
   );
   const iridescentOpacity = useDerivedValue(() => 0.25 + hov.value * 0.85);
 
+  // Sweep (conic) iridescent: rendered behind the primary radial. Cycles
+  // through 6 hue offsets and is softened by a 2px blur to mimic the
+  // prototype's banded foil sheen.
+  const sweepColors = useDerivedValue(() => {
+    const h = hue.value;
+    const a = (0.22 * TOKENS.iridescenceIntensity).toFixed(3);
+    return [
+      `hsla(${h.toFixed(0)}, 100%, 60%, ${a})`,
+      `hsla(${((h + 60) % 360).toFixed(0)}, 100%, 60%, ${a})`,
+      `hsla(${((h + 140) % 360).toFixed(0)}, 100%, 60%, ${a})`,
+      `hsla(${((h + 220) % 360).toFixed(0)}, 100%, 60%, ${a})`,
+      `hsla(${((h + 300) % 360).toFixed(0)}, 100%, 60%, ${a})`,
+      `hsla(${((h + 360) % 360).toFixed(0)}, 100%, 60%, ${a})`,
+    ];
+  });
+  const sweepOpacity = useDerivedValue(() => 0.15 + hov.value * 0.55);
+
   return (
     <Canvas
       style={{ position: 'absolute', width, height }}
       pointerEvents="none"
     >
       <Group>
+        {/* Sweep iridescent — conic overlay (rendered behind the primary) */}
+        <RoundedRect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          r={TOKENS.cornerRadius}
+          opacity={sweepOpacity}
+          blendMode="overlay"
+        >
+          <SweepGradient c={center} colors={sweepColors} />
+          <Blur blur={2} />
+        </RoundedRect>
+
         {/* Iridescent primary — radial HSL color-dodge */}
         <RoundedRect
           x={0}
