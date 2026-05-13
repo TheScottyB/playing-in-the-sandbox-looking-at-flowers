@@ -86,16 +86,7 @@
       "appStore": {
         "primaryCategory": "Entertainment",
         "secondaryCategory": "Lifestyle",
-        "contentRating": [
-          "4+",
-          "everyone",
-          "4+",
-          "everyone",
-          "4+",
-          "everyone",
-          "4+",
-          "everyone"
-        ]
+        "contentRating": ["4+", "everyone"]
       },
       "router": {}
     },

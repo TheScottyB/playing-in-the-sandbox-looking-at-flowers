@@ -1,12 +1,11 @@
 # Date navigation: tap Yesterday then Today to verify date browsing works.
 # Requires network access to GitHub Pages daily flower data.
-# Local dev (Expo Go): host.exp.Exponent
-# CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
 appId: host.exp.Exponent
 ---
 - launchApp
 - tapOn: "http://localhost:8081"
-# Wait for the flower to load (up to 20s for network fetch)
+
+# Wait for flower to load
 - extendedWaitUntil:
     visible: "← Yesterday"
     timeout: 20000
@@ -14,7 +13,6 @@ appId: host.exp.Exponent
 
 # Navigate to yesterday
 - tapOn: "← Yesterday"
-# Yesterday's flower loads and "Today →" button appears
 - extendedWaitUntil:
     visible: "Today →"
     timeout: 10000
@@ -23,7 +21,6 @@ appId: host.exp.Exponent
 
 # Navigate back to today
 - tapOn: "Today →"
-# "Today →" disappears when back on current date
 - extendedWaitUntil:
     notVisible: "Today →"
     timeout: 10000

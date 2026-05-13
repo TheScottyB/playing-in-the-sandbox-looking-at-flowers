@@ -73,6 +73,10 @@
         "appleId": "beilsco@gmail.com",
         "ascAppId": "6744488642",
         "appleTeamId": "3X872JR6P3"
+      },
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
       }
     }
   }

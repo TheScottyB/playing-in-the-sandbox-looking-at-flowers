@@ -1,0 +1,28 @@
+# Flip card: verify tapping the flower card flips between the image (front)
+# and the species info panel (back).
+appId: host.exp.Exponent
+---
+- launchApp
+- tapOn: "http://localhost:8081"
+
+# Wait for the flower card to load
+- extendedWaitUntil:
+    visible: "TAP TO READ"
+    timeout: 20000
+- assertVisible: "TAP TO READ"
+- assertVisible: "← Yesterday"
+
+# Tap the card to flip to the back (species info)
+- tapOn: "TAP TO READ"
+- extendedWaitUntil:
+    visible: "TAP TO FLIP BACK"
+    timeout: 5000
+- assertVisible: "SPECIES"
+- assertVisible: "TAP TO FLIP BACK"
+
+# Tap again to flip back to the image
+- tapOn: "TAP TO FLIP BACK"
+- extendedWaitUntil:
+    visible: "TAP TO READ"
+    timeout: 5000
+- assertVisible: "TAP TO READ"

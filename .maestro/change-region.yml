@@ -1,15 +1,12 @@
-# Change region: tapping the link clears the cached state, re-prompts (or
+# Update location: tapping the link clears the cached state, re-prompts (or
 # silently re-resolves if permission is already granted), and returns the
 # user to today's flower for their region.
 #
 # Asserts on:
-#   1. The link is reachable from the flower card meta row
+#   1. The link is reachable from the nav bar
 #   2. Tapping it triggers a re-fetch (loading → success round-trip)
 #   3. dayOffset is reset to 0 — if we were on yesterday before the tap,
 #      we're back on today after (no "Today →" button)
-#
-# Local dev (Expo Go): host.exp.Exponent
-# CI/prod (dev client): com.djscottyb.playinginthesandoxlookingatflowers
 appId: host.exp.Exponent
 ---
 - launchApp
@@ -20,7 +17,9 @@ appId: host.exp.Exponent
     visible: "← Yesterday"
     timeout: 20000
 - assertVisible: "← Yesterday"
-- assertVisible: "Change region"
+
+# "Update location" shows in the nav bar when on today's date
+- assertVisible: "Update location"
 
 # Navigate one day back so we can verify the offset reset later
 - tapOn: "← Yesterday"
@@ -29,17 +28,20 @@ appId: host.exp.Exponent
     timeout: 10000
 - assertVisible: "Today →"
 
-# Tap the meta-row link. This calls resetRegion() + setDayOffset(0) + bumps
-# the reloadKey, so we expect a re-fetch and a return to today.
-- tapOn: "Change region"
+# Go back to today to access "Update location" (it replaces "Today →")
+- tapOn: "Today →"
+- extendedWaitUntil:
+    visible: "Update location"
+    timeout: 10000
 
-# After re-resolution, "← Yesterday" comes back and "Today →" is gone
-# (dayOffset has been reset to 0). The wait is generous (30 s) because
-# resetRegion() clears AsyncStorage, forcing a full GPS → geocode →
-# flower-fetch round-trip which takes longer on the simulator.
+# Tap the link. This calls resetRegion() + setDayOffset(0) + bumps
+# the reloadKey, so we expect a re-fetch and a return to today.
+- tapOn: "Update location"
+
+# After re-resolution, "← Yesterday" comes back (dayOffset reset to 0).
+# The wait is generous because resetRegion() clears AsyncStorage, forcing
+# a full GPS → geocode → flower-fetch round-trip.
 - extendedWaitUntil:
     visible: "← Yesterday"
     timeout: 30000
 - assertVisible: "← Yesterday"
-- assertNotVisible: "Today →"
-- assertVisible: "Change region"

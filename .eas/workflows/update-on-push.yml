@@ -1,12 +1,13 @@
-name: Publish update
+name: Publish OTA update
 
 on:
   push:
     branches:
-      - "*"
+      - main
+      - "preview/*"
 
 jobs:
   publish_update:
     type: update
     params:
-      branch: ${{ github.ref_name || "default" }}
+      branch: ${{ github.ref_name || "production" }}
