@@ -42,12 +42,56 @@ export const CardEffects = memo(function CardEffects({
     () => (0.55 + hov.value * 0.45) * TOKENS.specularIntensity,
   );
 
+  // Iridescent primary: 5-stop HSL radial gradient that hue-cycles with the
+  // pointer position. ColorDodge brightens underlying tones where the
+  // gradient is light — gives the foil-rainbow effect.
+  const hue = useDerivedValue(
+    () =>
+      (TOKENS.hueOffset +
+        x.value * TOKENS.hueSpread +
+        y.value * TOKENS.hueSpread * 0.4) %
+      360,
+  );
+  const iridescentColors = useDerivedValue(() => {
+    const h = hue.value;
+    const i = TOKENS.iridescenceIntensity;
+    return [
+      `hsla(${h.toFixed(0)}, 100%, 70%, ${(0.55 * i).toFixed(3)})`,
+      `hsla(${((h + 60) % 360).toFixed(0)}, 100%, 60%, ${(0.45 * i).toFixed(3)})`,
+      `hsla(${((h + 130) % 360).toFixed(0)}, 100%, 55%, ${(0.4 * i).toFixed(3)})`,
+      `hsla(${((h + 220) % 360).toFixed(0)}, 100%, 60%, ${(0.35 * i).toFixed(3)})`,
+      `hsla(${((h + 310) % 360).toFixed(0)}, 100%, 65%, ${(0.3 * i).toFixed(3)})`,
+    ];
+  });
+  const iridescentRadius = useDerivedValue(
+    () => Math.max(width, height) * 1.1,
+  );
+  const iridescentOpacity = useDerivedValue(() => 0.25 + hov.value * 0.85);
+
   return (
     <Canvas
       style={{ position: 'absolute', width, height }}
       pointerEvents="none"
     >
       <Group>
+        {/* Iridescent primary — radial HSL color-dodge */}
+        <RoundedRect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          r={TOKENS.cornerRadius}
+          opacity={iridescentOpacity}
+          blendMode="colorDodge"
+        >
+          <RadialGradient
+            c={center}
+            r={iridescentRadius}
+            colors={iridescentColors}
+            positions={[0, 0.22, 0.42, 0.65, 1]}
+          />
+        </RoundedRect>
+
         {/* Specular highlight — radial white bloom */}
         <RoundedRect
           x={0}
