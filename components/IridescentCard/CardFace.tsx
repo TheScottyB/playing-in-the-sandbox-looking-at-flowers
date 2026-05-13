@@ -54,18 +54,20 @@ const styles = StyleSheet.create({
     borderRadius: TOKENS.cornerRadius,
     overflow: 'hidden',
   },
-  // Circular vignette host sized to the SVG vignette (radius 112 at center
-  // x=W/2, y=H/2 - 30 in the 360×540 viewBox). marginTop of -142 lifts the
-  // image 30px above the face's visual center to match that SVG geometry.
+  // Circular vignette host sized as a percentage of the card so it tracks the
+  // SVG frame at any render size. Reference geometry (in the 360×540 viewBox):
+  //   diameter 224 → 224/360 = 62.22% of card width
+  //   center y = H/2 - 30 = 240 → top edge = (240 - 112) / 540 = 23.7%
+  //   center x = W/2 → left edge = (180 - 112) / 360 = 18.89%
+  // aspectRatio:1 keeps it square as the card scales, and a fat borderRadius
+  // ensures a perfect circle regardless of computed dimensions.
   vignetteHost: {
     position: 'absolute',
-    width: 224,
-    height: 224,
-    left: '50%',
-    top: '50%',
-    marginLeft: -112,
-    marginTop: -142,
-    borderRadius: 112,
+    width: '62.22%',
+    aspectRatio: 1,
+    left: '18.89%',
+    top: '23.7%',
+    borderRadius: 9999,
     overflow: 'hidden',
   },
   vignetteImage: {

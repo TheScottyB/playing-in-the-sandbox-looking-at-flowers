@@ -99,16 +99,20 @@ export const CardFrame = memo(function CardFrame({
         </G>
       )}
 
-      {/* Footer baseline */}
+      {/* Footer baseline. Bumped from fontSize 7.5 / alpha 0.7 / letterSpacing
+          3.4 — at the prototype's 360px viewBox those rendered as a near-grey
+          smear when scaled up to the app's 360–440px on real screens. Slightly
+          larger and darker reads as "specimen card baseline" instead of
+          "graphic-design squiggle". */}
       <G transform={`translate(${W / 2} ${H - 40})`}>
-        <Line x1={-120} y1={0} x2={120} y2={0} stroke="rgba(10,10,12,0.55)" strokeWidth={0.5} />
+        <Line x1={-120} y1={0} x2={120} y2={0} stroke="rgba(10,10,12,0.6)" strokeWidth={0.6} />
         <SvgText
-          y={15}
+          y={17}
           textAnchor="middle"
           fontFamily="Menlo, ui-monospace, monospace"
-          fontSize={7.5}
-          letterSpacing={3.4}
-          fill="rgba(10,10,12,0.7)"
+          fontSize={9}
+          letterSpacing={2.8}
+          fill="rgba(10,10,12,0.85)"
         >
           {footer}
         </SvgText>
