@@ -23,12 +23,13 @@ import {
 import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
 import { WithSkiaWeb } from '@shopify/react-native-skia/lib/module/web';
 
-// CanvasKit (Skia's WASM blob) isn't bundled by Metro; fetch via jsDelivr so
-// the worklet path sees a populated `global.CanvasKit` when the iridescent
-// card mounts. Bumping the canvaskit-wasm npm dep means bumping this URL.
+// CanvasKit (Skia's WASM blob) lives at /canvaskit.wasm on the web build —
+// copied there by the `postinstall` script from the canvaskit-wasm package so
+// the loader always finds a version-matched WASM, offline-safe and without a
+// third-party CDN round-trip. The `/` prefix means Expo Router serves it from
+// the public/ folder at the site root.
 const SKIA_OPTS = {
-  locateFile: (file: string) =>
-    `https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.40.0/bin/full/${file}`,
+  locateFile: (file: string) => `/${file}`,
 };
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
