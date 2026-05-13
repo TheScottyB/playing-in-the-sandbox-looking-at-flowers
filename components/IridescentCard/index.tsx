@@ -12,6 +12,7 @@ import { type DailyFlower } from '@/lib/dailyFlower';
 
 import { CardEffects } from './CardEffects';
 import { CardFace } from './CardFace';
+import { CardGlow } from './CardGlow';
 import { TOKENS } from './tokens';
 import { useCardTilt } from './useCardTilt';
 
@@ -80,6 +81,9 @@ export const IridescentCard = memo(function IridescentCard({
       ref={webRef}
       onLayout={onHostLayout}
     >
+      <View style={StyleSheet.absoluteFill} pointerEvents="none">
+        <CardGlow width={width} height={height} x={x} y={y} hov={hov} />
+      </View>
       <View style={[styles.shadow, { borderRadius: TOKENS.cornerRadius }]} />
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.cardWrap, animatedStyle]}>
