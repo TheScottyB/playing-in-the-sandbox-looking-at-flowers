@@ -23,6 +23,7 @@ import {
   type DailyFlower,
 } from '@/lib/dailyFlower';
 import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
+import { IridescentCard } from '@/components/IridescentCard';
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
 
@@ -172,11 +173,11 @@ export default function HomeScreen() {
           )}
 
           {state.status === 'ok' && (
-            // TODO(iridescent-card): replace placeholder with Skia iridescent
-            // specimen card. Original FlipCard block kept below as reference for
-            // the front/back layout we still need (image, eyebrow, common name,
+            // TODO(iridescent-card): static front face — flip + Skia effects
+            // land in later tasks. Original FlipCard block kept below as reference
+            // for the back-face layout we still need (eyebrow, common name,
             // latin, blurb).
-            <View style={[styles.face, { width: cardW, height: cardH }]} />
+            <IridescentCard flower={state.flower} width={cardW} height={cardH} />
             /*
             <FlipCard
               key={state.flower.date + ':' + state.flower.state}

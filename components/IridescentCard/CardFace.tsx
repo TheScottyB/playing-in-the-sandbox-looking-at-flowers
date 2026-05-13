@@ -1,7 +1,7 @@
 // components/IridescentCard/CardFace.tsx
 import { memo, type ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Image, type ImageSource } from 'expo-image';
+import { StyleSheet, View, type ImageSourcePropType } from 'react-native';
+import { Image } from 'expo-image';
 
 import { CardFrame } from './CardFrame';
 import { TOKENS } from './tokens';
@@ -10,7 +10,7 @@ export type CardFaceProps = {
   cornerGlyph: string;
   footer: string;
 } & (
-  | { variant: 'front'; image: ImageSource | number; accessibilityLabel: string }
+  | { variant: 'front'; image: ImageSourcePropType; accessibilityLabel: string }
   | { variant: 'back'; children: ReactNode }
 );
 
