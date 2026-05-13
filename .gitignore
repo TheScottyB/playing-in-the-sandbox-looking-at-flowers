@@ -45,3 +45,8 @@ app.ipa
 credentials.json
 ios/
 
+
+# Playwright MCP / visual judging artifacts
+.playwright-mcp/
+app-*.png
+prototype*.png

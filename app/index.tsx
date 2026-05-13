@@ -21,7 +21,15 @@ import {
   type DailyFlower,
 } from '@/lib/dailyFlower';
 import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
-import { IridescentCard } from '@/components/IridescentCard';
+import { WithSkiaWeb } from '@shopify/react-native-skia/lib/module/web';
+
+// CanvasKit (Skia's WASM blob) isn't bundled by Metro; fetch via jsDelivr so
+// the worklet path sees a populated `global.CanvasKit` when the iridescent
+// card mounts. Bumping the canvaskit-wasm npm dep means bumping this URL.
+const SKIA_OPTS = {
+  locateFile: (file: string) =>
+    `https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.40.0/bin/full/${file}`,
+};
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
 
@@ -171,7 +179,21 @@ export default function HomeScreen() {
           )}
 
           {state.status === 'ok' && (
-            <IridescentCard flower={state.flower} width={cardW} height={cardH} />
+            <WithSkiaWeb
+              getComponent={async () => {
+                const mod = await import('@/components/IridescentCard');
+                return { default: mod.IridescentCard };
+              }}
+              opts={SKIA_OPTS}
+              componentProps={{
+                flower: state.flower,
+                width: cardW,
+                height: cardH,
+              }}
+              fallback={
+                <View style={[styles.placeholder, { width: cardW, height: cardH }]} />
+              }
+            />
           )}
         </View>
 
