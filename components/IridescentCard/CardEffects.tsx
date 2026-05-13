@@ -9,6 +9,7 @@ import {
   RadialGradient,
   RoundedRect,
   SweepGradient,
+  Turbulence,
   vec,
 } from '@shopify/react-native-skia';
 import { useDerivedValue, type SharedValue } from 'react-native-reanimated';
@@ -122,6 +123,26 @@ export const CardEffects = memo(function CardEffects({
             r={iridescentRadius}
             colors={iridescentColors}
             positions={[0, 0.22, 0.42, 0.65, 1]}
+          />
+        </RoundedRect>
+
+        {/* Perlin grain — micro-texture that breaks up the gradients and
+            adds tactile foil feel. Static (no animation) — drawn between
+            iridescent layers and specular so it modulates both. */}
+        <RoundedRect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          r={TOKENS.cornerRadius}
+          opacity={TOKENS.noiseOpacity}
+          blendMode="overlay"
+        >
+          <Turbulence
+            freqX={TOKENS.noiseScale}
+            freqY={TOKENS.noiseScale}
+            octaves={2}
+            seed={7}
           />
         </RoundedRect>
 
