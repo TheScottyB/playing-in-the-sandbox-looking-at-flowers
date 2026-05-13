@@ -1,11 +1,18 @@
 // components/IridescentCard/index.tsx
-import { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { memo, useCallback } from 'react';
+import { Platform, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { GestureDetector } from 'react-native-gesture-handler';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useDerivedValue,
+} from 'react-native-reanimated';
 
 import { type DailyFlower } from '@/lib/dailyFlower';
 
 import { CardFace } from './CardFace';
 import { TOKENS } from './tokens';
+import { useCardTilt } from './useCardTilt';
 
 export type IridescentCardProps = {
   flower: DailyFlower;
@@ -27,16 +34,63 @@ export const IridescentCard = memo(function IridescentCard({
   const cornerGlyph = MONTH_INITIAL[month] ?? '*';
   const frontFooter = `SPECIMEN · ${flower.latin.toUpperCase()}`;
 
+  const { x, y, hov, panGesture, onLayoutSize, bindPointer } = useCardTilt();
+
+  // rx/ry derive 3D rotation in degrees from normalized x/y. Faded by hov so
+  // the card sits flat when not interacted with. Y maps to rotateX (pitch
+  // around horizontal axis) with sign flip — cursor at top tilts the top
+  // *toward* the viewer.
+  const rx = useDerivedValue(
+    () => interpolate(y.value, [0, 1], [TOKENS.tiltAmount, -TOKENS.tiltAmount]) * hov.value,
+  );
+  const ry = useDerivedValue(
+    () => interpolate(x.value, [0, 1], [-TOKENS.tiltAmount, TOKENS.tiltAmount]) * hov.value,
+  );
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      { perspective: TOKENS.perspective },
+      { rotateX: `${rx.value}deg` },
+      { rotateY: `${ry.value}deg` },
+    ],
+  }));
+
+  const onHostLayout = useCallback(
+    (e: LayoutChangeEvent) => {
+      const { width: w, height: h } = e.nativeEvent.layout;
+      onLayoutSize(w, h);
+    },
+    [onLayoutSize],
+  );
+
+  const webRef = useCallback(
+    (node: View | null) => {
+      if (Platform.OS !== 'web') return;
+      // On web, react-native-web renders View as a DOM element; the ref is
+      // the underlying HTMLElement.
+      bindPointer(node as unknown as HTMLElement | null);
+    },
+    [bindPointer],
+  );
+
   return (
-    <View style={[styles.host, { width, height }]}>
+    <View
+      style={[styles.host, { width, height }]}
+      ref={webRef}
+      onLayout={onHostLayout}
+    >
       <View style={[styles.shadow, { borderRadius: TOKENS.cornerRadius }]} />
-      <CardFace
-        variant="front"
-        image={flower.imageSource}
-        accessibilityLabel={flower.common}
-        cornerGlyph={cornerGlyph}
-        footer={frontFooter}
-      />
+      <GestureDetector gesture={panGesture}>
+        <Animated.View style={[styles.cardWrap, animatedStyle]}>
+          <CardFace
+            variant="front"
+            image={flower.imageSource}
+            accessibilityLabel={flower.common}
+            cornerGlyph={cornerGlyph}
+            footer={frontFooter}
+          />
+        </Animated.View>
+      </GestureDetector>
     </View>
   );
 });
@@ -50,5 +104,9 @@ const styles = StyleSheet.create({
     inset: 0,
     boxShadow:
       '0px 30px 60px rgba(0,0,0,0.65), 0px 12px 24px rgba(0,0,0,0.55)',
+  },
+  cardWrap: {
+    width: '100%',
+    height: '100%',
   },
 });
