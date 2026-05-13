@@ -15,6 +15,13 @@ import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 import FlipCard from 'react-native-flip-card';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 
 import {
   fetchDailyFlower,
@@ -72,6 +79,140 @@ function formatDateLabel(iso: string): string {
   if (!y || !m || !d) return iso;
   return `${MONTH_SHORT[m - 1]} ${d} ${y}`;
 }
+
+function IridescentOverlay({ subtle }: { subtle?: boolean }) {
+  const alpha = subtle ? 0.55 : 1.0;
+  const phase = useSharedValue(0);
+
+  useEffect(() => {
+    phase.value = withRepeat(
+      withTiming(1, { duration: 8000, easing: Easing.linear }),
+      -1,
+    );
+  }, [phase]);
+
+  const iri1 = useAnimatedStyle(() => {
+    'worklet';
+    const p = phase.value * Math.PI * 2;
+    return {
+      opacity: (0.18 + Math.sin(p) * 0.12) * alpha,
+      transform: [
+        { translateX: Math.sin(p) * 50 },
+        { translateY: Math.cos(p * 0.7) * 30 },
+      ],
+    };
+  });
+
+  const iri2 = useAnimatedStyle(() => {
+    'worklet';
+    const p = phase.value * Math.PI * 2 + (Math.PI * 2) / 3;
+    return {
+      opacity: (0.15 + Math.sin(p) * 0.10) * alpha,
+      transform: [
+        { translateX: Math.cos(p) * 45 },
+        { translateY: Math.sin(p * 1.3) * 25 },
+      ],
+    };
+  });
+
+  const iri3 = useAnimatedStyle(() => {
+    'worklet';
+    const p = phase.value * Math.PI * 2 + (Math.PI * 4) / 3;
+    return {
+      opacity: (0.12 + Math.sin(p) * 0.08) * alpha,
+      transform: [
+        { translateX: Math.sin(p * 1.1) * 55 },
+        { translateY: Math.cos(p) * 35 },
+      ],
+    };
+  });
+
+  const specular = useAnimatedStyle(() => {
+    'worklet';
+    const p = phase.value * Math.PI * 2 * 0.6;
+    return {
+      opacity: (0.12 + Math.sin(p) * 0.08) * alpha,
+      transform: [
+        { translateX: Math.cos(p) * 70 },
+        { translateY: Math.sin(p * 0.8) * 40 },
+      ],
+    };
+  });
+
+  const edgeSheen = useAnimatedStyle(() => {
+    'worklet';
+    const p = phase.value * Math.PI * 2 * 0.5;
+    return {
+      borderColor: `rgba(255,255,255,${(0.12 + Math.sin(p) * 0.08) * alpha})`,
+    };
+  });
+
+  return (
+    <View style={iriStyles.container} pointerEvents="none">
+      <Animated.View style={[iriStyles.layer, iri1]}>
+        <LinearGradient
+          colors={['rgba(100,140,255,0.35)', 'rgba(200,100,255,0.20)', 'transparent']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={StyleSheet.absoluteFillObject}
+        />
+      </Animated.View>
+      <Animated.View style={[iriStyles.layer, iri2]}>
+        <LinearGradient
+          colors={['rgba(255,100,200,0.30)', 'rgba(255,180,100,0.15)', 'transparent']}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={StyleSheet.absoluteFillObject}
+        />
+      </Animated.View>
+      <Animated.View style={[iriStyles.layer, iri3]}>
+        <LinearGradient
+          colors={['rgba(100,255,200,0.25)', 'rgba(100,200,255,0.15)', 'transparent']}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={StyleSheet.absoluteFillObject}
+        />
+      </Animated.View>
+      <Animated.View style={[iriStyles.specular, specular]}>
+        <LinearGradient
+          colors={['transparent', 'rgba(255,255,255,0.28)', 'transparent']}
+          start={{ x: 0.3, y: 0.3 }}
+          end={{ x: 0.7, y: 0.7 }}
+          style={StyleSheet.absoluteFillObject}
+        />
+      </Animated.View>
+      <Animated.View style={[iriStyles.edge, edgeSheen]} />
+    </View>
+  );
+}
+
+const iriStyles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+    borderRadius: 18,
+  },
+  layer: {
+    position: 'absolute',
+    top: -60,
+    left: -60,
+    right: -60,
+    bottom: -60,
+  },
+  specular: {
+    position: 'absolute',
+    top: -80,
+    left: -80,
+    right: -80,
+    bottom: -80,
+  },
+  edge: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
+  },
+});
 
 export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
@@ -173,57 +314,62 @@ export default function HomeScreen() {
           )}
 
           {state.status === 'ok' && (
-            <FlipCard
-              key={state.flower.date + ':' + state.flower.state}
-              style={{ width: cardW, height: cardH }}
-              friction={6}
-              perspective={1000}
-              flipHorizontal
-              flipVertical={false}
-              clickable
-              useNativeDriver={Platform.OS !== 'web'}
-            >
-              {/* Front: image */}
-              <View style={styles.face}>
-                <Image
-                  source={state.flower.imageSource}
-                  style={[StyleSheet.absoluteFillObject, styles.imageRadius]}
-                  contentFit="cover"
-                  cachePolicy="memory-disk"
-                  transition={400}
-                  preferHighDynamicRange
-                  accessibilityLabel={state.flower.common}
-                />
-                {state.flower.isDefault && (
-                  <View style={styles.fallbackBadge}>
-                    <Text style={styles.fallbackBadgeText}>OFFLINE · ARCHIVE</Text>
-                  </View>
-                )}
-                <LinearGradient
-                  pointerEvents="none"
-                  colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)']}
-                  style={styles.hintScrim}
-                />
-                <Text style={styles.hint}>TAP TO READ</Text>
-              </View>
+            <View style={styles.cardWrap}>
+              <View style={styles.glow} />
+              <FlipCard
+                key={state.flower.date + ':' + state.flower.state}
+                style={{ width: cardW, height: cardH }}
+                friction={6}
+                perspective={1000}
+                flipHorizontal
+                flipVertical={false}
+                clickable
+                useNativeDriver={Platform.OS !== 'web'}
+              >
+                {/* Front: image */}
+                <View style={styles.face}>
+                  <Image
+                    source={state.flower.imageSource}
+                    style={[StyleSheet.absoluteFillObject, styles.imageRadius]}
+                    contentFit="cover"
+                    cachePolicy="memory-disk"
+                    transition={400}
+                    preferHighDynamicRange
+                    accessibilityLabel={state.flower.common}
+                  />
+                  {state.flower.isDefault && (
+                    <View style={styles.fallbackBadge}>
+                      <Text style={styles.fallbackBadgeText}>OFFLINE · ARCHIVE</Text>
+                    </View>
+                  )}
+                  <IridescentOverlay subtle />
+                  <LinearGradient
+                    pointerEvents="none"
+                    colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)']}
+                    style={styles.hintScrim}
+                  />
+                  <Text style={styles.hint}>TAP TO READ</Text>
+                </View>
 
-              {/* Back: serif info panel */}
-              <View style={styles.face}>
-                <LinearGradient
-                  colors={['#1a1a1a', '#0a0a0a']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 0, y: 1 }}
-                  style={[styles.back, styles.imageRadius]}
-                >
-                  <Text style={styles.backEyebrow}>SPECIES</Text>
-                  <Text style={styles.common}>{state.flower.common}</Text>
-                  <Text style={styles.latin}>{state.flower.latin}</Text>
-                  <View style={styles.rule} />
-                  <Text style={styles.blurb}>{state.flower.blurb}</Text>
-                  <Text style={[styles.hint, styles.hintBack]}>TAP TO FLIP BACK</Text>
-                </LinearGradient>
-              </View>
-            </FlipCard>
+                {/* Back: serif info panel */}
+                <View style={styles.face}>
+                  <LinearGradient
+                    colors={['#1a1a1a', '#0a0a0a']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    style={[styles.back, styles.imageRadius]}
+                  >
+                    <IridescentOverlay />
+                    <Text style={styles.backEyebrow}>SPECIES</Text>
+                    <Text style={styles.common}>{state.flower.common}</Text>
+                    <Text style={styles.latin}>{state.flower.latin}</Text>
+                    <View style={styles.rule} />
+                    <Text style={styles.blurb}>{state.flower.blurb}</Text>
+                    <Text style={[styles.hint, styles.hintBack]}>TAP TO FLIP BACK</Text>
+                  </LinearGradient>
+                </View>
+              </FlipCard>
+            </View>
           )}
         </View>
 
@@ -279,6 +425,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
 
+  cardWrap: {
+    position: 'relative',
+  },
+  glow: {
+    position: 'absolute',
+    top: -20,
+    left: -20,
+    right: -20,
+    bottom: -20,
+    borderRadius: 28,
+    backgroundColor: 'transparent',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(120,140,255,0.8)',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.5,
+        shadowRadius: 30,
+      },
+      android: {
+        elevation: 16,
+      },
+      default: {},
+    }),
+  },
   face: {
     flex: 1,
     width: '100%',
