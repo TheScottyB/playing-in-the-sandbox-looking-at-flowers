@@ -52,3 +52,6 @@ android/
 
 # AI agent working directories
 .claude/
+
+# EAS local build artifacts
+build-*.tar.gz
