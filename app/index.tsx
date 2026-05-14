@@ -25,6 +25,7 @@ import {
   type DailyFlower,
 } from '@/lib/dailyFlower';
 import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
+import { useOnline } from '@/hooks/useOnline';
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
 
@@ -78,6 +79,7 @@ export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
   const [reloadKey, setReloadKey] = useState(0);
+  const online = useOnline();
 
   const { width: winW, height: winH } = useWindowDimensions();
   // Portrait card sized to the screen: leaves room for the eyebrow at the top
@@ -108,14 +110,32 @@ export default function HomeScreen() {
       } catch (e) {
         if (cancelled) return;
         console.error('Flower fetch failed:', e);
-        // 404 is a legitimate "coming soon" — keep the error treatment so the
-        // user knows we don't have a flower for that exact date. For service
-        // outages and network failures, fall through to the bundled default
-        // so the app always shows something instead of an error wall.
+
         if (e instanceof FlowerFetchError && e.status === 404) {
+          // 404 is a legitimate "coming soon" — keep the error treatment so
+          // the user knows we don't have a flower for that exact date.
           setState({ status: 'error', kind: 'unpublished', message: ERROR_COPY.unpublished.sub });
+        } else if (!online) {
+          // Network down: show the fallback with an explicit offline marker so
+          // the user sees they're not online rather than a silently-different
+          // flower.
+          setState({
+            status: 'ok',
+            flower: { ...getDefaultFlower(date), isDefault: true },
+          });
         } else {
-          setState({ status: 'ok', flower: getDefaultFlower(date) });
+          // 5xx or other: retry once with backoff before falling through.
+          await new Promise((r) => setTimeout(r, 1500));
+          if (cancelled) return;
+          try {
+            const region = await getRegion();
+            const flower = await fetchDailyFlower(region, date);
+            if (!cancelled) setState({ status: 'ok', flower });
+          } catch {
+            if (!cancelled) {
+              setState({ status: 'ok', flower: getDefaultFlower(date) });
+            }
+          }
         }
       }
     }
