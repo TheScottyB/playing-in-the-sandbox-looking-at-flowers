@@ -1,5 +1,78 @@
 # Development Guide for Sandbox Staring at Flowers
 
+## Dev loop (start here)
+
+**Default: Expo Go.** This app has no custom native modules — Expo Go covers all required APIs (expo-location, expo-image, expo-router, etc.). Use this for day-to-day work.
+
+```bash
+pnpm install
+pnpm exec expo start
+# scan the QR with Expo Go on iOS/Android
+```
+
+For web preview:
+
+```bash
+pnpm exec expo start --web --port 8081
+```
+
+### When to use EAS dev builds instead
+
+Only when verifying behavior Expo Go doesn't cover:
+
+- Pre-release native smoke (the path TestFlight will exercise)
+- Native build pipeline changes (`eas.json`, `app.json` plugins)
+- A third-party native module that isn't in Expo Go's set (we don't have any in RC1)
+
+```bash
+# iOS simulator (no Apple signing)
+eas build --profile development-simulator --platform ios --local
+
+# iOS device (Apple credentials via `eas credentials`)
+eas build --profile development --platform ios --local
+
+# Android
+eas build --profile development --platform android --local
+```
+
+EAS local builds produce a `build-*.tar.gz` at the project root — gitignored, safe to delete after install.
+
+### Install a local build
+
+```bash
+# iOS simulator
+tar -xzf build-*.tar.gz
+xcrun simctl install booted ./SandboxStaringatFlowers.app
+
+# Android device
+adb install build.apk
+```
+
+## SDK maintenance
+
+The project is on **Expo SDK 55**. Patch bumps happen frequently — run monthly:
+
+```bash
+pnpm exec expo install expo@latest --fix
+pnpm exec expo install --fix
+```
+
+This pins each dep to its SDK-matched version. After a patch bump, re-run `pnpm typecheck` and the EAS simulator build to catch any plugin regressions.
+
+For minor or major SDK upgrades (55 → 56), follow the `upgrading-expo` Expo skill guidance: read release notes, clear caches (`rm -rf node_modules .expo ios android`), audit `expo.install.exclude` entries in `package.json`, remove deprecated packages.
+
+### Hermes v1 (deferred)
+
+Expo SDK 55 supports Hermes v1 opt-in. To enable later (deferred to RC2 — needs a measured perf gain on real-device profiling to justify the risk):
+
+```json
+"plugins": [["expo-build-properties", { "useHermesV1": true }]]
+```
+
+---
+
+The sections below are deeper-dive reference for hardware-first scenarios, pre-existing build profiles, and historical troubleshooting. The dev loop above supersedes the hardware-first recommendation that this guide originally led with.
+
 ## Development Environments
 
 ### 1. iOS Hardware Development (Recommended)

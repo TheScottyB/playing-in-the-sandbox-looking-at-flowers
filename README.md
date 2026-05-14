@@ -14,8 +14,9 @@ If permission is denied, or you're outside the US, the app falls back to a curat
 
 ```
 ├── app/
-│   ├── _layout.tsx            # Bare Stack: index + +not-found
-│   ├── index.tsx              # Single-screen flower card UI
+│   ├── _layout.tsx            # Stack: index + flower-detail + +not-found
+│   ├── index.tsx              # Home: daily flower card (flip-to-back for info)
+│   ├── flower-detail.tsx      # Full-screen detail view with close button
 │   └── +not-found.tsx
 ├── lib/
 │   ├── region.ts              # One-prompt expo-location → state, cached in AsyncStorage
@@ -37,17 +38,30 @@ If permission is denied, or you're outside the US, the app falls back to a curat
 ## Quick start
 
 ```bash
-npm install
-npx expo start
+pnpm install
+pnpm exec expo start
 ```
 
-For iOS hardware development with location prompts working correctly:
+Scan the QR code with **Expo Go** on iOS or Android. The app has no
+custom native modules, so Expo Go covers all required APIs — no custom
+build needed for day-to-day work.
+
+For native verification (TestFlight / Play Internal prerelease check):
 
 ```bash
-npx expo install expo-dev-client
-eas build --profile development --platform ios
-npx expo start --dev-client
+# iOS simulator (no signing)
+eas build --profile development-simulator --platform ios --local
+
+# iOS device (Apple credentials via `eas credentials`)
+eas build --profile development --platform ios --local
+
+# Android
+eas build --profile development --platform android --local
 ```
+
+See **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** for full dev loop +
+**[meta/DEPLOYMENT.md](meta/DEPLOYMENT.md)** for TestFlight / Play
+Internal submission.
 
 ## First-time setup
 
@@ -119,9 +133,12 @@ run so you can resume without re-paying for the states that already worked.
 ## Documentation
 
 - **[CHANGELOG.md](CHANGELOG.md)** — release history
-- **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** — local dev setup
+- **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** — local dev loop + SDK 55 maintenance
+- **[meta/DEPLOYMENT.md](meta/DEPLOYMENT.md)** — TestFlight + Play Internal walkthrough
+- **[meta/ERROR_STATES.md](meta/ERROR_STATES.md)** — error & offline behavior inventory + tester checklist
 - **[meta/SUBMISSION.md](meta/SUBMISSION.md)** — App Store submission reference
 - **[meta/PRIVACY.md](meta/PRIVACY.md)** — privacy policy (also at [docs/privacy.html](docs/privacy.html))
+- **[docs/plans/](docs/plans/)** — design + implementation plans (active and archived)
 
 ## Support
 
