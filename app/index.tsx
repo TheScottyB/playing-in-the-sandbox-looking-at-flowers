@@ -221,9 +221,8 @@ export default function HomeScreen() {
                     Only shown when we have a real CDN URI (not a bundled fallback). */}
                 {detailImageUri != null && (
                   <Link
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     href={{
-                      pathname: '/flower-detail' as any,
+                      pathname: '/flower-detail',
                       params: {
                         imageUri: detailImageUri,
                         common: state.flower.common,

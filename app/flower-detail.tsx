@@ -1,6 +1,6 @@
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -18,6 +18,7 @@ function formatDateLabel(iso: string): string {
 }
 
 export default function FlowerDetailScreen() {
+  const router = useRouter();
   const {
     imageUri,
     common,
@@ -70,6 +71,17 @@ export default function FlowerDetailScreen() {
       {/* Info panel anchored to the bottom */}
       <SafeAreaView style={styles.fill} edges={['bottom', 'left', 'right', 'top']}>
         <View style={styles.inner}>
+          {/* Close button — top-left, mirrors expand button styling */}
+          <Pressable
+            style={styles.closeBtn}
+            onPress={() => router.back()}
+            accessibilityLabel="Close"
+            accessibilityRole="button"
+            hitSlop={12}
+          >
+            <Text style={styles.closeIcon}>✕</Text>
+          </Pressable>
+
           {/* Spacer pushes info to the bottom */}
           <View style={styles.spacer} />
 
@@ -111,7 +123,6 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    justifyContent: 'flex-end',
   },
   spacer: {
     flex: 1,
@@ -156,5 +167,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 26,
     color: 'rgba(255,255,255,0.88)',
+  },
+  closeBtn: {
+    alignSelf: 'flex-start',
+    margin: 16,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: 'rgba(0,0,0,0.42)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.32)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeIcon: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
