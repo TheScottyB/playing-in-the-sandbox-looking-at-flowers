@@ -71,7 +71,7 @@ Words we don't use:
 
 | Field | Value |
 |---|---|
-| App display name | TBD — to be filled from `docs/plans/2026-05-14-name-candidates.md` selection |
+| App display name | **Specimen Sandbox** |
 | App Store name | same as display name (≤30 chars) |
 | Slug (unchanged for RC1) | `playing-in-the-sandbox-staring-at-flowers` |
 | URL scheme (unchanged for RC1) | `staring-at-flowers` |

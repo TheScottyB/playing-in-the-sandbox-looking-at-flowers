@@ -1,4 +1,4 @@
-# Sandbox Staring at Flowers
+# Specimen Sandbox
 
 A daily ritual app: every morning, a fresh AI-generated picture of a flower native to your US state — matched to what's blooming this month.
 

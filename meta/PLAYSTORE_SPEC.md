@@ -1,4 +1,4 @@
-# Play Store Release Spec: Sandbox Staring at Flowers
+# Play Store Release Spec: Specimen Sandbox
 
 > **Status:** In progress — listing copy ready, assets and backfill remain
 > **Updated:** 2026-04-25 (post-pivot to daily AI-generated flower)
@@ -61,7 +61,7 @@ green background.
 
 | Item | Status | Where it lives |
 |---|---|---|
-| App name (≤ 30 chars) | ✅ | "Sandbox Staring at Flowers" |
+| App name (≤ 30 chars) | ✅ | "Specimen Sandbox" |
 | Short description (≤ 80 chars) | ✅ | [PLAYSTORE_LISTING.md](PLAYSTORE_LISTING.md) |
 | Full description (≤ 4000 chars) | ✅ | [PLAYSTORE_LISTING.md](PLAYSTORE_LISTING.md) |
 | App icon (512×512 PNG) | ❌ | Resize from `assets/images/icon.png` |

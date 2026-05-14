@@ -1,6 +1,6 @@
 # Digital Services Act Compliance Documentation
 
-This document outlines the compliance information for "Sandbox Staring at Flowers" application with the Digital Services Act (DSA) requirements for the European Union.
+This document outlines the compliance information for "Specimen Sandbox" application with the Digital Services Act (DSA) requirements for the European Union.
 
 ## App Operator Information
 

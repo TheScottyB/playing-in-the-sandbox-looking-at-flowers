@@ -1,10 +1,10 @@
-# Privacy Policy for Sandbox Staring at Flowers
+# Privacy Policy for Specimen Sandbox
 
 **Last Updated:** April 25, 2025
 
 ## Introduction
 
-This Privacy Policy explains how Sandbox Staring at Flowers ("we", "our", or "us") handles information when you use our mobile application ("App"). We respect your privacy and are committed to protecting it through our compliance with this policy.
+This Privacy Policy explains how Specimen Sandbox ("we", "our", or "us") handles information when you use our mobile application ("App"). We respect your privacy and are committed to protecting it through our compliance with this policy.
 
 ## Location Data
 

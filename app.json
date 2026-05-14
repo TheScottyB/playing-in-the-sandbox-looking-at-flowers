@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Sandbox Staring at Flowers",
+    "name": "Specimen Sandbox",
     "slug": "playing-in-the-sandbox-staring-at-flowers",
     "version": "1.1.1",
     "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
@@ -47,7 +47,7 @@
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png",
-      "name": "Sandbox Staring at Flowers",
+      "name": "Specimen Sandbox",
       "shortName": "Staring at Flowers",
       "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today.",
       "themeColor": "#ffffff",

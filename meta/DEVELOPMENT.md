@@ -1,4 +1,4 @@
-# Development Guide for Sandbox Staring at Flowers
+# Development Guide for Specimen Sandbox
 
 ## Dev loop (start here)
 

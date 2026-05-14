@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 /**
- * Script to automate the screenshot capture process for Sandbox Staring at Flowers
+ * Script to automate the screenshot capture process for Specimen Sandbox
  * 
  * This script will:
  * 1. Create necessary directory structure if it doesn't exist
@@ -155,7 +155,7 @@ function guideCaptureProcess(deviceType) {
 
 // Main function
 function main() {
-  console.log('Welcome to the Sandbox Staring at Flowers Screenshot Capture Tool!\n');
+  console.log('Welcome to the Specimen Sandbox Screenshot Capture Tool!\n');
   
   // Create directory structure
   createDirectoryStructure();

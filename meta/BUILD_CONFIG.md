@@ -1,6 +1,6 @@
-# Build Configuration for Sandbox Staring at Flowers
+# Build Configuration for Specimen Sandbox
 
-This document provides an overview of the build configuration for the Sandbox Staring at Flowers app, including development and production build profiles.
+This document provides an overview of the build configuration for the Specimen Sandbox app, including development and production build profiles.
 
 ## Build Profiles Overview
 
