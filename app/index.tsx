@@ -142,7 +142,10 @@ export default function HomeScreen() {
 
     load();
     return () => { cancelled = true; };
-  }, [dayOffset, reloadKey]);
+    // `online` is intentionally in the deps: when network state flips, we
+    // want to refetch — coming back online should refresh today's flower
+    // instead of leaving the user looking at the fallback.
+  }, [dayOffset, reloadKey, online]);
 
   async function handleUpdateLocation() {
     await resetRegion();
@@ -186,7 +189,7 @@ export default function HomeScreen() {
           {state.status === 'loading' && (
             <View style={[styles.placeholder, { width: cardW, height: cardH }]}>
               <ActivityIndicator size="small" color="rgba(255,255,255,0.5)" />
-              <Text style={styles.loadingLabel}>FINDING TODAY'S BLOOM</Text>
+              <Text style={styles.loadingLabel}>FINDING TODAY&apos;S BLOOM</Text>
             </View>
           )}
 
