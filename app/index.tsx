@@ -10,8 +10,12 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import { Link } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Image } from 'expo-image';
+import FlipCard from 'react-native-flip-card';
 
 import {
   fetchDailyFlower,
@@ -21,16 +25,6 @@ import {
   type DailyFlower,
 } from '@/lib/dailyFlower';
 import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
-import { WithSkiaWeb } from '@shopify/react-native-skia/lib/module/web';
-
-// CanvasKit (Skia's WASM blob) lives at /canvaskit.wasm on the web build —
-// copied there by the `postinstall` script from the canvaskit-wasm package so
-// the loader always finds a version-matched WASM, offline-safe and without a
-// third-party CDN round-trip. The `/` prefix means Expo Router serves it from
-// the public/ folder at the site root.
-const SKIA_OPTS = {
-  locateFile: (file: string) => `/${file}`,
-};
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
 
@@ -90,6 +84,16 @@ export default function HomeScreen() {
   // and the nav row at the bottom. Caps width on tablets/desktop.
   const cardW = Math.min(winW - 48, 440);
   const cardH = Math.min(cardW * 1.35, winH - 220);
+
+  // Extract a plain URI string from imageSource (only set for CDN flowers,
+  // not for bundled require() fallbacks — those can't be serialised as a param).
+  const detailImageUri =
+    state.status === 'ok' &&
+    state.flower.imageSource != null &&
+    typeof state.flower.imageSource === 'object' &&
+    'uri' in (state.flower.imageSource as Record<string, unknown>)
+      ? (state.flower.imageSource as { uri: string }).uri
+      : null;
 
   useEffect(() => {
     let cancelled = false;
@@ -180,21 +184,87 @@ export default function HomeScreen() {
           )}
 
           {state.status === 'ok' && (
-            <WithSkiaWeb
-              getComponent={async () => {
-                const mod = await import('@/components/IridescentCard');
-                return { default: mod.IridescentCard };
-              }}
-              opts={SKIA_OPTS}
-              componentProps={{
-                flower: state.flower,
-                width: cardW,
-                height: cardH,
-              }}
-              fallback={
-                <View style={[styles.placeholder, { width: cardW, height: cardH }]} />
-              }
-            />
+            <FlipCard
+              key={state.flower.date + ':' + state.flower.state}
+              style={{ width: cardW, height: cardH }}
+              friction={6}
+              perspective={1000}
+              flipHorizontal
+              flipVertical={false}
+              clickable
+              useNativeDriver={Platform.OS !== 'web'}
+            >
+              {/* Front: image */}
+              <View style={styles.face}>
+                <Image
+                  source={state.flower.imageSource}
+                  style={[StyleSheet.absoluteFillObject, styles.imageRadius]}
+                  contentFit="cover"
+                  cachePolicy="memory-disk"
+                  transition={400}
+                  preferHighDynamicRange
+                  accessibilityLabel={state.flower.common}
+                />
+                {state.flower.isDefault && (
+                  <View style={styles.fallbackBadge}>
+                    <Text style={styles.fallbackBadgeText}>OFFLINE · ARCHIVE</Text>
+                  </View>
+                )}
+                <LinearGradient
+                  pointerEvents="none"
+                  colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.55)']}
+                  style={styles.hintScrim}
+                />
+                <Text style={styles.hint}>TAP TO READ</Text>
+
+                {/* Expand button — zoom-transitions to the full-screen detail view.
+                    Only shown when we have a real CDN URI (not a bundled fallback). */}
+                {detailImageUri != null && (
+                  <Link
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    href={{
+                      pathname: '/flower-detail' as any,
+                      params: {
+                        imageUri: detailImageUri,
+                        common: state.flower.common,
+                        latin: state.flower.latin,
+                        blurb: state.flower.blurb,
+                        state: state.flower.state,
+                        date: state.flower.date,
+                      },
+                    }}
+                    asChild
+                  >
+                    <Link.Trigger withAppleZoom>
+                      <Pressable
+                        style={styles.expandBtn}
+                        accessibilityLabel="View full screen"
+                        accessibilityRole="button"
+                      >
+                        <Text style={styles.expandIcon}>↗</Text>
+                      </Pressable>
+                    </Link.Trigger>
+                  </Link>
+                )}
+              </View>
+
+              {/* Back: serif info panel */}
+              <View style={styles.face}>
+                <LinearGradient
+                  colors={['#1a1a1a', '#0a0a0a']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 1 }}
+                  style={[styles.back, styles.imageRadius]}
+                >
+                  <Text style={styles.backEyebrow}>SPECIES</Text>
+                  <Text style={styles.common}>{state.flower.common}</Text>
+                  <Text style={styles.latin}>{state.flower.latin}</Text>
+                  <View style={styles.rule} />
+                  <Text style={styles.blurb}>{state.flower.blurb}</Text>
+                  <Text style={[styles.hint, styles.hintBack]}>TAP TO FLIP BACK</Text>
+                </LinearGradient>
+              </View>
+            </FlipCard>
           )}
         </View>
 
@@ -250,6 +320,117 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
 
+  face: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    borderRadius: 18,
+    overflow: 'hidden',
+    backgroundColor: '#0a0a0a',
+    boxShadow: '0px 16px 28px rgba(0,0,0,0.45)',
+  },
+  imageRadius: {
+    borderRadius: 18,
+  },
+  hintScrim: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 120,
+  },
+  hint: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 10,
+    letterSpacing: 2.8,
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingVertical: 18,
+  },
+  hintBack: {
+    position: 'relative',
+    marginTop: 'auto',
+    paddingTop: 24,
+  },
+  expandBtn: {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: 'rgba(0,0,0,0.42)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.32)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  expandIcon: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  fallbackBadge: {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    backgroundColor: 'rgba(0,0,0,0.55)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.35)',
+  },
+  fallbackBadgeText: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 9,
+    letterSpacing: 2,
+    fontWeight: '600',
+  },
+
+  back: {
+    flex: 1,
+    padding: 26,
+    justifyContent: 'flex-start',
+  },
+  backEyebrow: {
+    fontSize: 10,
+    letterSpacing: 2.8,
+    color: 'rgba(255,255,255,0.5)',
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  common: {
+    fontFamily: SERIF,
+    fontSize: 32,
+    lineHeight: 38,
+    color: '#fff',
+    letterSpacing: 0.2,
+  },
+  latin: {
+    fontFamily: SERIF,
+    fontStyle: 'italic',
+    fontSize: 16,
+    color: 'rgba(255,255,255,0.7)',
+    marginTop: 4,
+    letterSpacing: 0.3,
+  },
+  rule: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: 'rgba(255,255,255,0.22)',
+    marginTop: 18,
+    marginBottom: 16,
+    width: 56,
+  },
+  blurb: {
+    fontSize: 15,
+    lineHeight: 23,
+    color: 'rgba(255,255,255,0.88)',
+  },
   nav: {
     flexDirection: 'row',
     justifyContent: 'space-between',
