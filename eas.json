@@ -17,7 +17,7 @@
       },
       "ios": {
         "image": "latest",
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       },
       "cache": {
         "key": "dev-{{ os }}"
@@ -42,7 +42,7 @@
       },
       "ios": {
         "image": "latest",
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       },
       "cache": {
         "key": "preview-{{ os }}"
@@ -60,7 +60,7 @@
       },
       "ios": {
         "image": "latest",
-        "resourceClass": "m1-medium"
+        "resourceClass": "m-medium"
       },
       "cache": {
         "key": "prod-{{ os }}-{{ datetime }}"
@@ -75,6 +75,7 @@
         "appleTeamId": "3X872JR6P3"
       },
       "android": {
+        "serviceAccountKeyPath": "./google-service-account.json",
         "track": "internal",
         "releaseStatus": "draft"
       }
