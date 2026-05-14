@@ -70,7 +70,7 @@
           "backgroundColor": "#4CAF50"
         }
       ],
-      "expo-image"
+      ["expo-image", { "disableLibdav1d": true }]
     ],
     "experiments": {
       "typedRoutes": true
