@@ -215,7 +215,7 @@ export default function HomeScreen() {
               flipHorizontal
               flipVertical={false}
               clickable
-              useNativeDriver={Platform.OS !== 'web'}
+              useNativeDriver={process.env.EXPO_OS !== 'web'}
             >
               {/* Front: image */}
               <View style={styles.face}>
@@ -279,10 +279,10 @@ export default function HomeScreen() {
                   style={[styles.back, styles.imageRadius]}
                 >
                   <Text style={styles.backEyebrow}>SPECIES</Text>
-                  <Text style={styles.common}>{state.flower.common}</Text>
-                  <Text style={styles.latin}>{state.flower.latin}</Text>
+                  <Text style={styles.common} selectable>{state.flower.common}</Text>
+                  <Text style={styles.latin} selectable>{state.flower.latin}</Text>
                   <View style={styles.rule} />
-                  <Text style={styles.blurb}>{state.flower.blurb}</Text>
+                  <Text style={styles.blurb} selectable>{state.flower.blurb}</Text>
                   <Text style={[styles.hint, styles.hintBack]}>TAP TO FLIP BACK</Text>
                 </LinearGradient>
               </View>
@@ -347,12 +347,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 18,
+    borderCurve: 'continuous',
     overflow: 'hidden',
     backgroundColor: '#0a0a0a',
     boxShadow: '0px 16px 28px rgba(0,0,0,0.45)',
   },
   imageRadius: {
     borderRadius: 18,
+    borderCurve: 'continuous',
   },
   hintScrim: {
     position: 'absolute',
@@ -385,6 +387,7 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 17,
+    borderCurve: 'continuous',
     backgroundColor: 'rgba(0,0,0,0.42)',
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(255,255,255,0.32)',
@@ -485,6 +488,7 @@ const styles = StyleSheet.create({
 
   placeholder: {
     borderRadius: 18,
+    borderCurve: 'continuous',
     backgroundColor: '#111',
     alignItems: 'center',
     justifyContent: 'center',

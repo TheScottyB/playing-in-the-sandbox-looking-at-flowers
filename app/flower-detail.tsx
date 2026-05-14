@@ -90,10 +90,10 @@ export default function FlowerDetailScreen() {
               {regionLabel} · {formatDateLabel(date ?? '')}
             </Text>
 
-            <Text style={styles.common} numberOfLines={2} adjustsFontSizeToFit>
+            <Text style={styles.common} numberOfLines={2} adjustsFontSizeToFit selectable>
               {common}
             </Text>
-            <Text style={styles.latin}>{latin}</Text>
+            <Text style={styles.latin} selectable>{latin}</Text>
 
             <View style={styles.rule} />
 
@@ -102,7 +102,7 @@ export default function FlowerDetailScreen() {
               bounces
               style={styles.blurbScroll}
             >
-              <Text style={styles.blurb}>{blurb}</Text>
+              <Text style={styles.blurb} selectable>{blurb}</Text>
               {/* Bottom breathing room inside scroll */}
               <View style={{ height: 24 }} />
             </ScrollView>
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 17,
+    borderCurve: 'continuous',
     backgroundColor: 'rgba(0,0,0,0.42)',
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(255,255,255,0.32)',
