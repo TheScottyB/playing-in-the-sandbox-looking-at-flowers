@@ -11,8 +11,7 @@
     "web": "expo start --web",
     "e2e": "maestro test .maestro/",
     "e2e:smoke": "maestro test .maestro/smoke.yml",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "node ./scripts/copy-canvaskit-wasm.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@expo/dom-webview": "^55.0.6",
