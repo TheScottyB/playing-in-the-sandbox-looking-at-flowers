@@ -44,6 +44,7 @@ app-example
 app.ipa
 credentials.json
 ios/
+android/
 
 
 # Playwright MCP / visual judging artifacts
