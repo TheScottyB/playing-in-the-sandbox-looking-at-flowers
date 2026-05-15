@@ -35,7 +35,31 @@ eas build --profile development --platform ios --local
 eas build --profile development --platform android --local
 ```
 
-EAS local builds produce a `build-*.tar.gz` at the project root — gitignored, safe to delete after install.
+EAS local builds produce a `build-*.tar.gz` (iOS) or `build-*.apk` / `build-*.aab` (Android) at the project root — gitignored, safe to delete after install.
+
+### Android local build environment
+
+iOS local builds work out of the box on macOS with Xcode. Android local builds need three pieces installed AND two env vars set:
+
+| What | Where |
+|---|---|
+| **JDK 17** | `brew install --cask temurin@17` → `/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home`. AGP 8.x rejects Java 26 with `Unsupported class file major version 70`. |
+| **Android command-line tools** | `brew install --cask android-commandlinetools` → `/opt/homebrew/share/android-commandlinetools`. Provides SDK platforms, build-tools, NDK. |
+| **Android platform-tools** | `brew install --cask android-platform-tools` → `adb` for installing the APK on a device. |
+
+Set both env vars before running Android EAS local builds (add to `~/.zshrc` or `~/.bashrc` for persistence):
+
+```bash
+export JAVA_HOME="$(/usr/libexec/java_home -v 17)"
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$PATH"
+```
+
+Then:
+
+```bash
+eas build --profile development --platform android --local
+```
 
 ### Install a local build
 
