@@ -1,23 +1,35 @@
 // constants/brand.ts
 //
-// Single source of truth for visual tokens. Captured from the values
-// currently scattered across app/index.tsx and app/flower-detail.tsx so
-// the Phase 2 rebrand becomes a swap-in-this-one-file operation rather
-// than a sweep across screens.
+// Single source of truth for visual tokens. Updated 2026-05-14 to align
+// with the Specimen Sandbox icon identity (Seed Spiral · Anchored). Ink
+// shifts slightly cool (#0a0a0c) to match the icon stock; cream tokens
+// added to unlock the foil-stamped-specimen palette across screens.
 //
-// Until the brand workshop locks final values, these mirror what's
-// already on screen — no visual change today.
+// **Migration note**: app/index.tsx and app/flower-detail.tsx still use
+// inline hex values matching the older `ink: #0a0a0a` baseline. Brand
+// tokens here are the forward-looking source of truth; screens will be
+// migrated to import from this file in a follow-up refactor. The visual
+// delta between `#0a0a0a` and `#0a0a0c` is imperceptible — not blocking.
 
 import { Platform } from 'react-native';
 
-/** Background + foreground colors. Ink = dark plates; paper = light text. */
+/**
+ * Surface + text colors. Two stocks:
+ * - **ink**: dark plates (current home/detail screens, icon background)
+ * - **cream**: foil-stamped specimen cardstock (future iridescent treatment, App B)
+ */
 export const PALETTE = {
-  // Surfaces
-  ink: '#0a0a0a',
-  inkSoft: '#1a1a1a',
+  // Dark stock (matches icon background, slightly cool)
+  ink: '#0a0a0c',
+  inkSoft: '#1a1916',
+
+  // Cream stock (foil-stamped specimen card, App B + future light-mode)
+  cream: '#e9e3d2',
+  creamHi: '#f1ecde',
+  creamLo: '#ddd5c0',
 
   // Foreground text against ink
-  paper: '#fff',
+  paper: '#ffffff',
   paperStrong: 'rgba(255,255,255,0.9)',
   paperBright: 'rgba(255,255,255,0.88)',
   paperHigh: 'rgba(255,255,255,0.85)',
@@ -30,10 +42,14 @@ export const PALETTE = {
 
   // Lines
   hairline: 'rgba(255,255,255,0.25)',
+  hairlineInk: 'rgba(10,10,12,0.35)',
 
-  // Reserve for future brand accent (Phase 2 rebrand fills in)
-  accent: '#fff', // placeholder — same as `paper` until rebrand
-  accentInk: '#0a0a0a',
+  // Brand accent — pearl gradient is icon-only (radial gradient, not
+  // expressible as a single hex). Single-color tokens approximate the
+  // pearl's mid-tone for any UI accent that wants to nod at the icon.
+  accent: '#f2b8da', // pearl mid-rose
+  accentDeep: '#7e90d8', // pearl outer-blue
+  accentInk: '#0a0a0c',
 } as const;
 
 /** Type stack. `serif` is the only platform-branched value. */
