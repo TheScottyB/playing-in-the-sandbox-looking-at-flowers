@@ -3,10 +3,13 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
+  Modal,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -25,7 +28,7 @@ import {
   todayLocalIso,
   type DailyFlower,
 } from '@/lib/dailyFlower';
-import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
+import { getRegion, getRegionWithStatus, resetRegion, getRegionOverride, setRegionOverride } from '@/lib/region';
 import { useOnline } from '@/hooks/useOnline';
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
@@ -80,6 +83,10 @@ export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
   const [reloadKey, setReloadKey] = useState(0);
+  const [, setEyebrowTaps] = useState(0);
+  const [devMenuVisible, setDevMenuVisible] = useState(false);
+  const [activeOverride, setActiveOverride] = useState<string | null>(null);
+  const [customCode, setCustomCode] = useState('');
   const online = useOnline();
 
   const { width: winW, height: winH } = useWindowDimensions();
@@ -97,6 +104,33 @@ export default function HomeScreen() {
     'uri' in (state.flower.imageSource as Record<string, unknown>)
       ? (state.flower.imageSource as { uri: string }).uri
       : null;
+
+  useEffect(() => {
+    async function checkOverride() {
+      const over = await getRegionOverride();
+      setActiveOverride(over);
+    }
+    checkOverride();
+  }, [devMenuVisible]);
+
+  function handleEyebrowPress() {
+    setEyebrowTaps(prev => {
+      const next = prev + 1;
+      if (next >= 5) {
+        setDevMenuVisible(true);
+        return 0;
+      }
+      return next;
+    });
+  }
+
+  async function applyOverride(regionCode: string | null) {
+    await setRegionOverride(regionCode);
+    setActiveOverride(regionCode);
+    setDevMenuVisible(false);
+    setDayOffset(0);
+    setReloadKey(k => k + 1);
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -187,11 +221,11 @@ export default function HomeScreen() {
     <View style={styles.root}>
       <StatusBar style="light" />
       <SafeAreaView style={styles.fill}>
-        <View style={styles.topBar}>
+        <Pressable onPress={handleEyebrowPress} style={styles.topBar}>
           <Text style={styles.eyebrow}>
             {eyebrowRegion} · {dateLabel}
           </Text>
-        </View>
+        </Pressable>
 
         <View style={styles.stage}>
           {state.status === 'loading' && (
@@ -323,6 +357,91 @@ export default function HomeScreen() {
           )}
         </View>
       </SafeAreaView>
+
+      <Modal
+        visible={devMenuVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setDevMenuVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalHeader}>Dev Controls</Text>
+            
+            <Text style={styles.overrideLabel}>Active Location:</Text>
+            <Text style={styles.overrideStatus}>
+              {activeOverride ? activeOverride : 'Real System Location (No Override)'}
+            </Text>
+
+            <Text style={styles.sectionTitle}>Quick Select</Text>
+            <ScrollView
+              contentContainerStyle={styles.chipContainer}
+              showsVerticalScrollIndicator={false}
+              style={{ maxHeight: 150 }}
+            >
+              {[
+                { code: null, label: 'System' },
+                { code: 'default', label: 'Default' },
+                { code: 'MX', label: 'MX (Mexico)' },
+                { code: 'IS', label: 'IS (Iceland)' },
+                { code: 'RU', label: 'RU (Russia)' },
+                { code: 'CN', label: 'CN (China)' },
+                { code: 'CA-ON', label: 'CA-ON (Ontario)' },
+                { code: 'CA-BC', label: 'CA-BC' },
+                { code: 'CA', label: 'CA (California)' },
+                { code: 'NY', label: 'NY (New York)' },
+                { code: 'TX', label: 'TX (Texas)' },
+              ].map((item) => {
+                const isSelected = activeOverride === item.code;
+                return (
+                  <Pressable
+                    key={String(item.code)}
+                    style={[styles.chip, isSelected && styles.chipSelected]}
+                    onPress={() => applyOverride(item.code)}
+                  >
+                    <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+                      {item.label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+
+            <Text style={[styles.sectionTitle, { marginTop: 16 }]}>Custom Code</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="e.g. CA-QC, AL, WY"
+                placeholderTextColor="rgba(255,255,255,0.3)"
+                value={customCode}
+                onChangeText={setCustomCode}
+                autoCapitalize="characters"
+                autoCorrect={false}
+              />
+              <Pressable
+                style={styles.applyBtn}
+                onPress={() => {
+                  const trimmed = customCode.trim().toUpperCase();
+                  if (!trimmed) {
+                    Alert.alert('Invalid Code', 'Please enter a region code.');
+                    return;
+                  }
+                  applyOverride(trimmed);
+                }}
+              >
+                <Text style={styles.applyBtnText}>Apply</Text>
+              </Pressable>
+            </View>
+
+            <Pressable
+              style={styles.dismissBtn}
+              onPress={() => setDevMenuVisible(false)}
+            >
+              <Text style={styles.dismissBtnText}>Dismiss</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -536,5 +655,117 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
     letterSpacing: 0.4,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.85)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: '#161616',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.15)',
+    width: '100%',
+    maxWidth: 400,
+    padding: 24,
+    maxHeight: '80%',
+  },
+  modalHeader: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#fff',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  overrideLabel: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 13,
+    marginBottom: 4,
+  },
+  overrideStatus: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.4)',
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    marginBottom: 8,
+  },
+  chipContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingBottom: 8,
+  },
+  chip: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.05)',
+  },
+  chipSelected: {
+    borderColor: '#fff',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+  },
+  chipText: {
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 13,
+  },
+  chipTextSelected: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  textInput: {
+    flex: 1,
+    height: 44,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#111',
+    color: '#fff',
+    paddingHorizontal: 12,
+    fontSize: 14,
+  },
+  applyBtn: {
+    height: 44,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  applyBtnText: {
+    color: '#000',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  dismissBtn: {
+    marginTop: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  dismissBtnText: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 14,
+    fontWeight: '600',
+    letterSpacing: 1,
   },
 });

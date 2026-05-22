@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 
 const STORAGE_KEY = 'region.state.v1';
+const OVERRIDE_KEY = 'region.override.v1';
 const FALLBACK = 'default';
 
 export type RegionResult = {
@@ -78,6 +79,11 @@ export async function getRegion(): Promise<string> {
 }
 
 export async function getRegionWithStatus(): Promise<RegionResult> {
+  const override = await AsyncStorage.getItem(OVERRIDE_KEY);
+  if (override) {
+    return { region: override, permissionDenied: false };
+  }
+
   const cached = await AsyncStorage.getItem(STORAGE_KEY);
   const denied = await isPermissionDenied();
 
@@ -93,6 +99,18 @@ export async function getRegionWithStatus(): Promise<RegionResult> {
   const result = await resolveRegion();
   await AsyncStorage.setItem(STORAGE_KEY, result.region);
   return result;
+}
+
+export async function setRegionOverride(region: string | null): Promise<void> {
+  if (region === null) {
+    await AsyncStorage.removeItem(OVERRIDE_KEY);
+  } else {
+    await AsyncStorage.setItem(OVERRIDE_KEY, region);
+  }
+}
+
+export async function getRegionOverride(): Promise<string | null> {
+  return await AsyncStorage.getItem(OVERRIDE_KEY);
 }
 
 async function isPermissionDenied(): Promise<boolean> {
