@@ -48,7 +48,7 @@ export default function FlowerDetailScreen() {
       {/* Full-bleed flower image */}
       <Image
         source={{ uri: imageUri }}
-        style={StyleSheet.absoluteFillObject}
+        style={StyleSheet.absoluteFill}
         contentFit="cover"
         cachePolicy="memory-disk"
         preferHighDynamicRange
@@ -64,7 +64,7 @@ export default function FlowerDetailScreen() {
           'rgba(0,0,0,0.97)',
         ]}
         locations={[0, 0.38, 0.62, 1]}
-        style={StyleSheet.absoluteFillObject}
+        style={StyleSheet.absoluteFill}
         pointerEvents="none"
       />
 

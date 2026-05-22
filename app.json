@@ -3,7 +3,7 @@
     "name": "Specimen Sandbox",
     "slug": "playing-in-the-sandbox-staring-at-flowers",
     "version": "1.1.1",
-    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
+    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your region and the current season.",
     "primaryColor": "#0a0a0c",
     "orientation": "portrait",
     "icon": "./app_store_assets/icons/icon-1024.png",

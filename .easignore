@@ -26,3 +26,11 @@ Thumbs.db
 scripts/
 docs/
 .maestro/
+
+# Dependencies and local configuration
+node_modules/
+credentials.json
+credentials/
+ios/
+android/
+

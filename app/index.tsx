@@ -229,7 +229,7 @@ export default function HomeScreen() {
               <View style={styles.face}>
                 <Image
                   source={state.flower.imageSource}
-                  style={[StyleSheet.absoluteFillObject, styles.imageRadius]}
+                  style={[StyleSheet.absoluteFill, styles.imageRadius]}
                   contentFit="cover"
                   cachePolicy="memory-disk"
                   transition={400}

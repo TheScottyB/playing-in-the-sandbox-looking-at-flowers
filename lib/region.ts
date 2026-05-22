@@ -43,6 +43,35 @@ const LOWERCASE_STATE_NAME_TO_CODE = Object.keys(STATE_NAME_TO_CODE).reduce((acc
   return acc;
 }, {} as Record<string, string>);
 
+const CA_PROVINCE_CODES = new Set([
+  'AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'ON', 'PE', 'QC', 'SK', 'NT', 'NU', 'YT'
+]);
+
+const LOWERCASE_PROVINCE_CODES = new Set(
+  Array.from(CA_PROVINCE_CODES).map(code => code.toLowerCase())
+);
+
+const PROVINCE_NAME_TO_CODE: Record<string, string> = {
+  Alberta: 'AB',
+  'British Columbia': 'BC',
+  Manitoba: 'MB',
+  'New Brunswick': 'NB',
+  'Newfoundland and Labrador': 'NL',
+  'Nova Scotia': 'NS',
+  Ontario: 'ON',
+  'Prince Edward Island': 'PE',
+  Quebec: 'QC',
+  Saskatchewan: 'SK',
+  'Northwest Territories': 'NT',
+  Nunavut: 'NU',
+  Yukon: 'YT',
+};
+
+const LOWERCASE_PROVINCE_NAME_TO_CODE = Object.keys(PROVINCE_NAME_TO_CODE).reduce((acc, name) => {
+  acc[name.toLowerCase()] = PROVINCE_NAME_TO_CODE[name];
+  return acc;
+}, {} as Record<string, string>);
+
 export async function getRegion(): Promise<string> {
   const { region } = await getRegionWithStatus();
   return region;
@@ -90,12 +119,29 @@ async function resolveRegion(): Promise<RegionResult> {
     });
 
     const place = places[0];
-    if (!place || place.isoCountryCode !== 'US' || !place.region) {
+    if (!place) {
       return { region: FALLBACK, permissionDenied: false };
     }
 
-    const code = stateNameToCode(place.region);
-    return { region: code ?? FALLBACK, permissionDenied: false };
+    const countryCode = place.isoCountryCode?.toUpperCase();
+
+    if (countryCode === 'US') {
+      if (!place.region) return { region: FALLBACK, permissionDenied: false };
+      const code = stateNameToCode(place.region);
+      return { region: code ?? FALLBACK, permissionDenied: false };
+    }
+
+    if (countryCode === 'CA') {
+      if (!place.region) return { region: FALLBACK, permissionDenied: false };
+      const code = provinceNameToCode(place.region);
+      return { region: code ? `CA-${code}` : FALLBACK, permissionDenied: false };
+    }
+
+    if (countryCode === 'MX' || countryCode === 'IS' || countryCode === 'RU' || countryCode === 'CN') {
+      return { region: countryCode, permissionDenied: false };
+    }
+
+    return { region: FALLBACK, permissionDenied: false };
   } catch (error) {
     console.warn('Failed to resolve region from location services:', error);
     return { region: FALLBACK, permissionDenied: false };
@@ -109,6 +155,15 @@ function stateNameToCode(region: string): string | null {
     return cleaned.toUpperCase();
   }
   return LOWERCASE_STATE_NAME_TO_CODE[cleaned] ?? null;
+}
+
+function provinceNameToCode(region: string): string | null {
+  if (!region) return null;
+  const cleaned = region.trim().toLowerCase();
+  if (LOWERCASE_PROVINCE_CODES.has(cleaned)) {
+    return cleaned.toUpperCase();
+  }
+  return LOWERCASE_PROVINCE_NAME_TO_CODE[cleaned] ?? null;
 }
 
 /** Test/debug helper — clears the cached region so the next call re-prompts. */
