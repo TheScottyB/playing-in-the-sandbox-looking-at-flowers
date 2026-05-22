@@ -12,7 +12,7 @@
 Length limit: 30 characters
 
 ```
-Sandbox Staring at Flowers
+Specimen Sandbox
 ```
 (15 chars)
 
@@ -30,7 +30,7 @@ Length limit: 4000 characters
 ```
 Wake up to a fresh AI-generated picture of a flower blooming near you today.
 
-Every morning, Sandbox Staring at Flowers picks a native species for your US state and
+Every morning, Specimen Sandbox picks a native species for your US state and
 the current month, then delivers a new image with a botanical blurb. One tap
 takes you to yesterday's flower, or any day from the last week. That's it —
 no scrolling feed, no ads, no streaks, no notifications.

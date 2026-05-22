@@ -1,9 +1,9 @@
-# App Store Submission Reference for Sandbox Staring at Flowers
+# App Store Submission Reference for Specimen Sandbox
 
 ## Critical App Information
 | Field | Value |
 |-------|-------|
-| App Name | Sandbox Staring at Flowers |
+| App Name | Specimen Sandbox |
 | Bundle ID | com.djscottyb.playinginthesandoxlookingatflowers |
 | SKU | EX1744334003092 |
 | Apple ID | 6744488642 |

@@ -2,7 +2,7 @@
 
 ## Summary of Encryption Usage
 
-**Sandbox Playing Flowers** does not implement any custom encryption algorithms or cryptographic functionality. The application only uses standard HTTPS/TLS for secure network communications provided by the operating system.
+**Specimen Sandbox** does not implement any custom encryption algorithms or cryptographic functionality. The application only uses standard HTTPS/TLS for secure network communications provided by the operating system.
 
 ## Declaration
 

@@ -44,4 +44,19 @@ app-example
 app.ipa
 credentials.json
 ios/
+android/
 
+
+# Playwright debug logs
+.playwright-cli/
+
+# AI agent working directories
+.claude/
+
+# EAS local build artifacts
+build-*.tar.gz
+build-*.apk
+build-*.aab
+
+# Google Play service account key (do not commit)
+google-service-account.json

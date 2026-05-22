@@ -3,13 +3,17 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
+  Modal,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   useWindowDimensions,
   View,
 } from 'react-native';
+import { Link } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -26,11 +30,13 @@ import Animated, {
 import {
   fetchDailyFlower,
   FlowerFetchError,
+  getCachedFlower,
   getDefaultFlower,
   todayLocalIso,
   type DailyFlower,
 } from '@/lib/dailyFlower';
-import { getRegion, getRegionWithStatus, resetRegion } from '@/lib/region';
+import { getRegion, getRegionWithStatus, resetRegion, getRegionOverride, setRegionOverride } from '@/lib/region';
+import { useOnline } from '@/hooks/useOnline';
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
 
@@ -218,12 +224,54 @@ export default function HomeScreen() {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [dayOffset, setDayOffset] = useState(0);
   const [reloadKey, setReloadKey] = useState(0);
+  const [, setEyebrowTaps] = useState(0);
+  const [devMenuVisible, setDevMenuVisible] = useState(false);
+  const [activeOverride, setActiveOverride] = useState<string | null>(null);
+  const [customCode, setCustomCode] = useState('');
+  const online = useOnline();
 
   const { width: winW, height: winH } = useWindowDimensions();
   // Portrait card sized to the screen: leaves room for the eyebrow at the top
   // and the nav row at the bottom. Caps width on tablets/desktop.
   const cardW = Math.min(winW - 48, 440);
   const cardH = Math.min(cardW * 1.35, winH - 220);
+
+  // Extract a plain URI string from imageSource (only set for CDN flowers,
+  // not for bundled require() fallbacks — those can't be serialised as a param).
+  const detailImageUri =
+    state.status === 'ok' &&
+    state.flower.imageSource != null &&
+    typeof state.flower.imageSource === 'object' &&
+    'uri' in (state.flower.imageSource as Record<string, unknown>)
+      ? (state.flower.imageSource as { uri: string }).uri
+      : null;
+
+  useEffect(() => {
+    async function checkOverride() {
+      const over = await getRegionOverride();
+      setActiveOverride(over);
+    }
+    checkOverride();
+  }, [devMenuVisible]);
+
+  function handleEyebrowPress() {
+    setEyebrowTaps(prev => {
+      const next = prev + 1;
+      if (next >= 5) {
+        setDevMenuVisible(true);
+        return 0;
+      }
+      return next;
+    });
+  }
+
+  async function applyOverride(regionCode: string | null) {
+    await setRegionOverride(regionCode);
+    setActiveOverride(regionCode);
+    setDevMenuVisible(false);
+    setDayOffset(0);
+    setReloadKey(k => k + 1);
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -238,21 +286,49 @@ export default function HomeScreen() {
       } catch (e) {
         if (cancelled) return;
         console.error('Flower fetch failed:', e);
-        // 404 is a legitimate "coming soon" — keep the error treatment so the
-        // user knows we don't have a flower for that exact date. For service
-        // outages and network failures, fall through to the bundled default
-        // so the app always shows something instead of an error wall.
+
         if (e instanceof FlowerFetchError && e.status === 404) {
+          // 404 is a legitimate "coming soon" — keep the error treatment so
+          // the user knows we don't have a flower for that exact date.
           setState({ status: 'error', kind: 'unpublished', message: ERROR_COPY.unpublished.sub });
+        } else if (!online) {
+          // Network down: prefer the last successfully fetched flower from
+          // AsyncStorage; fall through to the bundled default if nothing's cached.
+          const cached = await getCachedFlower();
+          if (cancelled) return;
+          setState({
+            status: 'ok',
+            flower: cached
+              ? { ...cached, isDefault: true }
+              : { ...getDefaultFlower(date), isDefault: true },
+          });
         } else {
-          setState({ status: 'ok', flower: getDefaultFlower(date) });
+          // 5xx or other: retry once with backoff before falling through.
+          await new Promise((r) => setTimeout(r, 1500));
+          if (cancelled) return;
+          try {
+            const region = await getRegion();
+            const flower = await fetchDailyFlower(region, date);
+            if (!cancelled) setState({ status: 'ok', flower });
+          } catch {
+            if (cancelled) return;
+            const cached = await getCachedFlower();
+            if (cancelled) return;
+            setState({
+              status: 'ok',
+              flower: cached ? { ...cached, isDefault: true } : getDefaultFlower(date),
+            });
+          }
         }
       }
     }
 
     load();
     return () => { cancelled = true; };
-  }, [dayOffset, reloadKey]);
+    // `online` is intentionally in the deps: when network state flips, we
+    // want to refetch — coming back online should refresh today's flower
+    // instead of leaving the user looking at the fallback.
+  }, [dayOffset, reloadKey, online]);
 
   async function handleUpdateLocation() {
     await resetRegion();
@@ -286,17 +362,17 @@ export default function HomeScreen() {
     <View style={styles.root}>
       <StatusBar style="light" />
       <SafeAreaView style={styles.fill}>
-        <View style={styles.topBar}>
+        <Pressable onPress={handleEyebrowPress} style={styles.topBar}>
           <Text style={styles.eyebrow}>
             {eyebrowRegion} · {dateLabel}
           </Text>
-        </View>
+        </Pressable>
 
         <View style={styles.stage}>
           {state.status === 'loading' && (
             <View style={[styles.placeholder, { width: cardW, height: cardH }]}>
               <ActivityIndicator size="small" color="rgba(255,255,255,0.5)" />
-              <Text style={styles.loadingLabel}>FINDING TODAY'S BLOOM</Text>
+              <Text style={styles.loadingLabel}>FINDING TODAY&apos;S BLOOM</Text>
             </View>
           )}
 
@@ -324,7 +400,7 @@ export default function HomeScreen() {
                 flipHorizontal
                 flipVertical={false}
                 clickable
-                useNativeDriver={Platform.OS !== 'web'}
+                useNativeDriver={process.env.EXPO_OS !== 'web'}
               >
                 {/* Front: image */}
                 <View style={styles.face}>
@@ -349,6 +425,35 @@ export default function HomeScreen() {
                     style={styles.hintScrim}
                   />
                   <Text style={styles.hint}>TAP TO READ</Text>
+
+                  {/* Expand button — zoom-transitions to the full-screen detail view.
+                      Only shown when we have a real CDN URI (not a bundled fallback). */}
+                  {detailImageUri != null && (
+                    <Link
+                      href={{
+                        pathname: '/flower-detail',
+                        params: {
+                          imageUri: detailImageUri,
+                          common: state.flower.common,
+                          latin: state.flower.latin,
+                          blurb: state.flower.blurb,
+                          state: state.flower.state,
+                          date: state.flower.date,
+                        },
+                      }}
+                      asChild
+                    >
+                      <Link.Trigger withAppleZoom>
+                        <Pressable
+                          style={styles.expandBtn}
+                          accessibilityLabel="View full screen"
+                          accessibilityRole="button"
+                        >
+                          <Text style={styles.expandIcon}>↗</Text>
+                        </Pressable>
+                      </Link.Trigger>
+                    </Link>
+                  )}
                 </View>
 
                 {/* Back: serif info panel */}
@@ -361,10 +466,10 @@ export default function HomeScreen() {
                   >
                     <IridescentOverlay />
                     <Text style={styles.backEyebrow}>SPECIES</Text>
-                    <Text style={styles.common}>{state.flower.common}</Text>
-                    <Text style={styles.latin}>{state.flower.latin}</Text>
+                    <Text style={styles.common} selectable>{state.flower.common}</Text>
+                    <Text style={styles.latin} selectable>{state.flower.latin}</Text>
                     <View style={styles.rule} />
-                    <Text style={styles.blurb}>{state.flower.blurb}</Text>
+                    <Text style={styles.blurb} selectable>{state.flower.blurb}</Text>
                     <Text style={[styles.hint, styles.hintBack]}>TAP TO FLIP BACK</Text>
                   </LinearGradient>
                 </View>
@@ -398,6 +503,91 @@ export default function HomeScreen() {
           )}
         </View>
       </SafeAreaView>
+
+      <Modal
+        visible={devMenuVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setDevMenuVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalHeader}>Dev Controls</Text>
+            
+            <Text style={styles.overrideLabel}>Active Location:</Text>
+            <Text style={styles.overrideStatus}>
+              {activeOverride ? activeOverride : 'Real System Location (No Override)'}
+            </Text>
+
+            <Text style={styles.sectionTitle}>Quick Select</Text>
+            <ScrollView
+              contentContainerStyle={styles.chipContainer}
+              showsVerticalScrollIndicator={false}
+              style={{ maxHeight: 150 }}
+            >
+              {[
+                { code: null, label: 'System' },
+                { code: 'default', label: 'Default' },
+                { code: 'MX', label: 'MX (Mexico)' },
+                { code: 'IS', label: 'IS (Iceland)' },
+                { code: 'RU', label: 'RU (Russia)' },
+                { code: 'CN', label: 'CN (China)' },
+                { code: 'CA-ON', label: 'CA-ON (Ontario)' },
+                { code: 'CA-BC', label: 'CA-BC' },
+                { code: 'CA', label: 'CA (California)' },
+                { code: 'NY', label: 'NY (New York)' },
+                { code: 'TX', label: 'TX (Texas)' },
+              ].map((item) => {
+                const isSelected = activeOverride === item.code;
+                return (
+                  <Pressable
+                    key={String(item.code)}
+                    style={[styles.chip, isSelected && styles.chipSelected]}
+                    onPress={() => applyOverride(item.code)}
+                  >
+                    <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+                      {item.label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+
+            <Text style={[styles.sectionTitle, { marginTop: 16 }]}>Custom Code</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="e.g. CA-QC, AL, WY"
+                placeholderTextColor="rgba(255,255,255,0.3)"
+                value={customCode}
+                onChangeText={setCustomCode}
+                autoCapitalize="characters"
+                autoCorrect={false}
+              />
+              <Pressable
+                style={styles.applyBtn}
+                onPress={() => {
+                  const trimmed = customCode.trim().toUpperCase();
+                  if (!trimmed) {
+                    Alert.alert('Invalid Code', 'Please enter a region code.');
+                    return;
+                  }
+                  applyOverride(trimmed);
+                }}
+              >
+                <Text style={styles.applyBtnText}>Apply</Text>
+              </Pressable>
+            </View>
+
+            <Pressable
+              style={styles.dismissBtn}
+              onPress={() => setDevMenuVisible(false)}
+            >
+              <Text style={styles.dismissBtnText}>Dismiss</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -454,12 +644,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 18,
+    borderCurve: 'continuous',
     overflow: 'hidden',
     backgroundColor: '#0a0a0a',
     boxShadow: '0px 16px 28px rgba(0,0,0,0.45)',
   },
   imageRadius: {
     borderRadius: 18,
+    borderCurve: 'continuous',
   },
   hintScrim: {
     position: 'absolute',
@@ -484,6 +676,25 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginTop: 'auto',
     paddingTop: 24,
+  },
+  expandBtn: {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    borderCurve: 'continuous',
+    backgroundColor: 'rgba(0,0,0,0.42)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.32)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  expandIcon: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 15,
+    fontWeight: '600',
   },
   fallbackBadge: {
     position: 'absolute',
@@ -574,6 +785,7 @@ const styles = StyleSheet.create({
 
   placeholder: {
     borderRadius: 18,
+    borderCurve: 'continuous',
     backgroundColor: '#111',
     alignItems: 'center',
     justifyContent: 'center',
@@ -613,5 +825,117 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
     letterSpacing: 0.4,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.85)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: '#161616',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.15)',
+    width: '100%',
+    maxWidth: 400,
+    padding: 24,
+    maxHeight: '80%',
+  },
+  modalHeader: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#fff',
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  overrideLabel: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 13,
+    marginBottom: 4,
+  },
+  overrideStatus: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.4)',
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    marginBottom: 8,
+  },
+  chipContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingBottom: 8,
+  },
+  chip: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.05)',
+  },
+  chipSelected: {
+    borderColor: '#fff',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+  },
+  chipText: {
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 13,
+  },
+  chipTextSelected: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  textInput: {
+    flex: 1,
+    height: 44,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#111',
+    color: '#fff',
+    paddingHorizontal: 12,
+    fontSize: 14,
+  },
+  applyBtn: {
+    height: 44,
+    paddingHorizontal: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  applyBtnText: {
+    color: '#000',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  dismissBtn: {
+    marginTop: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  dismissBtnText: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 14,
+    fontWeight: '600',
+    letterSpacing: 1,
   },
 });

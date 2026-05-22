@@ -1,21 +1,22 @@
-# Sandbox Staring at Flowers
+# Specimen Sandbox
 
-A daily ritual app: every morning, a fresh AI-generated picture of a flower native to your US state — matched to what's blooming this month.
+A daily ritual app: every morning, a fresh AI-generated picture of a flower native to your region (US states, Canadian provinces, or countries) — matched to what's blooming this month.
 
 ## How it works
 
-1. On first launch, the app asks for your location once and resolves it to a US state code (e.g. `CA`). The state is cached locally; no coordinates are stored or sent anywhere.
-2. Each night at 04:00 PT, a GitHub Actions cron picks one in-season native species per state from `data/species.json`, generates an image with Gemini 2.5 Flash Image, and commits the `.png` + sidecar JSON to `docs/daily/{state}/{YYYY-MM-DD}.{png,json}`.
-3. GitHub Pages serves those files as a free static CDN. The app fetches today's flower for your state and displays it full-bleed with the common name, latin name, and a short blurb.
+1. On first launch, the app asks for your location once and resolves it to a region code (e.g. `CA`, `CA-ON`, or `MX`). The region is cached locally; no coordinates are stored or sent anywhere.
+2. Each night at 04:00 PT, a GitHub Actions cron picks one in-season native species per region from `data/species.json`, generates an image with Gemini 2.5 Flash Image, and commits the `.png` + sidecar JSON to `docs/daily/{state}/{YYYY-MM-DD}.{png,json}`.
+3. GitHub Pages serves those files as a free static CDN. The app fetches today's flower for your region and displays it full-bleed with the common name, latin name, and a short blurb.
 
-If permission is denied, or you're outside the US, the app falls back to a curated `default` bucket.
+If permission is denied, or you're in an unsupported region, the app falls back to a curated `default` bucket.
 
 ## Repo layout
 
 ```
 ├── app/
-│   ├── _layout.tsx            # Bare Stack: index + +not-found
-│   ├── index.tsx              # Single-screen flower card UI
+│   ├── _layout.tsx            # Stack: index + flower-detail + +not-found
+│   ├── index.tsx              # Home: daily flower card (flip-to-back for info)
+│   ├── flower-detail.tsx      # Full-screen detail view with close button
 │   └── +not-found.tsx
 ├── lib/
 │   ├── region.ts              # One-prompt expo-location → state, cached in AsyncStorage
@@ -37,17 +38,30 @@ If permission is denied, or you're outside the US, the app falls back to a curat
 ## Quick start
 
 ```bash
-npm install
-npx expo start
+pnpm install
+pnpm exec expo start
 ```
 
-For iOS hardware development with location prompts working correctly:
+Scan the QR code with **Expo Go** on iOS or Android. The app has no
+custom native modules, so Expo Go covers all required APIs — no custom
+build needed for day-to-day work.
+
+For native verification (TestFlight / Play Internal prerelease check):
 
 ```bash
-npx expo install expo-dev-client
-eas build --profile development --platform ios
-npx expo start --dev-client
+# iOS simulator (no signing)
+eas build --profile development-simulator --platform ios --local
+
+# iOS device (Apple credentials via `eas credentials`)
+eas build --profile development --platform ios --local
+
+# Android
+eas build --profile development --platform android --local
 ```
+
+See **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** for full dev loop +
+**[meta/DEPLOYMENT.md](meta/DEPLOYMENT.md)** for TestFlight / Play
+Internal submission.
 
 ## First-time setup
 
@@ -119,9 +133,12 @@ run so you can resume without re-paying for the states that already worked.
 ## Documentation
 
 - **[CHANGELOG.md](CHANGELOG.md)** — release history
-- **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** — local dev setup
+- **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** — local dev loop + SDK 55 maintenance
+- **[meta/DEPLOYMENT.md](meta/DEPLOYMENT.md)** — TestFlight + Play Internal walkthrough
+- **[meta/ERROR_STATES.md](meta/ERROR_STATES.md)** — error & offline behavior inventory + tester checklist
 - **[meta/SUBMISSION.md](meta/SUBMISSION.md)** — App Store submission reference
 - **[meta/PRIVACY.md](meta/PRIVACY.md)** — privacy policy (also at [docs/privacy.html](docs/privacy.html))
+- **[docs/plans/](docs/plans/)** — design + implementation plans (active and archived)
 
 ## Support
 

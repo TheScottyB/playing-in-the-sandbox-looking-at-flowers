@@ -1,4 +1,4 @@
-# Screenshot Capture for Sandbox Staring at Flowers
+# Screenshot Capture for Specimen Sandbox
 
 This directory contains organized screenshots for App Store submission.
 

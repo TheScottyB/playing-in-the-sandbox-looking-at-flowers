@@ -1,10 +1,10 @@
 # App Store Submission Checklist
 
-This document tracks all requirements for submitting "Sandbox Staring at Flowers" to the App Store. Updated for v1.1.0 (daily AI-generated native flower).
+This document tracks all requirements for submitting "Specimen Sandbox" to the App Store. Updated for v1.1.0 (daily AI-generated native flower).
 
 ## App Store Metadata Requirements
 
-- [x] **App Name**: "Sandbox Staring at Flowers"
+- [x] **App Name**: "Specimen Sandbox"
 - [x] **Bundle ID**: com.djscottyb.playinginthesandoxlookingatflowers
 - [x] **Primary Category**: Entertainment
 - [ ] **Secondary Category**: Lifestyle (change from Education)

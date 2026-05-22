@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Sandbox Staring at Flowers",
+    "name": "Specimen Sandbox",
     "slug": "playing-in-the-sandbox-staring-at-flowers",
     "version": "1.1.1",
-    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your US state and the current season.",
-    "primaryColor": "#4CAF50",
+    "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your region and the current season.",
+    "primaryColor": "#0a0a0c",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./app_store_assets/icons/icon-1024.png",
     "scheme": "staring-at-flowers",
     "userInterfaceStyle": "automatic",
     "ios": {
@@ -32,8 +32,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./app_store_assets/icons/adaptive-foreground.png",
+        "backgroundImage": "./app_store_assets/icons/adaptive-background.png",
+        "monochromeImage": "./app_store_assets/icons/monochrome.png",
+        "backgroundColor": "#0a0a0c"
       },
       "package": "com.djscottyb.playinginthesandoxlookingatflowers",
       "versionCode": 1,
@@ -47,10 +49,10 @@
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png",
-      "name": "Sandbox Staring at Flowers",
+      "name": "Specimen Sandbox",
       "shortName": "Staring at Flowers",
       "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today.",
-      "themeColor": "#ffffff",
+      "themeColor": "#0a0a0c",
       "lang": "en-US"
     },
     "plugins": [
@@ -64,13 +66,13 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./app_store_assets/icons/adaptive-foreground.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#4CAF50"
+          "backgroundColor": "#0a0a0c"
         }
       ],
-      "expo-image"
+      ["expo-image", { "disableLibdav1d": true }]
     ],
     "experiments": {
       "typedRoutes": true

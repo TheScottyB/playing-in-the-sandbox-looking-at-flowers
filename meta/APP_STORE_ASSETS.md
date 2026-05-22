@@ -1,6 +1,6 @@
 # App Store Submission Assets
 
-This document outlines required assets, metadata, and specifications for submitting "Sandbox Staring at Flowers" to the Apple App Store. The app is a daily ritual: each morning it shows a fresh AI-generated picture of a flower native to the user's US state.
+This document outlines required assets, metadata, and specifications for submitting "Specimen Sandbox" to the Apple App Store. The app is a daily ritual: each morning it shows a fresh AI-generated picture of a flower native to the user's US state.
 
 ## Screenshot Specifications
 
@@ -83,7 +83,7 @@ Generated via ImageMagick from `assets/images/icon.png` (1024×1024, 8-bit sRGB,
 
 | Metadata | Value | Status |
 |----------|-------|--------|
-| App Name | "Sandbox Staring at Flowers" (max 30 char) | ✅ Complete |
+| App Name | "Specimen Sandbox" (max 30 char) | ✅ Complete |
 | Subtitle | "A flower a day, native to you" (max 30 char) | ❌ Pending |
 | Category | Primary: Entertainment<br>Secondary: Lifestyle | ❌ Update from Education |
 | Price | Free | ✅ Complete |
@@ -93,7 +93,7 @@ Generated via ImageMagick from `assets/images/icon.png` (1024×1024, 8-bit sRGB,
 
 | Item | Value | Status |
 |------|-------|--------|
-| Description (max 4000 char) | "Wake up to a fresh AI-generated picture of a flower blooming near you today. Sandbox Staring at Flowers selects a native species for your US state and the current month, then delivers a new image every morning. One tap to see yesterday's. No accounts, no ads, no tracking — your region is resolved once on first launch and stored only on your device." | ❌ Pending |
+| Description (max 4000 char) | "Wake up to a fresh AI-generated picture of a flower blooming near you today. Specimen Sandbox selects a native species for your US state and the current month, then delivers a new image every morning. One tap to see yesterday's. No accounts, no ads, no tracking — your region is resolved once on first launch and stored only on your device." | ❌ Pending |
 | Promotional Text (max 170 char) | "A new native flower, every morning. Picked for your state and the season." | ❌ Pending |
 | Keywords (max 100 char) | "flowers,native,daily,wildflowers,bloom,nature,seasons,states,gallery,morning" | ❌ Pending |
 

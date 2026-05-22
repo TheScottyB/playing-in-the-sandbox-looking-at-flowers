@@ -65,11 +65,48 @@ function pickSpecies(species, state, date) {
   return pool[idx];
 }
 
+function getRegionPromptText(state) {
+  const countryNames = {
+    'MX': 'Mexico',
+    'IS': 'Iceland',
+    'RU': 'Russia',
+    'CN': 'China'
+  };
+
+  const caProvinces = {
+    'CA-AB': 'Alberta, Canada',
+    'CA-BC': 'British Columbia, Canada',
+    'CA-MB': 'Manitoba, Canada',
+    'CA-NB': 'New Brunswick, Canada',
+    'CA-NL': 'Newfoundland and Labrador, Canada',
+    'CA-NS': 'Nova Scotia, Canada',
+    'CA-ON': 'Ontario, Canada',
+    'CA-PE': 'Prince Edward Island, Canada',
+    'CA-QC': 'Quebec, Canada',
+    'CA-SK': 'Saskatchewan, Canada',
+    'CA-NT': 'Northwest Territories, Canada',
+    'CA-NU': 'Nunavut, Canada',
+    'CA-YT': 'Yukon, Canada'
+  };
+
+  if (state === 'default') {
+    return 'North America';
+  }
+  if (countryNames[state]) {
+    return countryNames[state];
+  }
+  if (caProvinces[state]) {
+    return caProvinces[state];
+  }
+  return `the "${state}" region of the US`;
+}
+
 async function generateImage(apiKey, species, state) {
   const month = new Date().toLocaleString('en-US', { month: 'long' });
+  const regionText = getRegionPromptText(state);
   const prompt =
     `Generate a beautiful, highly detailed photorealistic image of a ${species.common} ` +
-    `(${species.latin}) in full bloom, native to the "${state}" region of the US and blooming in ${month}. ` +
+    `(${species.latin}) in full bloom, native to ${regionText} and blooming in ${month}. ` +
     `Soft natural lighting, botanically accurate, white or softly blurred outdoor background. ` +
     `No text, no watermarks, portrait orientation.\n\n` +
     `After the image, write exactly one sentence (max 280 characters) describing this flower's ` +

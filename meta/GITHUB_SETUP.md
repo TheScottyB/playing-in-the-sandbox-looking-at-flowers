@@ -1,6 +1,6 @@
 # GitHub Setup Documentation
 
-This document outlines the GitHub repository structure, branch management, and workflow processes for the Sandbox Staring at Flowers project.
+This document outlines the GitHub repository structure, branch management, and workflow processes for the Specimen Sandbox project.
 
 ## Repository Configuration
 
