@@ -4,12 +4,15 @@
  * (on-demand generation) or on-device generation without changing callers.
  */
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { ImageSourcePropType } from 'react-native';
 
 import { DEFAULT_FLOWER, pickVariant, type TimeOfDay } from '@/data/defaults';
 
 const PAGES_BASE_URL =
   'https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/daily';
+
+const CACHE_KEY = 'dailyFlower.lastSuccess.v1';
 
 export interface DailyFlower {
   /** Accepts both `{ uri }` and `require(...)` so a single field covers
@@ -68,7 +71,7 @@ export async function fetchDailyFlower(state: string, date: string = todayLocalI
     throw new FlowerFetchError(state, date, sidecar.status);
   }
   const meta = (await sidecar.json()) as DailyFlowerSidecar;
-  return {
+  const flower: DailyFlower = {
     imageSource: { uri: imageUrlFor(state, date) },
     common: meta.common,
     latin: meta.latin,
@@ -76,6 +79,26 @@ export async function fetchDailyFlower(state: string, date: string = todayLocalI
     state,
     date,
   };
+  // Best-effort cache for offline fallback — storage failures must not break the success path.
+  AsyncStorage.setItem(CACHE_KEY, JSON.stringify(flower)).catch((e) => {
+    console.warn('Failed to cache flower for offline use:', e);
+  });
+  return flower;
+}
+
+/**
+ * Returns the last successfully fetched CDN flower, or null if none cached.
+ * Used as a graceful step between a CDN failure and `getDefaultFlower()`.
+ */
+export async function getCachedFlower(): Promise<DailyFlower | null> {
+  try {
+    const raw = await AsyncStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as DailyFlower;
+  } catch (e) {
+    console.warn('Failed to read cached flower:', e);
+    return null;
+  }
 }
 
 /**

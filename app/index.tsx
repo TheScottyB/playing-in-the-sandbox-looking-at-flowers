@@ -20,6 +20,7 @@ import FlipCard from 'react-native-flip-card';
 import {
   fetchDailyFlower,
   FlowerFetchError,
+  getCachedFlower,
   getDefaultFlower,
   todayLocalIso,
   type DailyFlower,
@@ -116,12 +117,15 @@ export default function HomeScreen() {
           // the user knows we don't have a flower for that exact date.
           setState({ status: 'error', kind: 'unpublished', message: ERROR_COPY.unpublished.sub });
         } else if (!online) {
-          // Network down: show the fallback with an explicit offline marker so
-          // the user sees they're not online rather than a silently-different
-          // flower.
+          // Network down: prefer the last successfully fetched flower from
+          // AsyncStorage; fall through to the bundled default if nothing's cached.
+          const cached = await getCachedFlower();
+          if (cancelled) return;
           setState({
             status: 'ok',
-            flower: { ...getDefaultFlower(date), isDefault: true },
+            flower: cached
+              ? { ...cached, isDefault: true }
+              : { ...getDefaultFlower(date), isDefault: true },
           });
         } else {
           // 5xx or other: retry once with backoff before falling through.
@@ -132,9 +136,13 @@ export default function HomeScreen() {
             const flower = await fetchDailyFlower(region, date);
             if (!cancelled) setState({ status: 'ok', flower });
           } catch {
-            if (!cancelled) {
-              setState({ status: 'ok', flower: getDefaultFlower(date) });
-            }
+            if (cancelled) return;
+            const cached = await getCachedFlower();
+            if (cancelled) return;
+            setState({
+              status: 'ok',
+              flower: cached ? { ...cached, isDefault: true } : getDefaultFlower(date),
+            });
           }
         }
       }

@@ -18,48 +18,9 @@ const US_STATE_CODES = new Set([
   'DC',
 ]);
 
-export async function getRegion(): Promise<string> {
-  const { region } = await getRegionWithStatus();
-  return region;
-}
-
-export async function getRegionWithStatus(): Promise<RegionResult> {
-  const cached = await AsyncStorage.getItem(STORAGE_KEY);
-  if (cached) {
-    const denied = await isPermissionDenied();
-    return { region: cached, permissionDenied: cached === FALLBACK && denied };
-  }
-
-  const result = await resolveRegion();
-  await AsyncStorage.setItem(STORAGE_KEY, result.region);
-  return result;
-}
-
-async function isPermissionDenied(): Promise<boolean> {
-  const { status } = await Location.getForegroundPermissionsAsync();
-  return status !== 'granted';
-}
-
-async function resolveRegion(): Promise<RegionResult> {
-  const { status } = await Location.requestForegroundPermissionsAsync();
-  if (status !== 'granted') return { region: FALLBACK, permissionDenied: true };
-
-  const position = await Location.getCurrentPositionAsync({
-    accuracy: Location.Accuracy.Lowest,
-  });
-  const places = await Location.reverseGeocodeAsync({
-    latitude: position.coords.latitude,
-    longitude: position.coords.longitude,
-  });
-
-  const place = places[0];
-  if (!place || place.isoCountryCode !== 'US' || !place.region) {
-    return { region: FALLBACK, permissionDenied: false };
-  }
-
-  const code = stateNameToCode(place.region);
-  return { region: code ?? FALLBACK, permissionDenied: false };
-}
+const LOWERCASE_STATE_CODES = new Set(
+  Array.from(US_STATE_CODES).map(code => code.toLowerCase())
+);
 
 const STATE_NAME_TO_CODE: Record<string, string> = {
   Alabama: 'AL', Alaska: 'AK', Arizona: 'AZ', Arkansas: 'AR',
@@ -77,9 +38,77 @@ const STATE_NAME_TO_CODE: Record<string, string> = {
   Wisconsin: 'WI', Wyoming: 'WY', 'District of Columbia': 'DC',
 };
 
+const LOWERCASE_STATE_NAME_TO_CODE = Object.keys(STATE_NAME_TO_CODE).reduce((acc, name) => {
+  acc[name.toLowerCase()] = STATE_NAME_TO_CODE[name];
+  return acc;
+}, {} as Record<string, string>);
+
+export async function getRegion(): Promise<string> {
+  const { region } = await getRegionWithStatus();
+  return region;
+}
+
+export async function getRegionWithStatus(): Promise<RegionResult> {
+  const cached = await AsyncStorage.getItem(STORAGE_KEY);
+  const denied = await isPermissionDenied();
+
+  if (cached) {
+    if (cached === FALLBACK && !denied) {
+      const result = await resolveRegion();
+      await AsyncStorage.setItem(STORAGE_KEY, result.region);
+      return result;
+    }
+    return { region: cached, permissionDenied: cached === FALLBACK && denied };
+  }
+
+  const result = await resolveRegion();
+  await AsyncStorage.setItem(STORAGE_KEY, result.region);
+  return result;
+}
+
+async function isPermissionDenied(): Promise<boolean> {
+  try {
+    const { status } = await Location.getForegroundPermissionsAsync();
+    return status !== 'granted';
+  } catch (error) {
+    console.warn('Failed to get location permissions:', error);
+    return true;
+  }
+}
+
+async function resolveRegion(): Promise<RegionResult> {
+  try {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') return { region: FALLBACK, permissionDenied: true };
+
+    const position = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Lowest,
+    });
+    const places = await Location.reverseGeocodeAsync({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    });
+
+    const place = places[0];
+    if (!place || place.isoCountryCode !== 'US' || !place.region) {
+      return { region: FALLBACK, permissionDenied: false };
+    }
+
+    const code = stateNameToCode(place.region);
+    return { region: code ?? FALLBACK, permissionDenied: false };
+  } catch (error) {
+    console.warn('Failed to resolve region from location services:', error);
+    return { region: FALLBACK, permissionDenied: false };
+  }
+}
+
 function stateNameToCode(region: string): string | null {
-  if (US_STATE_CODES.has(region)) return region;
-  return STATE_NAME_TO_CODE[region] ?? null;
+  if (!region) return null;
+  const cleaned = region.trim().toLowerCase();
+  if (LOWERCASE_STATE_CODES.has(cleaned)) {
+    return cleaned.toUpperCase();
+  }
+  return LOWERCASE_STATE_NAME_TO_CODE[cleaned] ?? null;
 }
 
 /** Test/debug helper — clears the cached region so the next call re-prompts. */
