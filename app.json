@@ -6,7 +6,7 @@
 		"description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your region and the current season.",
 		"primaryColor": "#0a0a0c",
 		"orientation": "portrait",
-		"icon": "./app_store_assets/icons/icon-1024.png",
+		"icon": "./assets/icons/icon-1024.png",
 		"scheme": "staring-at-flowers",
 		"userInterfaceStyle": "dark",
 		"ios": {
@@ -28,9 +28,9 @@
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./app_store_assets/icons/adaptive-foreground.png",
-				"backgroundImage": "./app_store_assets/icons/adaptive-background.png",
-				"monochromeImage": "./app_store_assets/icons/monochrome.png",
+				"foregroundImage": "./assets/icons/adaptive-foreground.png",
+				"backgroundImage": "./assets/icons/adaptive-background.png",
+				"monochromeImage": "./assets/icons/monochrome.png",
 				"backgroundColor": "#0a0a0c"
 			},
 			"package": "com.djscottyb.playinginthesandoxlookingatflowers",
@@ -62,7 +62,7 @@
 			[
 				"expo-splash-screen",
 				{
-					"image": "./app_store_assets/icons/adaptive-foreground.png",
+					"image": "./assets/icons/adaptive-foreground.png",
 					"imageWidth": 200,
 					"resizeMode": "contain",
 					"backgroundColor": "#0a0a0c"
