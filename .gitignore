@@ -60,3 +60,4 @@ build-*.ipa
 google-service-account.json
 .vercel
 .env
+store/

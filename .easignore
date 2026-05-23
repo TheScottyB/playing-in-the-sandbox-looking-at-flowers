@@ -44,6 +44,7 @@ ios/
 android/
 google-service-account.json
 app.ipa
+store/
 app-example
 
 # Native keys and provisions
