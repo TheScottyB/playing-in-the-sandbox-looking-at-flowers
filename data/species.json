@@ -1,349 +1,4271 @@
 {
   "AL": [
-    { "common": "Camellia", "latin": "Camellia japonica", "bloomMonths": [1, 2, 3] },
-    { "common": "Blue Wild Indigo", "latin": "Baptisia australis", "bloomMonths": [4, 5, 6] },
-    { "common": "Purple Coneflower", "latin": "Echinacea purpurea", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Camellia",
+      "latin": "Camellia japonica",
+      "bloomMonths": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Blue Wild Indigo",
+      "latin": "Baptisia australis",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Purple Coneflower",
+      "latin": "Echinacea purpurea",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "AK": [
-    { "common": "Forget-Me-Not", "latin": "Myosotis alpestris", "bloomMonths": [5, 6, 7, 8] },
-    { "common": "Fireweed", "latin": "Chamerion angustifolium", "bloomMonths": [7, 8, 9] },
-    { "common": "Arctic Poppy", "latin": "Papaver radicatum", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Forget-Me-Not",
+      "latin": "Myosotis alpestris",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Fireweed",
+      "latin": "Chamerion angustifolium",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Arctic Poppy",
+      "latin": "Papaver radicatum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "AZ": [
-    { "common": "Saguaro Blossom", "latin": "Carnegiea gigantea", "bloomMonths": [5, 6] },
-    { "common": "Desert Marigold", "latin": "Baileya multiradiata", "bloomMonths": [3, 4, 5, 6, 7, 8, 9, 10, 11] },
-    { "common": "Arizona Poppy", "latin": "Kallstroemia grandiflora", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Saguaro Blossom",
+      "latin": "Carnegiea gigantea",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Desert Marigold",
+      "latin": "Baileya multiradiata",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "common": "Arizona Poppy",
+      "latin": "Kallstroemia grandiflora",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "AR": [
-    { "common": "Apple Blossom", "latin": "Malus sylvestris", "bloomMonths": [4, 5] },
-    { "common": "Passionflower", "latin": "Passiflora incarnata", "bloomMonths": [6, 7, 8] },
-    { "common": "Cardinal Flower", "latin": "Lobelia cardinalis", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Apple Blossom",
+      "latin": "Malus sylvestris",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Passionflower",
+      "latin": "Passiflora incarnata",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Cardinal Flower",
+      "latin": "Lobelia cardinalis",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "CA": [
-    { "common": "California Poppy", "latin": "Eschscholzia californica", "bloomMonths": [2, 3, 4, 5, 6, 7, 8, 9] },
-    { "common": "Douglas Iris", "latin": "Iris douglasiana", "bloomMonths": [3, 4, 5] },
-    { "common": "Matilija Poppy", "latin": "Romneya coulteri", "bloomMonths": [5, 6, 7] }
+    {
+      "common": "California Poppy",
+      "latin": "Eschscholzia californica",
+      "bloomMonths": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Douglas Iris",
+      "latin": "Iris douglasiana",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Matilija Poppy",
+      "latin": "Romneya coulteri",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "CO": [
-    { "common": "Rocky Mountain Columbine", "latin": "Aquilegia coerulea", "bloomMonths": [6, 7, 8] },
-    { "common": "Indian Paintbrush", "latin": "Castilleja miniata", "bloomMonths": [6, 7, 8, 9] },
-    { "common": "Pasqueflower", "latin": "Pulsatilla patens", "bloomMonths": [3, 4, 5] }
+    {
+      "common": "Rocky Mountain Columbine",
+      "latin": "Aquilegia coerulea",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Indian Paintbrush",
+      "latin": "Castilleja miniata",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Pasqueflower",
+      "latin": "Pulsatilla patens",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    }
   ],
   "CT": [
-    { "common": "Mountain Laurel", "latin": "Kalmia latifolia", "bloomMonths": [5, 6] },
-    { "common": "Pink Lady's Slipper", "latin": "Cypripedium acaule", "bloomMonths": [5, 6] },
-    { "common": "Cardinal Flower", "latin": "Lobelia cardinalis", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Mountain Laurel",
+      "latin": "Kalmia latifolia",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Pink Lady's Slipper",
+      "latin": "Cypripedium acaule",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Cardinal Flower",
+      "latin": "Lobelia cardinalis",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "DE": [
-    { "common": "Peach Blossom", "latin": "Prunus persica", "bloomMonths": [3, 4] },
-    { "common": "Virginia Bluebells", "latin": "Mertensia virginica", "bloomMonths": [3, 4, 5] },
-    { "common": "Swamp Rose Mallow", "latin": "Hibiscus moscheutos", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Peach Blossom",
+      "latin": "Prunus persica",
+      "bloomMonths": [
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Virginia Bluebells",
+      "latin": "Mertensia virginica",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Swamp Rose Mallow",
+      "latin": "Hibiscus moscheutos",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "FL": [
-    { "common": "Orange Blossom", "latin": "Citrus sinensis", "bloomMonths": [1, 2, 3, 4] },
-    { "common": "Tickseed", "latin": "Coreopsis floridana", "bloomMonths": [5, 6, 7, 8] },
-    { "common": "Swamp Lily", "latin": "Crinum americanum", "bloomMonths": [6, 7, 8, 9] }
+    {
+      "common": "Orange Blossom",
+      "latin": "Citrus sinensis",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Tickseed",
+      "latin": "Coreopsis floridana",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Swamp Lily",
+      "latin": "Crinum americanum",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "GA": [
-    { "common": "Cherokee Rose", "latin": "Rosa laevigata", "bloomMonths": [3, 4] },
-    { "common": "Flame Azalea", "latin": "Rhododendron calendulaceum", "bloomMonths": [4, 5, 6] },
-    { "common": "Black-Eyed Susan", "latin": "Rudbeckia hirta", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Cherokee Rose",
+      "latin": "Rosa laevigata",
+      "bloomMonths": [
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Flame Azalea",
+      "latin": "Rhododendron calendulaceum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Black-Eyed Susan",
+      "latin": "Rudbeckia hirta",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "HI": [
-    { "common": "Hawaiian Yellow Hibiscus", "latin": "Hibiscus brackenridgei", "bloomMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-    { "common": "Naupaka", "latin": "Scaevola taccada", "bloomMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-    { "common": "Red Ginger", "latin": "Alpinia purpurata", "bloomMonths": [3, 4, 5, 6, 7, 8, 9, 10] }
+    {
+      "common": "Hawaiian Yellow Hibiscus",
+      "latin": "Hibiscus brackenridgei",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Naupaka",
+      "latin": "Scaevola taccada",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Red Ginger",
+      "latin": "Alpinia purpurata",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
   ],
   "ID": [
-    { "common": "Mock Orange", "latin": "Philadelphus lewisii", "bloomMonths": [5, 6, 7] },
-    { "common": "Bitterroot", "latin": "Lewisia rediviva", "bloomMonths": [5, 6, 7] },
-    { "common": "Glacier Lily", "latin": "Erythronium grandiflorum", "bloomMonths": [4, 5, 6] }
+    {
+      "common": "Mock Orange",
+      "latin": "Philadelphus lewisii",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Bitterroot",
+      "latin": "Lewisia rediviva",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Glacier Lily",
+      "latin": "Erythronium grandiflorum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
   ],
   "IL": [
-    { "common": "Violet", "latin": "Viola sororia", "bloomMonths": [4, 5, 6] },
-    { "common": "Wild Bergamot", "latin": "Monarda fistulosa", "bloomMonths": [6, 7, 8] },
-    { "common": "Prairie Blazing Star", "latin": "Liatris pycnostachya", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Violet",
+      "latin": "Viola sororia",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Wild Bergamot",
+      "latin": "Monarda fistulosa",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Prairie Blazing Star",
+      "latin": "Liatris pycnostachya",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "IN": [
-    { "common": "Peony", "latin": "Paeonia lactiflora", "bloomMonths": [5, 6] },
-    { "common": "Jack-in-the-Pulpit", "latin": "Arisaema triphyllum", "bloomMonths": [4, 5] },
-    { "common": "Spiderwort", "latin": "Tradescantia ohiensis", "bloomMonths": [5, 6, 7] }
+    {
+      "common": "Peony",
+      "latin": "Paeonia lactiflora",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Jack-in-the-Pulpit",
+      "latin": "Arisaema triphyllum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Spiderwort",
+      "latin": "Tradescantia ohiensis",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "IA": [
-    { "common": "Wild Prairie Rose", "latin": "Rosa blanda", "bloomMonths": [5, 6, 7] },
-    { "common": "Purple Coneflower", "latin": "Echinacea purpurea", "bloomMonths": [6, 7, 8] },
-    { "common": "Wild Blue Indigo", "latin": "Baptisia australis", "bloomMonths": [5, 6] }
+    {
+      "common": "Wild Prairie Rose",
+      "latin": "Rosa blanda",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Purple Coneflower",
+      "latin": "Echinacea purpurea",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Wild Blue Indigo",
+      "latin": "Baptisia australis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "KS": [
-    { "common": "Sunflower", "latin": "Helianthus annuus", "bloomMonths": [6, 7, 8, 9] },
-    { "common": "Prairie Smoke", "latin": "Geum triflorum", "bloomMonths": [4, 5, 6] },
-    { "common": "Indian Blanket", "latin": "Gaillardia pulchella", "bloomMonths": [5, 6, 7, 8] }
+    {
+      "common": "Sunflower",
+      "latin": "Helianthus annuus",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Prairie Smoke",
+      "latin": "Geum triflorum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Indian Blanket",
+      "latin": "Gaillardia pulchella",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "KY": [
-    { "common": "Goldenrod", "latin": "Solidago canadensis", "bloomMonths": [7, 8, 9, 10] },
-    { "common": "Wild Blue Phlox", "latin": "Phlox divaricata", "bloomMonths": [4, 5] },
-    { "common": "Purple Coneflower", "latin": "Echinacea purpurea", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Goldenrod",
+      "latin": "Solidago canadensis",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Wild Blue Phlox",
+      "latin": "Phlox divaricata",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Purple Coneflower",
+      "latin": "Echinacea purpurea",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "LA": [
-    { "common": "Magnolia", "latin": "Magnolia grandiflora", "bloomMonths": [4, 5, 6] },
-    { "common": "Louisiana Iris", "latin": "Iris fulva", "bloomMonths": [3, 4, 5] },
-    { "common": "Swamp Rose", "latin": "Rosa palustris", "bloomMonths": [5, 6, 7, 8] }
+    {
+      "common": "Magnolia",
+      "latin": "Magnolia grandiflora",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Louisiana Iris",
+      "latin": "Iris fulva",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Swamp Rose",
+      "latin": "Rosa palustris",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "ME": [
-    { "common": "White Pine Tassel", "latin": "Pinus strobus", "bloomMonths": [5] },
-    { "common": "Bunchberry", "latin": "Cornus canadensis", "bloomMonths": [5, 6, 7] },
-    { "common": "Lupine", "latin": "Lupinus perennis", "bloomMonths": [5, 6] }
+    {
+      "common": "White Pine Tassel",
+      "latin": "Pinus strobus",
+      "bloomMonths": [
+        5
+      ]
+    },
+    {
+      "common": "Bunchberry",
+      "latin": "Cornus canadensis",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Lupine",
+      "latin": "Lupinus perennis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "MD": [
-    { "common": "Black-Eyed Susan", "latin": "Rudbeckia hirta", "bloomMonths": [6, 7, 8] },
-    { "common": "Wild Columbine", "latin": "Aquilegia canadensis", "bloomMonths": [4, 5] },
-    { "common": "Cardinal Flower", "latin": "Lobelia cardinalis", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Black-Eyed Susan",
+      "latin": "Rudbeckia hirta",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Wild Columbine",
+      "latin": "Aquilegia canadensis",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Cardinal Flower",
+      "latin": "Lobelia cardinalis",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "MA": [
-    { "common": "Trailing Arbutus", "latin": "Epigaea repens", "bloomMonths": [3, 4, 5] },
-    { "common": "Blue Flag Iris", "latin": "Iris versicolor", "bloomMonths": [5, 6, 7] },
-    { "common": "Swamp Azalea", "latin": "Rhododendron viscosum", "bloomMonths": [6, 7] }
+    {
+      "common": "Trailing Arbutus",
+      "latin": "Epigaea repens",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Blue Flag Iris",
+      "latin": "Iris versicolor",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Swamp Azalea",
+      "latin": "Rhododendron viscosum",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    }
   ],
   "MI": [
-    { "common": "Apple Blossom", "latin": "Malus pumila", "bloomMonths": [5] },
-    { "common": "Trillium", "latin": "Trillium grandiflorum", "bloomMonths": [4, 5] },
-    { "common": "Michigan Lily", "latin": "Lilium michiganense", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Apple Blossom",
+      "latin": "Malus pumila",
+      "bloomMonths": [
+        5
+      ]
+    },
+    {
+      "common": "Trillium",
+      "latin": "Trillium grandiflorum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Michigan Lily",
+      "latin": "Lilium michiganense",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "MN": [
-    { "common": "Showy Lady's Slipper", "latin": "Cypripedium reginae", "bloomMonths": [6, 7] },
-    { "common": "Wild Bergamot", "latin": "Monarda fistulosa", "bloomMonths": [6, 7, 8] },
-    { "common": "Prairie Blazing Star", "latin": "Liatris pycnostachya", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Showy Lady's Slipper",
+      "latin": "Cypripedium reginae",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Wild Bergamot",
+      "latin": "Monarda fistulosa",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Prairie Blazing Star",
+      "latin": "Liatris pycnostachya",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "MS": [
-    { "common": "Magnolia", "latin": "Magnolia grandiflora", "bloomMonths": [4, 5, 6] },
-    { "common": "Blue Wild Indigo", "latin": "Baptisia australis", "bloomMonths": [4, 5, 6] },
-    { "common": "Yellow Pitcher Plant", "latin": "Sarracenia flava", "bloomMonths": [3, 4, 5] }
+    {
+      "common": "Magnolia",
+      "latin": "Magnolia grandiflora",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Blue Wild Indigo",
+      "latin": "Baptisia australis",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Yellow Pitcher Plant",
+      "latin": "Sarracenia flava",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    }
   ],
   "MO": [
-    { "common": "White Hawthorn Blossom", "latin": "Crataegus mollis", "bloomMonths": [4, 5] },
-    { "common": "Missouri Coneflower", "latin": "Rudbeckia missouriensis", "bloomMonths": [7, 8, 9] },
-    { "common": "Ozark Trillium", "latin": "Trillium ozarkanum", "bloomMonths": [4, 5] }
+    {
+      "common": "White Hawthorn Blossom",
+      "latin": "Crataegus mollis",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Missouri Coneflower",
+      "latin": "Rudbeckia missouriensis",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Ozark Trillium",
+      "latin": "Trillium ozarkanum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
   ],
   "MT": [
-    { "common": "Bitterroot", "latin": "Lewisia rediviva", "bloomMonths": [5, 6, 7] },
-    { "common": "Pasqueflower", "latin": "Pulsatilla patens", "bloomMonths": [3, 4, 5, 6] },
-    { "common": "Glacier Lily", "latin": "Erythronium grandiflorum", "bloomMonths": [4, 5, 6, 7] }
+    {
+      "common": "Bitterroot",
+      "latin": "Lewisia rediviva",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Pasqueflower",
+      "latin": "Pulsatilla patens",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Glacier Lily",
+      "latin": "Erythronium grandiflorum",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "NE": [
-    { "common": "Goldenrod", "latin": "Solidago canadensis", "bloomMonths": [7, 8, 9, 10] },
-    { "common": "Prairie Smoke", "latin": "Geum triflorum", "bloomMonths": [4, 5, 6] },
-    { "common": "Wild Rose", "latin": "Rosa blanda", "bloomMonths": [5, 6, 7] }
+    {
+      "common": "Goldenrod",
+      "latin": "Solidago canadensis",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Prairie Smoke",
+      "latin": "Geum triflorum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Wild Rose",
+      "latin": "Rosa blanda",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "NV": [
-    { "common": "Sagebrush", "latin": "Artemisia tridentata", "bloomMonths": [7, 8, 9] },
-    { "common": "Desert Paintbrush", "latin": "Castilleja chromosa", "bloomMonths": [4, 5, 6] },
-    { "common": "Claret Cup Cactus", "latin": "Echinocereus triglochidiatus", "bloomMonths": [4, 5, 6] }
+    {
+      "common": "Sagebrush",
+      "latin": "Artemisia tridentata",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Desert Paintbrush",
+      "latin": "Castilleja chromosa",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Claret Cup Cactus",
+      "latin": "Echinocereus triglochidiatus",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
   ],
   "NH": [
-    { "common": "Purple Lilac", "latin": "Syringa vulgaris", "bloomMonths": [5, 6] },
-    { "common": "Painted Trillium", "latin": "Trillium undulatum", "bloomMonths": [4, 5, 6] },
-    { "common": "Rhodora", "latin": "Rhododendron canadense", "bloomMonths": [4, 5] }
+    {
+      "common": "Purple Lilac",
+      "latin": "Syringa vulgaris",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Painted Trillium",
+      "latin": "Trillium undulatum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Rhodora",
+      "latin": "Rhododendron canadense",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
   ],
   "NJ": [
-    { "common": "Common Blue Violet", "latin": "Viola sororia", "bloomMonths": [4, 5] },
-    { "common": "Swamp Pink", "latin": "Helonias bullata", "bloomMonths": [3, 4] },
-    { "common": "Rose Mallow", "latin": "Hibiscus moscheutos", "bloomMonths": [7, 8, 9] }
+    {
+      "common": "Common Blue Violet",
+      "latin": "Viola sororia",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Swamp Pink",
+      "latin": "Helonias bullata",
+      "bloomMonths": [
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Rose Mallow",
+      "latin": "Hibiscus moscheutos",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "NM": [
-    { "common": "Yucca", "latin": "Yucca glauca", "bloomMonths": [5, 6, 7] },
-    { "common": "Desert Marigold", "latin": "Baileya multiradiata", "bloomMonths": [4, 5, 6, 7, 8, 9, 10] },
-    { "common": "Claret Cup Cactus", "latin": "Echinocereus triglochidiatus", "bloomMonths": [4, 5, 6] }
+    {
+      "common": "Yucca",
+      "latin": "Yucca glauca",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Desert Marigold",
+      "latin": "Baileya multiradiata",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Claret Cup Cactus",
+      "latin": "Echinocereus triglochidiatus",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
   ],
   "NY": [
-    { "common": "Wild Rose", "latin": "Rosa carolina", "bloomMonths": [5, 6, 7] },
-    { "common": "Trout Lily", "latin": "Erythronium americanum", "bloomMonths": [4, 5] },
-    { "common": "Blue Flag Iris", "latin": "Iris versicolor", "bloomMonths": [5, 6, 7] }
+    {
+      "common": "Wild Rose",
+      "latin": "Rosa carolina",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Trout Lily",
+      "latin": "Erythronium americanum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Blue Flag Iris",
+      "latin": "Iris versicolor",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "NC": [
-    { "common": "Dogwood", "latin": "Cornus florida", "bloomMonths": [3, 4, 5] },
-    { "common": "Carolina Lily", "latin": "Lilium michauxii", "bloomMonths": [6, 7, 8] },
-    { "common": "Venus Flytrap", "latin": "Dionaea muscipula", "bloomMonths": [5, 6] }
+    {
+      "common": "Dogwood",
+      "latin": "Cornus florida",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Carolina Lily",
+      "latin": "Lilium michauxii",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Venus Flytrap",
+      "latin": "Dionaea muscipula",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "ND": [
-    { "common": "Wild Prairie Rose", "latin": "Rosa blanda", "bloomMonths": [6, 7] },
-    { "common": "Prairie Blazing Star", "latin": "Liatris pycnostachya", "bloomMonths": [7, 8, 9] },
-    { "common": "Pasqueflower", "latin": "Pulsatilla patens", "bloomMonths": [3, 4, 5] }
+    {
+      "common": "Wild Prairie Rose",
+      "latin": "Rosa blanda",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Prairie Blazing Star",
+      "latin": "Liatris pycnostachya",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Pasqueflower",
+      "latin": "Pulsatilla patens",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    }
   ],
   "OH": [
-    { "common": "Scarlet Carnation", "latin": "Dianthus caryophyllus", "bloomMonths": [5, 6, 7, 8] },
-    { "common": "Trout Lily", "latin": "Erythronium americanum", "bloomMonths": [3, 4, 5] },
-    { "common": "Spiderwort", "latin": "Tradescantia ohiensis", "bloomMonths": [5, 6, 7] }
+    {
+      "common": "Scarlet Carnation",
+      "latin": "Dianthus caryophyllus",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Trout Lily",
+      "latin": "Erythronium americanum",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Spiderwort",
+      "latin": "Tradescantia ohiensis",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "OK": [
-    { "common": "Indian Blanket", "latin": "Gaillardia pulchella", "bloomMonths": [5, 6, 7, 8] },
-    { "common": "Prairie Verbena", "latin": "Glandularia bipinnatifida", "bloomMonths": [4, 5, 6, 7, 8, 9, 10] },
-    { "common": "Oklahoma Plum", "latin": "Prunus gracilis", "bloomMonths": [3, 4] }
+    {
+      "common": "Indian Blanket",
+      "latin": "Gaillardia pulchella",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Prairie Verbena",
+      "latin": "Glandularia bipinnatifida",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Oklahoma Plum",
+      "latin": "Prunus gracilis",
+      "bloomMonths": [
+        3,
+        4
+      ]
+    }
   ],
   "OR": [
-    { "common": "Oregon Grape", "latin": "Mahonia aquifolium", "bloomMonths": [2, 3, 4] },
-    { "common": "Farewell-to-Spring", "latin": "Clarkia amoena", "bloomMonths": [5, 6, 7] },
-    { "common": "Showy Phlox", "latin": "Phlox speciosa", "bloomMonths": [4, 5, 6] }
+    {
+      "common": "Oregon Grape",
+      "latin": "Mahonia aquifolium",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Farewell-to-Spring",
+      "latin": "Clarkia amoena",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Showy Phlox",
+      "latin": "Phlox speciosa",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
   ],
   "PA": [
-    { "common": "Mountain Laurel", "latin": "Kalmia latifolia", "bloomMonths": [5, 6] },
-    { "common": "Mayapple", "latin": "Podophyllum peltatum", "bloomMonths": [4, 5] },
-    { "common": "Wild Geranium", "latin": "Geranium maculatum", "bloomMonths": [4, 5, 6] }
+    {
+      "common": "Mountain Laurel",
+      "latin": "Kalmia latifolia",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Mayapple",
+      "latin": "Podophyllum peltatum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Wild Geranium",
+      "latin": "Geranium maculatum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
   ],
   "RI": [
-    { "common": "Violet", "latin": "Viola sororia", "bloomMonths": [4, 5] },
-    { "common": "Beach Plum", "latin": "Prunus maritima", "bloomMonths": [4, 5] },
-    { "common": "Swamp Rose", "latin": "Rosa palustris", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Violet",
+      "latin": "Viola sororia",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Beach Plum",
+      "latin": "Prunus maritima",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Swamp Rose",
+      "latin": "Rosa palustris",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "SC": [
-    { "common": "Yellow Jessamine", "latin": "Gelsemium sempervirens", "bloomMonths": [1, 2, 3, 4] },
-    { "common": "Carolina Lily", "latin": "Lilium michauxii", "bloomMonths": [7, 8, 9] },
-    { "common": "Venus Flytrap", "latin": "Dionaea muscipula", "bloomMonths": [5, 6] }
+    {
+      "common": "Yellow Jessamine",
+      "latin": "Gelsemium sempervirens",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Carolina Lily",
+      "latin": "Lilium michauxii",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Venus Flytrap",
+      "latin": "Dionaea muscipula",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "SD": [
-    { "common": "Pasqueflower", "latin": "Pulsatilla hirsutissima", "bloomMonths": [3, 4, 5, 6] },
-    { "common": "Prairie Smoke", "latin": "Geum triflorum", "bloomMonths": [4, 5, 6] },
-    { "common": "Prairie Fringed Orchid", "latin": "Platanthera praeclara", "bloomMonths": [6, 7] }
+    {
+      "common": "Pasqueflower",
+      "latin": "Pulsatilla hirsutissima",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Prairie Smoke",
+      "latin": "Geum triflorum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Prairie Fringed Orchid",
+      "latin": "Platanthera praeclara",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    }
   ],
   "TN": [
-    { "common": "Iris", "latin": "Iris germanica", "bloomMonths": [4, 5] },
-    { "common": "Tennessee Coneflower", "latin": "Echinacea tennesseensis", "bloomMonths": [6, 7, 8] },
-    { "common": "Cumberland Rosemary", "latin": "Conradina verticillata", "bloomMonths": [4, 5] }
+    {
+      "common": "Iris",
+      "latin": "Iris germanica",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Tennessee Coneflower",
+      "latin": "Echinacea tennesseensis",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Cumberland Rosemary",
+      "latin": "Conradina verticillata",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
   ],
   "TX": [
-    { "common": "Texas Bluebonnet", "latin": "Lupinus texensis", "bloomMonths": [3, 4, 5] },
-    { "common": "Indian Paintbrush", "latin": "Castilleja indivisa", "bloomMonths": [3, 4, 5] },
-    { "common": "Black-Eyed Susan", "latin": "Rudbeckia hirta", "bloomMonths": [5, 6, 7, 8, 9] }
+    {
+      "common": "Texas Bluebonnet",
+      "latin": "Lupinus texensis",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Indian Paintbrush",
+      "latin": "Castilleja indivisa",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Black-Eyed Susan",
+      "latin": "Rudbeckia hirta",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
   ],
   "UT": [
-    { "common": "Sego Lily", "latin": "Calochortus nuttallii", "bloomMonths": [5, 6, 7] },
-    { "common": "Claret Cup Cactus", "latin": "Echinocereus triglochidiatus", "bloomMonths": [4, 5, 6] },
-    { "common": "Prickly Pear", "latin": "Opuntia polyacantha", "bloomMonths": [5, 6] }
+    {
+      "common": "Sego Lily",
+      "latin": "Calochortus nuttallii",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Claret Cup Cactus",
+      "latin": "Echinocereus triglochidiatus",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Prickly Pear",
+      "latin": "Opuntia polyacantha",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "VT": [
-    { "common": "Red Clover", "latin": "Trifolium pratense", "bloomMonths": [5, 6, 7, 8, 9] },
-    { "common": "Jack-in-the-Pulpit", "latin": "Arisaema triphyllum", "bloomMonths": [4, 5] },
-    { "common": "Trout Lily", "latin": "Erythronium americanum", "bloomMonths": [4, 5] }
+    {
+      "common": "Red Clover",
+      "latin": "Trifolium pratense",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Jack-in-the-Pulpit",
+      "latin": "Arisaema triphyllum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Trout Lily",
+      "latin": "Erythronium americanum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
   ],
   "VA": [
-    { "common": "American Dogwood", "latin": "Cornus florida", "bloomMonths": [3, 4, 5] },
-    { "common": "Wild Blue Phlox", "latin": "Phlox divaricata", "bloomMonths": [3, 4, 5] },
-    { "common": "Pink Lady's Slipper", "latin": "Cypripedium acaule", "bloomMonths": [4, 5, 6] }
+    {
+      "common": "American Dogwood",
+      "latin": "Cornus florida",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Wild Blue Phlox",
+      "latin": "Phlox divaricata",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Pink Lady's Slipper",
+      "latin": "Cypripedium acaule",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
   ],
   "WA": [
-    { "common": "Coast Rhododendron", "latin": "Rhododendron macrophyllum", "bloomMonths": [5, 6, 7] },
-    { "common": "Columbia Lily", "latin": "Lilium columbianum", "bloomMonths": [6, 7, 8] },
-    { "common": "Bitterroot", "latin": "Lewisia rediviva", "bloomMonths": [5, 6, 7] }
+    {
+      "common": "Coast Rhododendron",
+      "latin": "Rhododendron macrophyllum",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Columbia Lily",
+      "latin": "Lilium columbianum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Bitterroot",
+      "latin": "Lewisia rediviva",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "WV": [
-    { "common": "Rhododendron", "latin": "Rhododendron maximum", "bloomMonths": [6, 7, 8] },
-    { "common": "Trillium", "latin": "Trillium grandiflorum", "bloomMonths": [4, 5] },
-    { "common": "Dutchman's Breeches", "latin": "Dicentra cucullaria", "bloomMonths": [3, 4, 5] }
+    {
+      "common": "Rhododendron",
+      "latin": "Rhododendron maximum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Trillium",
+      "latin": "Trillium grandiflorum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Dutchman's Breeches",
+      "latin": "Dicentra cucullaria",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    }
   ],
   "WI": [
-    { "common": "Wood Violet", "latin": "Viola sororia", "bloomMonths": [4, 5] },
-    { "common": "Bloodroot", "latin": "Sanguinaria canadensis", "bloomMonths": [3, 4, 5] },
-    { "common": "Prairie Smoke", "latin": "Geum triflorum", "bloomMonths": [4, 5, 6] }
+    {
+      "common": "Wood Violet",
+      "latin": "Viola sororia",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Bloodroot",
+      "latin": "Sanguinaria canadensis",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Prairie Smoke",
+      "latin": "Geum triflorum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
   ],
   "WY": [
-    { "common": "Indian Paintbrush", "latin": "Castilleja linariaefolia", "bloomMonths": [5, 6, 7, 8, 9] },
-    { "common": "Bitterroot", "latin": "Lewisia rediviva", "bloomMonths": [5, 6, 7] },
-    { "common": "Rocky Mountain Iris", "latin": "Iris missouriensis", "bloomMonths": [5, 6] }
+    {
+      "common": "Indian Paintbrush",
+      "latin": "Castilleja linariaefolia",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Bitterroot",
+      "latin": "Lewisia rediviva",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Rocky Mountain Iris",
+      "latin": "Iris missouriensis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "DC": [
-    { "common": "Cherry Blossom", "latin": "Prunus × yedoensis", "bloomMonths": [3, 4] },
-    { "common": "Swamp Rose Mallow", "latin": "Hibiscus moscheutos", "bloomMonths": [7, 8, 9] },
-    { "common": "Black-Eyed Susan", "latin": "Rudbeckia hirta", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Cherry Blossom",
+      "latin": "Prunus × yedoensis",
+      "bloomMonths": [
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Swamp Rose Mallow",
+      "latin": "Hibiscus moscheutos",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Black-Eyed Susan",
+      "latin": "Rudbeckia hirta",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "CA-AB": [
-    { "common": "Wild Rose", "latin": "Rosa acicularis", "bloomMonths": [5, 6, 7] },
-    { "common": "Prairie Crocus", "latin": "Pulsatilla patens", "bloomMonths": [4, 5] },
-    { "common": "Bunchberry", "latin": "Cornus canadensis", "bloomMonths": [5, 6] }
+    {
+      "common": "Wild Rose",
+      "latin": "Rosa acicularis",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Prairie Crocus",
+      "latin": "Pulsatilla patens",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Bunchberry",
+      "latin": "Cornus canadensis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "CA-BC": [
-    { "common": "Pacific Dogwood", "latin": "Cornus nuttallii", "bloomMonths": [4, 5] },
-    { "common": "Fireweed", "latin": "Chamerion angustifolium", "bloomMonths": [6, 7, 8] },
-    { "common": "Broad-leaved Starflower", "latin": "Lysimachia latifolia", "bloomMonths": [5, 6] }
+    {
+      "common": "Pacific Dogwood",
+      "latin": "Cornus nuttallii",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Fireweed",
+      "latin": "Chamerion angustifolium",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Broad-leaved Starflower",
+      "latin": "Lysimachia latifolia",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "CA-MB": [
-    { "common": "Prairie Crocus", "latin": "Pulsatilla patens", "bloomMonths": [4, 5] },
-    { "common": "Marsh Marigold", "latin": "Caltha palustris", "bloomMonths": [4, 5, 6] },
-    { "common": "Fireweed", "latin": "Chamerion angustifolium", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Prairie Crocus",
+      "latin": "Pulsatilla patens",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Marsh Marigold",
+      "latin": "Caltha palustris",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Fireweed",
+      "latin": "Chamerion angustifolium",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "CA-NB": [
-    { "common": "Purple Violet", "latin": "Viola cucullata", "bloomMonths": [5, 6] },
-    { "common": "Fiddlehead Fern", "latin": "Matteuccia struthiopteris", "bloomMonths": [4, 5] }
+    {
+      "common": "Purple Violet",
+      "latin": "Viola cucullata",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Fiddlehead Fern",
+      "latin": "Matteuccia struthiopteris",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
   ],
   "CA-NL": [
-    { "common": "Pitcher Plant", "latin": "Sarracenia purpurea", "bloomMonths": [6, 7] },
-    { "common": "Twinflower", "latin": "Linnaea borealis", "bloomMonths": [6, 7] },
-    { "common": "Bunchberry", "latin": "Cornus canadensis", "bloomMonths": [5, 6] }
+    {
+      "common": "Pitcher Plant",
+      "latin": "Sarracenia purpurea",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Twinflower",
+      "latin": "Linnaea borealis",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Bunchberry",
+      "latin": "Cornus canadensis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "CA-NS": [
-    { "common": "Mayflower", "latin": "Epigaea repens", "bloomMonths": [4, 5] },
-    { "common": "Blue Flag Iris", "latin": "Iris versicolor", "bloomMonths": [5, 6, 7] },
-    { "common": "Bunchberry", "latin": "Cornus canadensis", "bloomMonths": [5, 6] }
+    {
+      "common": "Mayflower",
+      "latin": "Epigaea repens",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Blue Flag Iris",
+      "latin": "Iris versicolor",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Bunchberry",
+      "latin": "Cornus canadensis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
   ],
   "CA-ON": [
-    { "common": "White Trillium", "latin": "Trillium grandiflorum", "bloomMonths": [4, 5, 6] },
-    { "common": "Wild Columbine", "latin": "Aquilegia canadensis", "bloomMonths": [5, 6] },
-    { "common": "Showy Lady's Slipper", "latin": "Cypripedinae reginae", "bloomMonths": [6, 7] }
+    {
+      "common": "White Trillium",
+      "latin": "Trillium grandiflorum",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Wild Columbine",
+      "latin": "Aquilegia canadensis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Showy Lady's Slipper",
+      "latin": "Cypripedinae reginae",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    }
   ],
   "CA-PE": [
-    { "common": "Lady's Slipper", "latin": "Cypripedium acaule", "bloomMonths": [5, 6] },
-    { "common": "Wild Rose", "latin": "Rosa virginiana", "bloomMonths": [6, 7] },
-    { "common": "Blue Flag Iris", "latin": "Iris versicolor", "bloomMonths": [5, 6, 7] }
+    {
+      "common": "Lady's Slipper",
+      "latin": "Cypripedium acaule",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Wild Rose",
+      "latin": "Rosa virginiana",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Blue Flag Iris",
+      "latin": "Iris versicolor",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
   ],
   "CA-QC": [
-    { "common": "Blue Flag Iris", "latin": "Iris versicolor", "bloomMonths": [5, 6, 7] },
-    { "common": "Canada Lily", "latin": "Lilium canadense", "bloomMonths": [6, 7] },
-    { "common": "Purple Trillium", "latin": "Trillium erectum", "bloomMonths": [4, 5] }
+    {
+      "common": "Blue Flag Iris",
+      "latin": "Iris versicolor",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Canada Lily",
+      "latin": "Lilium canadense",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Purple Trillium",
+      "latin": "Trillium erectum",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
   ],
   "CA-SK": [
-    { "common": "Western Red Lily", "latin": "Lilium philadelphicum", "bloomMonths": [6, 7] },
-    { "common": "Prairie Rose", "latin": "Rosa arkansana", "bloomMonths": [6, 7, 8] },
-    { "common": "Pasqueflower", "latin": "Pulsatilla patens", "bloomMonths": [4, 5] }
+    {
+      "common": "Western Red Lily",
+      "latin": "Lilium philadelphicum",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Prairie Rose",
+      "latin": "Rosa arkansana",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Pasqueflower",
+      "latin": "Pulsatilla patens",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
   ],
   "CA-NT": [
-    { "common": "Mountain Avens", "latin": "Dryas octopetala", "bloomMonths": [6, 7] },
-    { "common": "Fireweed", "latin": "Chamerion angustifolium", "bloomMonths": [7, 8] },
-    { "common": "Arctic Poppy", "latin": "Papaver radicatum", "bloomMonths": [6, 7, 8] }
+    {
+      "common": "Mountain Avens",
+      "latin": "Dryas octopetala",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Fireweed",
+      "latin": "Chamerion angustifolium",
+      "bloomMonths": [
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Arctic Poppy",
+      "latin": "Papaver radicatum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "CA-NU": [
-    { "common": "Purple Saxifrage", "latin": "Saxifraga oppositifolia", "bloomMonths": [6, 7] },
-    { "common": "Arctic Poppy", "latin": "Papaver radicatum", "bloomMonths": [6, 7, 8] },
-    { "common": "Mountain Avens", "latin": "Dryas octopetala", "bloomMonths": [6, 7] }
+    {
+      "common": "Purple Saxifrage",
+      "latin": "Saxifraga oppositifolia",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Arctic Poppy",
+      "latin": "Papaver radicatum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Mountain Avens",
+      "latin": "Dryas octopetala",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    }
   ],
   "CA-YT": [
-    { "common": "Fireweed", "latin": "Chamerion angustifolium", "bloomMonths": [7, 8] },
-    { "common": "Yukon Lupine", "latin": "Lupinus kuschei", "bloomMonths": [6, 7] },
-    { "common": "Arctic Poppy", "latin": "Papaver radicatum", "bloomMonths": [6, 7, 8] }
-  ],
-  "MX": [
-    { "common": "Dahlia", "latin": "Dahlia pinnata", "bloomMonths": [7, 8, 9, 10] },
-    { "common": "Mexican Marigold", "latin": "Tagetes erecta", "bloomMonths": [9, 10, 11] },
-    { "common": "Poinsettia", "latin": "Euphorbia pulcherrima", "bloomMonths": [11, 12, 1] }
+    {
+      "common": "Fireweed",
+      "latin": "Chamerion angustifolium",
+      "bloomMonths": [
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Yukon Lupine",
+      "latin": "Lupinus kuschei",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Arctic Poppy",
+      "latin": "Papaver radicatum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
   ],
   "IS": [
-    { "common": "Mountain Avens", "latin": "Dryas octopetala", "bloomMonths": [6, 7] },
-    { "common": "Wild Pansy", "latin": "Viola tricolor", "bloomMonths": [5, 6, 7, 8] },
-    { "common": "Arctic Riverbeauty", "latin": "Chamaenerion latifolium", "bloomMonths": [7, 8] }
+    {
+      "common": "Mountain Avens",
+      "latin": "Dryas octopetala",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Wild Pansy",
+      "latin": "Viola tricolor",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Arctic Riverbeauty",
+      "latin": "Chamaenerion latifolium",
+      "bloomMonths": [
+        7,
+        8
+      ]
+    }
   ],
-  "RU": [
-    { "common": "Chamomile", "latin": "Matricaria chamomilla", "bloomMonths": [6, 7, 8] },
-    { "common": "Siberian Iris", "latin": "Iris sibirica", "bloomMonths": [5, 6] },
-    { "common": "Globe Flower", "latin": "Trollius europaeus", "bloomMonths": [5, 6] }
+  "RU-MOW": [
+    {
+      "common": "Chamomile",
+      "latin": "Matricaria chamomilla",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Siberian Iris",
+      "latin": "Iris sibirica",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Wood Anemone",
+      "latin": "Anemonoides nemorosa",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Cornflower",
+      "latin": "Centaurea cyanus",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    }
   ],
-  "CN": [
-    { "common": "Plum Blossom", "latin": "Prunus mume", "bloomMonths": [1, 2, 3] },
-    { "common": "Peony", "latin": "Paeonia suffruticosa", "bloomMonths": [4, 5] },
-    { "common": "Lotus", "latin": "Nelumbo nucifera", "bloomMonths": [6, 7, 8] }
+  "RU-SPE": [
+    {
+      "common": "Forget-Me-Not",
+      "latin": "Myosotis arvensis",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Lupine",
+      "latin": "Lupinus polyphyllus",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Lily of the Valley",
+      "latin": "Convallaria majalis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Marsh Marigold",
+      "latin": "Caltha palustris",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "RU-SIB": [
+    {
+      "common": "Globe Flower",
+      "latin": "Trollius asiaticus",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Siberian Lily",
+      "latin": "Lilium pensylvanicum",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Pasqueflower",
+      "latin": "Pulsatilla patens",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Arctic Poppy",
+      "latin": "Papaver radicatum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "RU-URA": [
+    {
+      "common": "Meadow Cranesbill",
+      "latin": "Geranium pratense",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Fireweed",
+      "latin": "Chamerion angustifolium",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Siberian Peony",
+      "latin": "Paeonia anomala",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Globe Flower",
+      "latin": "Trollius europaeus",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
+  ],
+  "RU-FE": [
+    {
+      "common": "Kamchatka Lily",
+      "latin": "Fritillaria camschatcensis",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Amur Adonis",
+      "latin": "Adonis amurensis",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Japanese Primrose",
+      "latin": "Primula japonica",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Siberian Iris",
+      "latin": "Iris sibirica",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
+  ],
+  "CN-GD": [
+    {
+      "common": "Kapok Flower",
+      "latin": "Bombax ceiba",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Orchid Tree",
+      "latin": "Bauhinia variegata",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Ixora",
+      "latin": "Ixora coccinea",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Hibiscus",
+      "latin": "Hibiscus rosa-sinensis",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "CN-SC": [
+    {
+      "common": "Sichuan Primrose",
+      "latin": "Primula sikkingensis",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Tibetan Poppy",
+      "latin": "Meconopsis baileyi",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Rhododendron",
+      "latin": "Rhododendron davidii",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Camellia",
+      "latin": "Camellia reticulata",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "CN-BJ": [
+    {
+      "common": "Chinese Rose",
+      "latin": "Rosa chinensis",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Peony",
+      "latin": "Paeonia lactiflora",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Lotus",
+      "latin": "Nelumbo nucifera",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Chrysanthemum",
+      "latin": "Chrysanthemum morifolium",
+      "bloomMonths": [
+        9,
+        10,
+        11
+      ]
+    }
+  ],
+  "CN-ZJ": [
+    {
+      "common": "Sweet Osmanthus",
+      "latin": "Osmanthus fragrans",
+      "bloomMonths": [
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Plum Blossom",
+      "latin": "Prunus mume",
+      "bloomMonths": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Lotus",
+      "latin": "Nelumbo nucifera",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Camellia",
+      "latin": "Camellia japonica",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "CN-XZ": [
+    {
+      "common": "Blue Poppy",
+      "latin": "Meconopsis horridula",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Gentian",
+      "latin": "Gentiana urnula",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Edelweiss",
+      "latin": "Leontopodium jacotianum",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Rhododendron",
+      "latin": "Rhododendron nivale",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    }
+  ],
+  "MX-MEX": [
+    {
+      "common": "Dahlia",
+      "latin": "Dahlia pinnata",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Mexican Marigold",
+      "latin": "Tagetes erecta",
+      "bloomMonths": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "common": "Poinsettia",
+      "latin": "Euphorbia pulcherrima",
+      "bloomMonths": [
+        11,
+        12,
+        1
+      ]
+    },
+    {
+      "common": "Orchid",
+      "latin": "Laelia speciosa",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "MX-JAL": [
+    {
+      "common": "Agave Flower",
+      "latin": "Agave tequilana",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Mexican Sunflower",
+      "latin": "Tithonia diversifolia",
+      "bloomMonths": [
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Blue Sage",
+      "latin": "Salvia patens",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Cosmos",
+      "latin": "Cosmos bipinnatus",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "MX-NLE": [
+    {
+      "common": "Anacahuita",
+      "latin": "Cordia boissieri",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Desert Willow",
+      "latin": "Chilopsis linearis",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Yucca",
+      "latin": "Yucca filifera",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Texas Sage",
+      "latin": "Leucophyllum frutescens",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "MX-OAX": [
+    {
+      "common": "Plumeria",
+      "latin": "Plumeria rubra",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Marigold",
+      "latin": "Tagetes patula",
+      "bloomMonths": [
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "common": "Coral Tree Flower",
+      "latin": "Erythrina americana",
+      "bloomMonths": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Pineapple Sage",
+      "latin": "Salvia elegans",
+      "bloomMonths": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "MX-YUC": [
+    {
+      "common": "Mayan Tree Spinach Flower",
+      "latin": "Cnidoscolus aconitifolius",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Bougainvillea",
+      "latin": "Bougainvillea glabra",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Frangipani",
+      "latin": "Plumeria alba",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Yellow Elder",
+      "latin": "Tecoma stans",
+      "bloomMonths": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2
+      ]
+    }
+  ],
+  "BR-SP": [
+    {
+      "common": "Ipê-amarelo",
+      "latin": "Handroanthus albus",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Tibouchina",
+      "latin": "Tibouchina mutabilis",
+      "bloomMonths": [
+        12,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Imperial Bromeliad",
+      "latin": "Vriesea imperialis",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1
+      ]
+    },
+    {
+      "common": "Passion Flower",
+      "latin": "Passiflora edulis",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "BR-AM": [
+    {
+      "common": "Amazon Water Lily",
+      "latin": "Victoria amazonica",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Scarlet Passion Flower",
+      "latin": "Passiflora coccinea",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Heliconia",
+      "latin": "Heliconia chartacea",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Violet Orchid",
+      "latin": "Cattleya violacea",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    }
+  ],
+  "BR-BA": [
+    {
+      "common": "Mandacaru Cactus Flower",
+      "latin": "Cereus jamacaru",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Bougainvillea",
+      "latin": "Bougainvillea spectabilis",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Desert Rose",
+      "latin": "Adenium obesum",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Coconut Flower",
+      "latin": "Cocos nucifera",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "BR-RS": [
+    {
+      "common": "Princess's Earring",
+      "latin": "Fuchsia regia",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Pampas Grass Flower",
+      "latin": "Cortaderia selloana",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Verbena",
+      "latin": "Glandularia tenera",
+      "bloomMonths": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Wild Petunia",
+      "latin": "Petunia integrifolia",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "GTM": [
+    {
+      "common": "White Nun Orchid",
+      "latin": "Lycaste virginalis",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Guaria Morada Orchid",
+      "latin": "Guarianthe skinneri",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Jacaranda",
+      "latin": "Jacaranda mimosifolia",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Plumeria",
+      "latin": "Plumeria rubra",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "BLZ": [
+    {
+      "common": "Black Orchid",
+      "latin": "Prosthechea cochleata",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Yellow Hibiscus",
+      "latin": "Hibiscus rosa-sinensis",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Red Ginger",
+      "latin": "Alpinia purpurata",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Heliconia",
+      "latin": "Heliconia psittacorum",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  ],
+  "SLV": [
+    {
+      "common": "Flor de Izote",
+      "latin": "Yucca gigantea",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Poinciana",
+      "latin": "Delonix regia",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Madagascar Periwinkle",
+      "latin": "Catharanthus roseus",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Mexican Flame Vine",
+      "latin": "Pseudogynoxys chenopodioides",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "HND": [
+    {
+      "common": "Virgin's Orchid",
+      "latin": "Rhyncholaelia digbyana",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Angel's Trumpet",
+      "latin": "Brugmansia aurea",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Yellow Elder",
+      "latin": "Tecoma stans",
+      "bloomMonths": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Firebush",
+      "latin": "Hamelia patens",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  ],
+  "NIC": [
+    {
+      "common": "Sacuanjoche",
+      "latin": "Plumeria rubra",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Ixora",
+      "latin": "Ixora coccinea",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Blue Passionflower",
+      "latin": "Passiflora caerulea",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Crown of Thorns",
+      "latin": "Euphorbia milii",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "CRI": [
+    {
+      "common": "Guaria Morada",
+      "latin": "Guarianthe skinneri",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Lobster Claw",
+      "latin": "Heliconia rostrata",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Hot Lips",
+      "latin": "Psychotria elata",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Bird of Paradise",
+      "latin": "Strelitzia reginae",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "PAN": [
+    {
+      "common": "Holy Ghost Orchid",
+      "latin": "Peristeria elata",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Coral Aphelandra",
+      "latin": "Aphelandra sinclairiana",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Golden Trumpet",
+      "latin": "Allamanda cathartica",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "common": "Chenille Plant",
+      "latin": "Acalypha hispida",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "COL": [
+    {
+      "common": "Christmas Orchid",
+      "latin": "Cattleya trianae",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Anthurium",
+      "latin": "Anthurium andraeanum",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Heliconia",
+      "latin": "Heliconia bihai",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Passionfruit Flower",
+      "latin": "Passiflora edulis",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
+  "VEN": [
+    {
+      "common": "May Flower Orchid",
+      "latin": "Cattleya mossiae",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Yellow Poui",
+      "latin": "Handroanthus chrysanthus",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Pink Poui",
+      "latin": "Tabebuia rosea",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Pride of Burma",
+      "latin": "Amherstia nobilis",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "GUY": [
+    {
+      "common": "Victoria Regia Water Lily",
+      "latin": "Victoria amazonica",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Canna Lily",
+      "latin": "Canna indica",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Fire Spike",
+      "latin": "Odontonema tubaeforme",
+      "bloomMonths": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Spider Lily",
+      "latin": "Hymenocallis caribaea",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
+  "SUR": [
+    {
+      "common": "Fajalobi",
+      "latin": "Ixora coccinea",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Pink Porcelain Lily",
+      "latin": "Alpinia zerumbet",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Wild Sage",
+      "latin": "Lantana camara",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Shrimp Plant",
+      "latin": "Justicia brandegeeana",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "ECU": [
+    {
+      "common": "Chuquiragua",
+      "latin": "Chuquiraga jussieui",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Magellanic Fuchsia",
+      "latin": "Fuchsia magellanica",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Red Angel's Trumpet",
+      "latin": "Brugmansia sanguinea",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Peruvian Lily",
+      "latin": "Alstroemeria aurea",
+      "bloomMonths": [
+        12,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "PER": [
+    {
+      "common": "Cantua",
+      "latin": "Cantua buxifolia",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Sacred Datura",
+      "latin": "Datura wrightii",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Heliotrope",
+      "latin": "Heliotropium arborescens",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Orchid",
+      "latin": "Masdevallia veitchiana",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "BOL": [
+    {
+      "common": "Kantuta",
+      "latin": "Cantua buxifolia",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Hanging Lobster Claw",
+      "latin": "Heliconia rostrata",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Cosmos",
+      "latin": "Cosmos bipinnatus",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Sunflower",
+      "latin": "Helianthus annuus",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
+  "PRY": [
+    {
+      "common": "Mburucuyá",
+      "latin": "Passiflora caerulea",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Pink Lapacho",
+      "latin": "Handroanthus heptaphyllus",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Common Jasmine",
+      "latin": "Jasminum officinale",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Cockspur Coral Tree",
+      "latin": "Erythrina crista-galli",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "CHL": [
+    {
+      "common": "Copihue",
+      "latin": "Lapageria rosea",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Puya",
+      "latin": "Puya alpestris",
+      "bloomMonths": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Alstroemeria",
+      "latin": "Alstroemeria ligtu",
+      "bloomMonths": [
+        11,
+        12,
+        1
+      ]
+    },
+    {
+      "common": "Calceolaria",
+      "latin": "Calceolaria biflora",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2
+      ]
+    }
+  ],
+  "URY": [
+    {
+      "common": "Ceibo",
+      "latin": "Erythrina crista-galli",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Common Verbena",
+      "latin": "Verbena officinalis",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Cape Leadwort",
+      "latin": "Plumbago auriculata",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Pampas Grass",
+      "latin": "Cortaderia selloana",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "ARG": [
+    {
+      "common": "Ceibo",
+      "latin": "Erythrina crista-galli",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Patagonian Orchid",
+      "latin": "Chloraea magellanica",
+      "bloomMonths": [
+        12,
+        1
+      ]
+    },
+    {
+      "common": "Jacaranda",
+      "latin": "Jacaranda mimosifolia",
+      "bloomMonths": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Verbena",
+      "latin": "Glandularia peruviana",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "EU-NORTH": [
+    {
+      "common": "Twinflower",
+      "latin": "Linnaea borealis",
+      "bloomMonths": [
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Lily of the Valley",
+      "latin": "Convallaria majalis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Heather",
+      "latin": "Calluna vulgaris",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Wood Anemone",
+      "latin": "Anemonoides nemorosa",
+      "bloomMonths": [
+        4,
+        5
+      ]
+    }
+  ],
+  "EU-WEST": [
+    {
+      "common": "Red Rose",
+      "latin": "Rosa rubiginosa",
+      "bloomMonths": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "common": "Cornflower",
+      "latin": "Centaurea cyanus",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Lily of the Valley",
+      "latin": "Convallaria majalis",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Lavender",
+      "latin": "Lavandula angustifolia",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "EU-EAST": [
+    {
+      "common": "Sunflower",
+      "latin": "Helianthus annuus",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Corn Poppy",
+      "latin": "Papaver rhoeas",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Chamomile",
+      "latin": "Matricaria chamomilla",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Snowdrop",
+      "latin": "Galanthus nivalis",
+      "bloomMonths": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "EU-SOUTH": [
+    {
+      "common": "Olive Blossom",
+      "latin": "Olea europaea",
+      "bloomMonths": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Bougainvillea",
+      "latin": "Bougainvillea glabra",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Lavender",
+      "latin": "Lavandula latifolia",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Carnation",
+      "latin": "Dianthus caryophyllus",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "AF-NORTH": [
+    {
+      "common": "Blue Lotus",
+      "latin": "Nymphaea lotus",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Common Jasmine",
+      "latin": "Jasminum officinale",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Roselle Hibiscus",
+      "latin": "Hibiscus sabdariffa",
+      "bloomMonths": [
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "common": "Date Palm Flower",
+      "latin": "Phoenix dactylifera",
+      "bloomMonths": [
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "AF-SOUTH": [
+    {
+      "common": "King Protea",
+      "latin": "Protea cynaroides",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Bird of Paradise",
+      "latin": "Strelitzia reginae",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Calla Lily",
+      "latin": "Zantedeschia aethiopica",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Clivia",
+      "latin": "Clivia miniata",
+      "bloomMonths": [
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "AF-EAST": [
+    {
+      "common": "African Violet",
+      "latin": "Streptocarpus ionanthus",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Red Hot Poker",
+      "latin": "Kniphofia uvaria",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Flame Lily",
+      "latin": "Gloriosa superba",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "common": "Adenium",
+      "latin": "Adenium multiflorum",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  ],
+  "AF-WEST": [
+    {
+      "common": "Costus",
+      "latin": "Chamaecostus cuspidatus",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Yellow Trumpet Flower",
+      "latin": "Tecoma stans",
+      "bloomMonths": [
+        9,
+        10,
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "African Tulip Flower",
+      "latin": "Spathodea campanulata",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Baobab Flower",
+      "latin": "Adansonia digitata",
+      "bloomMonths": [
+        11,
+        12,
+        1
+      ]
+    }
+  ],
+  "AF-CENTRAL": [
+    {
+      "common": "Saker's Impatiens",
+      "latin": "Impatiens sakeriana",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "West African Ground Orchid",
+      "latin": "Eulophia guineensis",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Fireball Lily",
+      "latin": "Scadoxus multiflorus",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Clerodendrum",
+      "latin": "Clerodendrum splendens",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
   ],
   "default": [
-    { "common": "Sunflower", "latin": "Helianthus annuus", "bloomMonths": [6, 7, 8, 9] },
-    { "common": "Daisy", "latin": "Leucanthemum vulgare", "bloomMonths": [5, 6, 7, 8] },
-    { "common": "Lavender", "latin": "Lavandula angustifolia", "bloomMonths": [6, 7, 8] },
-    { "common": "Common Violet", "latin": "Viola sororia", "bloomMonths": [3, 4, 5] },
-    { "common": "Witch Hazel", "latin": "Hamamelis virginiana", "bloomMonths": [10, 11, 12, 1, 2] },
-    { "common": "Snowdrop", "latin": "Galanthus nivalis", "bloomMonths": [1, 2, 3] }
+    {
+      "common": "California Poppy",
+      "latin": "Eschscholzia californica",
+      "bloomMonths": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Saguaro Blossom",
+      "latin": "Carnegiea gigantea",
+      "bloomMonths": [
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Texas Bluebonnet",
+      "latin": "Lupinus texensis",
+      "bloomMonths": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "common": "Christmas Orchid",
+      "latin": "Cattleya trianae",
+      "bloomMonths": [
+        11,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "common": "Copihue",
+      "latin": "Lapageria rosea",
+      "bloomMonths": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "common": "Ceibo",
+      "latin": "Erythrina crista-galli",
+      "bloomMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Lavender",
+      "latin": "Lavandula angustifolia",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Edelweiss",
+      "latin": "Leontopodium nivale",
+      "bloomMonths": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "common": "Corn Poppy",
+      "latin": "Papaver rhoeas",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "King Protea",
+      "latin": "Protea cynaroides",
+      "bloomMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Bird of Paradise",
+      "latin": "Strelitzia reginae",
+      "bloomMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Calla Lily",
+      "latin": "Zantedeschia aethiopica",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "common": "Lotus",
+      "latin": "Nelumbo nucifera",
+      "bloomMonths": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "common": "Plum Blossom",
+      "latin": "Prunus mume",
+      "bloomMonths": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "common": "Chinese Rose",
+      "latin": "Rosa chinensis",
+      "bloomMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Golden Wattle",
+      "latin": "Acacia pycnantha",
+      "bloomMonths": [
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "common": "Waratah",
+      "latin": "Telopea speciosissima",
+      "bloomMonths": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "common": "Pink Heath",
+      "latin": "Epacris impressa",
+      "bloomMonths": [
+        6,
+        7,
+        8,
+        9
+      ]
+    }
   ]
 }

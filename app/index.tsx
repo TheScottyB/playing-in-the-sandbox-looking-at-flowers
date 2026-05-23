@@ -13,7 +13,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -37,6 +37,7 @@ import {
 } from '@/lib/dailyFlower';
 import { getRegion, getRegionWithStatus, resetRegion, getRegionOverride, setRegionOverride } from '@/lib/region';
 import { useOnline } from '@/hooks/useOnline';
+import { getDailyFlowerOffline, searchSpeciesVector, type SpeciesRecord } from '@/lib/speciesDb';
 
 type ErrorKind = 'unpublished' | 'service' | 'network';
 
@@ -160,7 +161,7 @@ function IridescentOverlay({ subtle }: { subtle?: boolean }) {
           colors={['rgba(100,140,255,0.35)', 'rgba(200,100,255,0.20)', 'transparent']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
         />
       </Animated.View>
       <Animated.View style={[iriStyles.layer, iri2]}>
@@ -168,7 +169,7 @@ function IridescentOverlay({ subtle }: { subtle?: boolean }) {
           colors={['rgba(255,100,200,0.30)', 'rgba(255,180,100,0.15)', 'transparent']}
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 1 }}
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
         />
       </Animated.View>
       <Animated.View style={[iriStyles.layer, iri3]}>
@@ -176,7 +177,7 @@ function IridescentOverlay({ subtle }: { subtle?: boolean }) {
           colors={['rgba(100,255,200,0.25)', 'rgba(100,200,255,0.15)', 'transparent']}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
         />
       </Animated.View>
       <Animated.View style={[iriStyles.specular, specular]}>
@@ -184,7 +185,7 @@ function IridescentOverlay({ subtle }: { subtle?: boolean }) {
           colors={['transparent', 'rgba(255,255,255,0.28)', 'transparent']}
           start={{ x: 0.3, y: 0.3 }}
           end={{ x: 0.7, y: 0.7 }}
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
         />
       </Animated.View>
       <Animated.View style={[iriStyles.edge, edgeSheen]} />
@@ -194,7 +195,7 @@ function IridescentOverlay({ subtle }: { subtle?: boolean }) {
 
 const iriStyles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     overflow: 'hidden',
     borderRadius: 18,
   },
@@ -213,7 +214,7 @@ const iriStyles = StyleSheet.create({
     bottom: -80,
   },
   edge: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: 18,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.12)',
@@ -229,6 +230,26 @@ export default function HomeScreen() {
   const [activeOverride, setActiveOverride] = useState<string | null>(null);
   const [customCode, setCustomCode] = useState('');
   const online = useOnline();
+
+  const [searchVisible, setSearchVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<SpeciesRecord[]>([]);
+  const [searching, setSearching] = useState(false);
+  const router = useRouter();
+
+  async function handleSearch() {
+    if (!searchQuery.trim()) return;
+    setSearching(true);
+    try {
+      const results = await searchSpeciesVector(searchQuery.trim());
+      setSearchResults(results);
+    } catch (e) {
+      console.error('Search failed:', e);
+      Alert.alert('Search Error', 'Unable to complete search.');
+    } finally {
+      setSearching(false);
+    }
+  }
 
   const { width: winW, height: winH } = useWindowDimensions();
   // Portrait card sized to the screen: leaves room for the eyebrow at the top
@@ -279,8 +300,9 @@ export default function HomeScreen() {
     async function load() {
       setState({ status: 'loading' });
       const date = offsetDate(todayLocalIso(), dayOffset);
+      let region = 'default';
       try {
-        const region = await getRegion();
+        region = await getRegion();
         const flower = await fetchDailyFlower(region, date);
         if (!cancelled) setState({ status: 'ok', flower });
       } catch (e) {
@@ -293,31 +315,65 @@ export default function HomeScreen() {
           setState({ status: 'error', kind: 'unpublished', message: ERROR_COPY.unpublished.sub });
         } else if (!online) {
           // Network down: prefer the last successfully fetched flower from
-          // AsyncStorage; fall through to the bundled default if nothing's cached.
+          // AsyncStorage; fall back to our pre-compiled SQLite species database.
           const cached = await getCachedFlower();
           if (cancelled) return;
-          setState({
-            status: 'ok',
-            flower: cached
-              ? { ...cached, isDefault: true }
-              : { ...getDefaultFlower(date), isDefault: true },
-          });
+          if (cached) {
+            setState({ status: 'ok', flower: { ...cached, isDefault: true } });
+          } else {
+            const dbFlower = await getDailyFlowerOffline(region, date);
+            if (cancelled) return;
+            if (dbFlower) {
+              setState({
+                status: 'ok',
+                flower: {
+                  imageSource: getDefaultFlower(date).imageSource, // daylight variants
+                  common: dbFlower.common,
+                  latin: dbFlower.latin,
+                  blurb: dbFlower.blurb,
+                  state: dbFlower.region,
+                  date,
+                  isDefault: true,
+                },
+              });
+            } else {
+              setState({ status: 'ok', flower: { ...getDefaultFlower(date), isDefault: true } });
+            }
+          }
         } else {
           // 5xx or other: retry once with backoff before falling through.
           await new Promise((r) => setTimeout(r, 1500));
           if (cancelled) return;
           try {
-            const region = await getRegion();
+            region = await getRegion();
             const flower = await fetchDailyFlower(region, date);
             if (!cancelled) setState({ status: 'ok', flower });
           } catch {
             if (cancelled) return;
             const cached = await getCachedFlower();
             if (cancelled) return;
-            setState({
-              status: 'ok',
-              flower: cached ? { ...cached, isDefault: true } : getDefaultFlower(date),
-            });
+            if (cached) {
+              setState({ status: 'ok', flower: { ...cached, isDefault: true } });
+            } else {
+              const dbFlower = await getDailyFlowerOffline(region, date);
+              if (cancelled) return;
+              if (dbFlower) {
+                setState({
+                  status: 'ok',
+                  flower: {
+                    imageSource: getDefaultFlower(date).imageSource,
+                    common: dbFlower.common,
+                    latin: dbFlower.latin,
+                    blurb: dbFlower.blurb,
+                    state: dbFlower.region,
+                    date,
+                    isDefault: true,
+                  },
+                });
+              } else {
+                setState({ status: 'ok', flower: { ...getDefaultFlower(date), isDefault: true } });
+              }
+            }
           }
         }
       }
@@ -362,11 +418,20 @@ export default function HomeScreen() {
     <View style={styles.root}>
       <StatusBar style="light" />
       <SafeAreaView style={styles.fill}>
-        <Pressable onPress={handleEyebrowPress} style={styles.topBar}>
-          <Text style={styles.eyebrow}>
-            {eyebrowRegion} · {dateLabel}
-          </Text>
-        </Pressable>
+        <View style={styles.topBarRow}>
+          <Pressable onPress={handleEyebrowPress} style={styles.topBar}>
+            <Text style={styles.eyebrow}>
+              {eyebrowRegion} · {dateLabel}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setSearchVisible(true)}
+            style={styles.searchBarBtn}
+            accessibilityLabel="Search species"
+          >
+            <Text style={styles.searchBarBtnLabel}>🔍 SEARCH</Text>
+          </Pressable>
+        </View>
 
         <View style={styles.stage}>
           {state.status === 'loading' && (
@@ -406,7 +471,7 @@ export default function HomeScreen() {
                 <View style={styles.face}>
                   <Image
                     source={state.flower.imageSource}
-                    style={[StyleSheet.absoluteFillObject, styles.imageRadius]}
+                    style={[StyleSheet.absoluteFill, styles.imageRadius]}
                     contentFit="cover"
                     cachePolicy="memory-disk"
                     transition={400}
@@ -584,6 +649,98 @@ export default function HomeScreen() {
               onPress={() => setDevMenuVisible(false)}
             >
               <Text style={styles.dismissBtnText}>Dismiss</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Search Modal */}
+      <Modal
+        visible={searchVisible}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => {
+          setSearchVisible(false);
+          setSearchQuery('');
+          setSearchResults([]);
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContent, { maxWidth: 450, maxHeight: '85%' }]}>
+            <Text style={styles.modalHeader}>Vector Vibe Search</Text>
+            
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="e.g. purple spring poppy or desert cactus..."
+                placeholderTextColor="rgba(255,255,255,0.4)"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                onSubmitEditing={handleSearch}
+                autoCorrect={false}
+              />
+              <Pressable
+                style={styles.applyBtn}
+                onPress={handleSearch}
+                disabled={searching}
+              >
+                {searching ? (
+                  <ActivityIndicator size="small" color="#000" />
+                ) : (
+                  <Text style={styles.applyBtnText}>Search</Text>
+                )}
+              </Pressable>
+            </View>
+
+            <ScrollView style={{ marginTop: 12, flex: 1 }} showsVerticalScrollIndicator={false}>
+              {searchResults.length === 0 && !searching && (
+                <Text style={styles.noResultsText}>
+                  {'Type a description or vibe (like "yellow autumn bloom") to search the offline database using semantic embeddings.'}
+                </Text>
+              )}
+              {searchResults.map((result) => {
+                const pct = result.similarity ? Math.round(result.similarity * 100) : 50;
+                return (
+                  <Pressable
+                    key={result.id}
+                    style={styles.searchResultItem}
+                    onPress={() => {
+                      setSearchVisible(false);
+                      setSearchQuery('');
+                      setSearchResults([]);
+                      router.push({
+                        pathname: '/flower-detail',
+                        params: {
+                          imageUri: '', // Forces local fallback image in details screen
+                          common: result.common,
+                          latin: result.latin,
+                          blurb: result.blurb,
+                          state: result.region,
+                          date: todayLocalIso(),
+                        },
+                      });
+                    }}
+                  >
+                    <View style={styles.searchResultHeader}>
+                      <Text style={styles.searchResultCommon}>{result.common}</Text>
+                      <Text style={styles.searchResultMatch}>{pct}% match</Text>
+                    </View>
+                    <Text style={styles.searchResultLatin}>{result.latin}</Text>
+                    <Text style={styles.searchResultRegion}>Region: {result.region}</Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+
+            <Pressable
+              style={styles.dismissBtn}
+              onPress={() => {
+                setSearchVisible(false);
+                setSearchQuery('');
+                setSearchResults([]);
+              }}
+            >
+              <Text style={styles.dismissBtnText}>Close</Text>
             </Pressable>
           </View>
         </View>
@@ -937,5 +1094,68 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     letterSpacing: 1,
+  },
+  topBarRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 24,
+  },
+  searchBarBtn: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.15)',
+    marginTop: 4,
+  },
+  searchBarBtnLabel: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 1,
+  },
+  noResultsText: {
+    color: 'rgba(255,255,255,0.4)',
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginTop: 20,
+    paddingHorizontal: 12,
+  },
+  searchResultItem: {
+    paddingVertical: 14,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,0.08)',
+  },
+  searchResultHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  searchResultCommon: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  searchResultMatch: {
+    color: 'rgba(100,255,200,0.85)',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  searchResultLatin: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 13,
+    fontStyle: 'italic',
+    marginTop: 2,
+  },
+  searchResultRegion: {
+    color: 'rgba(255,255,255,0.3)',
+    fontSize: 11,
+    marginTop: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
 });

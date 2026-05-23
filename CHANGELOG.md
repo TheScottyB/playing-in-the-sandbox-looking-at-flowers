@@ -1,129 +1,85 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.2.0] - 2026-05-22
+
+### Added
+- **Offline SQLite Vector Database**: Compiled the species dataset into a local SQLite database (`assets/species.db`) with pre-calculated Float32 vector embeddings.
+- **Semantic Search**: Added a search modal on the home screen for vibe-based/semantic queries (e.g., "yellow desert bloom") with similarity scoring.
+- **Hybrid Search Engine**: Supported native JSI `sqlite-vec` search with a high-performance JavaScript dot-product scanner fallback for Expo Go.
+- **Developer Controls**: Added a hidden coordinator override panel (triggered by double-tapping the region header) to simplify testing.
+- **Expanded Regional Support**: Added geocoding and coordinates resolution support for Canada (`CAN`), Iceland (`ISL`), and subdivided regions of Russia, China, Mexico, and Brazil.
+- **WebAssembly Support**: Added `.wasm` configuration to Metro for web-based `expo-sqlite` support.
+
+### Changed
+- **Rebrand**: Renamed the application to "Specimen Sandbox" across the package manifests and configuration screens (preserving EAS schemes/slugs).
+- **WebP Image Compression**: Integrated `sharp` WebP compression at 85% quality in the daily generator cron, reducing asset storage size by ~93% (from 1.26 GB to 90 MB).
+- **Consolidated Shared Constants**: Moved brand styling tokens and colors to a unified `/workspace/shared/constants/` directory, resolving pathing using local workspace symlinks.
+- **Asset Relocation**: Relocated heavy App Store screenshots out of the runtime bundles.
+- **Package Manager Update**: Upgraded pnpm to version `11.2.2` and migrated package settings to `.npmrc`.
+
+### Removed
+- **Purged Expo Boilerplate**: Deleted orphaned template files `ThemedText.tsx`, `ThemedView.tsx`, `useThemeColor.ts`, and `Colors.ts`.
+- **Legacy PNG Assets**: Removed raw daily PNGs from Git history, replacing them with optimized WebP equivalents.
+
+---
+
 ## [1.1.1] - 2026-04-25
 
 ### Fixed
-- Fixed UTC-vs-local date mismatch that caused 404s for US users after ~5 p.m. Pacific
-  (`todayLocalIso` now uses device-local calendar instead of `toISOString`)
-- Anchored `offsetDate` at noon to dodge DST shifts when navigating previous days
-- Regenerated `pnpm-lock.yaml` so `expo-location@55.1.8` is actually resolved
-  (stale lockfile was pulling 18.1.6, which broke Xcode 26 builds due to
-  implicit-function-declaration errors in the SDK 53-era native module)
-- Replaced generic "No flower today" error screen with three-tier error UX:
-  *unpublished* (404), *service trouble* (5xx), and *network* (offline)
+- Fixed UTC-vs-local date mismatches causing daily flower fetch failures for US users after 5 p.m. Pacific.
+- Anchored `offsetDate` navigation calculations at noon to prevent DST offset drift.
+- Regenerated `pnpm-lock.yaml` to ensure `expo-location` matches SDK requirements.
+- Replaced generic connection error messages with structured three-tier UX (unpublished, service trouble, and network offline).
 
 ### Changed
-- Hardened `generate-daily.mjs`: 3-attempt retry with exponential backoff for
-  429/5xx, `stripPreamble()` to clean AI chatter from blurbs, `statSync` guard
-  against 0-byte images, `--missing-only` flag with heal/preserve modes
-- Generator no longer `process.exit(1)` on partial failure — workflow commit
-  step always runs so partial successes are not lost
-- Simplified `_layout.tsx`: removed SpaceMono font loading and
-  `SplashScreen.preventAutoHideAsync` (Expo splash-screen plugin handles it)
-- Added "Change region" link to both the flower card meta row and the error
-  screen so users can re-prompt for location without a reinstall
-- Loading screen now reads "Finding flowers in your area…" instead of a bare spinner
-- Removed `assets/fonts/SpaceMono-Regular.ttf` (no longer used)
+- Hardened daily generator script with exponential retry backoff, blurb preamble stripping, and zero-byte image guards.
+- Ensured daily generator does not exit on partial errors, preserving successfully compiled assets.
+- Simplified `_layout.tsx` by removing redundant font loader and splash screen boilerplate.
+- Added region change shortcuts to the home card metadata and error screens.
 
 ### Infrastructure
-- Passed `expo doctor` 18/18: removed invalid `newArchEnabled`,
-  `ios.primaryCategory`, `ios.secondaryCategory`, and `contentRating` fields
-  from `app.json`; moved store metadata to `extra.appStore`
-- Added `expo.install.exclude` for intentionally-pinned packages (TypeScript 6,
-  React 19.2, etc.) to silence version-mismatch warnings
-- Added EAS Workflow for OTA updates on push (`.eas/workflows/update-on-push.yml`)
-- Corrected EAS `owner` to `thescottybe` (matches projectId)
+- Cleared Expo configuration validation warnings in `app.json` and adjusted package exclusions to silence version mismatch notices.
+- Added automated EAS Workflows for OTA updates.
 
-### Tests
-- Replaced Jest snapshot tests with Maestro E2E flows
-- Added `change-region.yml` flow: verifies link discoverability, re-fetch
-  round-trip, and dayOffset reset after region change
-- Updated `smoke.yml` and `flowers.yml` for v1.1 three-tier error copy
-- Removed stale `cards.yml` (coverage now split between `flowers.yml` and
-  `change-region.yml`)
+### Tests & Docs
+- Replaced Jest snapshot tests with Maestro E2E flows (`smoke.yml`, `flowers.yml`, `change-region.yml`).
+- Added Play Store listing metadata copy and updated the project setup documentation.
 
-### Docs
-- Added `meta/PLAYSTORE_LISTING.md` with drop-in Play Store listing copy
-- Updated `meta/PLAYSTORE_SPEC.md` for post-pivot architecture
-- Updated `README.md` with backfill procedures and workflow_dispatch input table
+---
 
 ## [1.1.0] - 2026-04-25
 
-### Changed (BREAKING — product pivot)
-- Replaced the boilerplate tab gallery with a single-screen daily flower experience
-- App now resolves the user's US state via a one-shot `expo-location` prompt and shows a fresh AI-generated flower image native to that state, matched to the current month
-- `app/index.tsx` is the only screen; the `(tabs)` group has been removed entirely
+### Changed
+- **Product Pivot**: Replaced the default tab-based gallery layout with a single-screen daily flower experience.
+- Resolved user coordinates to regional state codes using one-shot location queries, caching results in `AsyncStorage`.
 
 ### Added
-- `lib/region.ts` — one-prompt location → US state code, cached forever in AsyncStorage; falls back to `default` bucket if denied or non-US
-- `lib/dailyFlower.ts` — provider interface for the daily flower (v1 resolves to GH Pages CDN; v2-ready for a Cloudflare Worker swap-in)
-- `data/species.json` — 3 curated native species per state (51 buckets + `default`), each tagged with bloom months
-- `scripts/generate-daily.mjs` — Node 20 generator that picks an in-season species via deterministic `hash(state+date)`, calls Gemini 2.5 Flash Image via REST, and writes `.webp` + sidecar JSON to `docs/daily/{state}/{date}.{webp,json}`
-- `.github/workflows/generate-daily.yml` — daily cron at 04:00 PT plus `workflow_dispatch` with optional `date` and `states` inputs for backfills
-- `NSLocationWhenInUseUsageDescription` and `expo-location` plugin in `app.json`
-- `expo-location` and `@react-native-async-storage/async-storage` dependencies
-- Location-data disclosure in `meta/PRIVACY.md` and `docs/privacy.html`
+- Localized species dataset (`data/species.json`) supporting 51 regional buckets with 4 native species each.
+- Daily Node generator cron to select daily seasonal flowers and retrieve AI-generated webp images.
+- Location-data disclosures and privacy policy.
 
 ### Removed
-- `app/(tabs)/` — Home, Explore, Cards, Flowers screens
-- `components/` — `AnimatedCard`, `Collapsible`, `ExternalLink`, `FlowerGalleryCard`, `HapticTab`, `HelloWave`, `ParallaxScrollView`, `IconSymbol`, `TabBarBackground`
-- `hooks/useCacheAssets.ts`
-- `assets/images/partial-react-logo.png`, `react-logo*.png`
+- Unused tab screens and default template assets/hooks.
 
 ### Infrastructure
-- Upgraded Expo SDK 52 → 55 (52.0.43 → 55.0.17)
-- Upgraded React Native 0.76.9 → 0.83.6 and React 18.3.1 → 19.2.0
-- Upgraded react-native-reanimated 3.16 → 4.2, expo-router 4 → 55, and aligned dev deps
-- Added `react-native-worklets` as required peer dep of Reanimated 4
-- Migrated `useCacheAssets` to `expo-file-system/legacy` to preserve existing caching API
-- Narrowed `useColorScheme` wrapper to return `'light' | 'dark' | null` (RN now surfaces `'unspecified'`)
-- Tightened `IconSymbol` MAPPING typing with `as const satisfies` and added missing
-  `rectangle.stack.fill` and `leaf.fill` fallbacks for Android/web
+- Upgraded project base to Expo SDK 55, React Native 0.83.6, and React 19.2.0.
+- Implemented Reanimated 4 and configured web support.
 
-### Fixed
-- Deduplicated corrupted `FlowerGalleryCard.tsx` (two concatenated copies, broken string
-  literal, invalid apostrophe escape — would have blocked any typecheck/bundle)
-- Added missing `expo-file-system` and `expo-crypto` dependencies used by `useCacheAssets`
+---
 
 ## [1.0.0] - 2025-04-11
 
 ### Features
-- Added Flowers tab to main navigation with leaf icon
-- Enhanced app navigation structure for better user experience
-- Added flower gallery with flip card animations
-- Added image caching system for improved performance
-- Added animated cards feature with spring animations
+- Added Flowers gallery with flip-card animations.
+- Implemented client-side image caching.
+- Setup app configuration metadata and store assets.
 
-### Documentation
-- Added comprehensive GitHub setup documentation (GITHUB_SETUP.md)
-- Added Digital Services Act (DSA) compliance documentation (DSA_COMPLIANCE.md)
-- Added encryption usage declaration for App Store submission (ENCRYPTION_NOTICE.md)
-- Updated README with project structure and GitHub Pages information
-- Added comprehensive iOS Developer Mode guide on gh-pages branch
-- Added comprehensive build configuration guide on gh-pages branch
-
-### Configuration
-- Updated app.json with detailed app description and metadata
-- Enhanced iOS-specific configurations:
-  - Added proper bundle identifier
-  - Set primary app color to #4CAF50
-  - Configured localization settings
-  - Set device capabilities requirements
-  - Updated privacy settings with necessary declarations
-- Removed web-specific configurations to focus on iOS platform
-- Setup GitHub Pages with privacy policy and documentation
-- Optimized build profiles for development workflow
-- Updated .gitignore to exclude build artifacts and credentials
+---
 
 ## [0.9.0] - 2025-03-28
 
 ### Added
-- Initial project setup
-- Basic navigation structure
-- Tabbed interface with Home, Explore, and Cards sections
-- Native iOS styling with blur effects and translucency
-- Responsive parallax scrolling
-- Adaptive light/dark theme support
-
----
-
-**Note:** This changelog was initiated on April 11, 2025. Earlier changes may not be fully documented.
-
+- Initial project setup with standard tab layout.
+- Native iOS blur styling and light/dark theme support.

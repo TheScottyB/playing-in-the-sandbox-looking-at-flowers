@@ -47,7 +47,7 @@ export default function FlowerDetailScreen() {
 
       {/* Full-bleed flower image */}
       <Image
-        source={{ uri: imageUri }}
+        source={imageUri ? { uri: imageUri } : require('../assets/defaults/midday.png')}
         style={StyleSheet.absoluteFill}
         contentFit="cover"
         cachePolicy="memory-disk"

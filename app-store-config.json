@@ -1,7 +1,7 @@
 {
   "appId": "6744488642",
   "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers",
-  "versionString": "1.0",
+  "versionString": "1.1.1",
   "primaryCategory": "ENTERTAINMENT",
   "copyright": "© 2026 Scott Beilfuss",
   "contentRightsDeclaration": "DOES_NOT_USE_THIRD_PARTY_CONTENT",
@@ -13,7 +13,7 @@
     "contactEmail": "beilsco@gmail.com",
     "contactPhone": "+18473099047",
     "demoAccountRequired": false,
-    "notes": "The app requests location permission once on first launch to resolve the user's US state, Canadian province, or country via reverse-geocoding. The region code is cached locally and the location is never transmitted off-device. Daily flower images are pre-generated server-side via a GitHub Actions cron and served from GitHub Pages — no user data is sent with these requests. Falls back to a default bucket if permission is denied or the user is in an unsupported region."
+    "notes": "The app requests location permission once on first launch to resolve the user's US state, Canadian province, or country via reverse-geocoding. The region code is cached locally and the location is never transmitted off-device. Daily flower images are pre-generated server-side via a GitHub Actions cron and served from GitHub Pages — no user data is sent with these requests. Falls back to a default bucket if permission is denied or the user is in an unsupported region. This update includes minor UI refinements and improved error handling for initial data fetch."
   },
 
   "ageRatingDeclarations": {
@@ -53,24 +53,24 @@
   },
 
   "screenshots": [
-    { "displayType": "APP_IPHONE_67", "filePath": "assets/iphone67.png" },
-    { "displayType": "APP_IPHONE_67", "filePath": "assets/iphone67_back.png" },
-    { "displayType": "APP_IPHONE_65", "filePath": "assets/iphone65.png" },
-    { "displayType": "APP_IPHONE_65", "filePath": "assets/iphone65_back.png" },
-    { "displayType": "APP_IPHONE_61", "filePath": "assets/iphone61.png" },
-    { "displayType": "APP_IPHONE_61", "filePath": "assets/iphone61_back.png" },
-    { "displayType": "APP_IPHONE_55", "filePath": "assets/iphone55.png" },
-    { "displayType": "APP_IPHONE_55", "filePath": "assets/iphone55_back.png" },
-    { "displayType": "APP_IPAD_PRO_3GEN_129", "filePath": "assets/ipad129.png" },
-    { "displayType": "APP_IPAD_PRO_3GEN_129", "filePath": "assets/ipad129_back.png" },
-    { "displayType": "APP_IPAD_PRO_129", "filePath": "assets/ipad129.png" },
-    { "displayType": "APP_IPAD_PRO_129", "filePath": "assets/ipad129_back.png" },
-    { "displayType": "APP_IPAD_PRO_3GEN_11", "filePath": "assets/ipad11.png" },
-    { "displayType": "APP_IPAD_PRO_3GEN_11", "filePath": "assets/ipad11_back.png" },
-    { "displayType": "APP_IPAD_105", "filePath": "assets/ipad105.png" },
-    { "displayType": "APP_IPAD_105", "filePath": "assets/ipad105_back.png" },
-    { "displayType": "APP_IPAD_97", "filePath": "assets/ipad97.png" },
-    { "displayType": "APP_IPAD_97", "filePath": "assets/ipad97_back.png" }
+    { "displayType": "APP_IPHONE_67", "filePath": "app_store_assets/screenshots/iphone67.png" },
+    { "displayType": "APP_IPHONE_67", "filePath": "app_store_assets/screenshots/iphone67_back.png" },
+    { "displayType": "APP_IPHONE_65", "filePath": "app_store_assets/screenshots/iphone65.png" },
+    { "displayType": "APP_IPHONE_65", "filePath": "app_store_assets/screenshots/iphone65_back.png" },
+    { "displayType": "APP_IPHONE_61", "filePath": "app_store_assets/screenshots/iphone61.png" },
+    { "displayType": "APP_IPHONE_61", "filePath": "app_store_assets/screenshots/iphone61_back.png" },
+    { "displayType": "APP_IPHONE_55", "filePath": "app_store_assets/screenshots/iphone55.png" },
+    { "displayType": "APP_IPHONE_55", "filePath": "app_store_assets/screenshots/iphone55_back.png" },
+    { "displayType": "APP_IPAD_PRO_3GEN_129", "filePath": "app_store_assets/screenshots/ipad129.png" },
+    { "displayType": "APP_IPAD_PRO_3GEN_129", "filePath": "app_store_assets/screenshots/ipad129_back.png" },
+    { "displayType": "APP_IPAD_PRO_129", "filePath": "app_store_assets/screenshots/ipad129.png" },
+    { "displayType": "APP_IPAD_PRO_129", "filePath": "app_store_assets/screenshots/ipad129_back.png" },
+    { "displayType": "APP_IPAD_PRO_3GEN_11", "filePath": "app_store_assets/screenshots/ipad11.png" },
+    { "displayType": "APP_IPAD_PRO_3GEN_11", "filePath": "app_store_assets/screenshots/ipad11_back.png" },
+    { "displayType": "APP_IPAD_105", "filePath": "app_store_assets/screenshots/ipad105.png" },
+    { "displayType": "APP_IPAD_105", "filePath": "app_store_assets/screenshots/ipad105_back.png" },
+    { "displayType": "APP_IPAD_97", "filePath": "app_store_assets/screenshots/ipad97.png" },
+    { "displayType": "APP_IPAD_97", "filePath": "app_store_assets/screenshots/ipad97_back.png" }
   ],
 
   "screenshotsCapture": {

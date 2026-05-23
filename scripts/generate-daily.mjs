@@ -23,14 +23,15 @@
  */
 
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DOCS_DIR = join(ROOT, 'docs', 'daily');
-const IMG_EXT = 'png'; // Gemini image generation returns PNG
+const IMG_EXT = 'png'; // Daily images are generated as high-res PNGs
 const SPECIES_PATH = join(ROOT, 'data', 'species.json');
 
 const GEMINI_MODEL = 'gemini-2.5-flash-image';
@@ -67,10 +68,53 @@ function pickSpecies(species, state, date) {
 
 function getRegionPromptText(state) {
   const countryNames = {
-    'MX': 'Mexico',
+    'GTM': 'Guatemala',
+    'BLZ': 'Belize',
+    'SLV': 'El Salvador',
+    'HND': 'Honduras',
+    'NIC': 'Nicaragua',
+    'CRI': 'Costa Rica',
+    'PAN': 'Panama',
+    'COL': 'Colombia',
+    'VEN': 'Venezuela',
+    'GUY': 'Guyana',
+    'SUR': 'Suriname',
+    'ECU': 'Ecuador',
+    'PER': 'Peru',
+    'BOL': 'Bolivia',
+    'PRY': 'Paraguay',
+    'CHL': 'Chile',
+    'URY': 'Uruguay',
+    'ARG': 'Argentina',
     'IS': 'Iceland',
-    'RU': 'Russia',
-    'CN': 'China'
+    'RU-MOW': 'Moscow region, Russia',
+    'RU-SPE': 'St. Petersburg region, Russia',
+    'RU-SIB': 'Siberia region, Russia',
+    'RU-URA': 'Urals region, Russia',
+    'RU-FE': 'Far East region, Russia',
+    'CN-GD': 'Guangdong Province, China',
+    'CN-SC': 'Sichuan Province, China',
+    'CN-BJ': 'Beijing, China',
+    'CN-ZJ': 'Zhejiang Province, China',
+    'CN-XZ': 'Tibet, China',
+    'MX-MEX': 'Central Mexico',
+    'MX-JAL': 'Jalisco, Mexico',
+    'MX-NLE': 'Nuevo León, Mexico',
+    'MX-OAX': 'Oaxaca, Mexico',
+    'MX-YUC': 'Yucatán Peninsula, Mexico',
+    'BR-SP': 'São Paulo, Brazil',
+    'BR-AM': 'Amazonas, Brazil',
+    'BR-BA': 'Bahia, Brazil',
+    'BR-RS': 'Rio Grande do Sul, Brazil',
+    'EU-NORTH': 'Northern Europe',
+    'EU-WEST': 'Western Europe',
+    'EU-EAST': 'Eastern Europe',
+    'EU-SOUTH': 'Southern Europe',
+    'AF-NORTH': 'North Africa',
+    'AF-SOUTH': 'Southern Africa',
+    'AF-EAST': 'East Africa',
+    'AF-WEST': 'West Africa',
+    'AF-CENTRAL': 'Central Africa'
   };
 
   const caProvinces = {
@@ -277,9 +321,73 @@ async function run() {
     console.log(`Failed states: ${failedStates.join(',')}`);
     console.log(`Re-run with: --states ${failedStates.join(',')} --missing-only`);
   }
-  // Exit 0 even on partial failure so the workflow's commit step still runs
-  // and persists whatever did succeed. Hard preconditions (no API key,
-  // missing species.json) already exited 1 above.
+
+  await archiveOldPngs();
+}
+
+const WAREHOUSE_DIR = '/Users/scottybe/workspace/shared/design-assets/daily';
+
+async function archiveOldPngs() {
+  console.log('\nRunning rolling buffer cleanup (archiving PNGs older than 7 days)...');
+  const todayStr = targetDate;
+  const todayDate = new Date(todayStr + 'T12:00:00');
+  
+  let archivedCount = 0;
+  
+  if (!existsSync(DOCS_DIR)) return;
+  const states = readdirSync(DOCS_DIR);
+  for (const state of states) {
+    const statePath = join(DOCS_DIR, state);
+    if (!statSync(statePath).isDirectory()) continue;
+    
+    const files = readdirSync(statePath);
+    for (const file of files) {
+      if (!file.endsWith('.png')) continue;
+      
+      const fileDateStr = file.replace('.png', '');
+      const fileDate = new Date(fileDateStr + 'T12:00:00');
+      if (isNaN(fileDate.getTime())) continue;
+      
+      const diffTime = todayDate.getTime() - fileDate.getTime();
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays >= 8) {
+        const pngPath = join(statePath, file);
+        const webpPath = pngPath.replace('.png', '.webp');
+        
+        try {
+          // 1. Convert to WebP and save in doc site
+          const stat = statSync(pngPath);
+          if (stat.size > 0) {
+            const buffer = readFileSync(pngPath);
+            const webpBuffer = await sharp(buffer).webp({ quality: 85 }).toBuffer();
+            writeFileSync(webpPath, webpBuffer);
+          } else {
+            writeFileSync(webpPath, Buffer.alloc(0));
+          }
+          
+          // 2. Backup high-res PNG to common warehouse (if accessible)
+          if (existsSync('/Users/scottybe/workspace/shared/design-assets')) {
+            const destPath = join(WAREHOUSE_DIR, state, file);
+            mkdirSync(dirname(destPath), { recursive: true });
+            copyFileSync(pngPath, destPath);
+          }
+          
+          // 3. Delete the original PNG from active repository docs/daily/
+          unlinkSync(pngPath);
+          archivedCount++;
+        } catch (err) {
+          console.error(`  Failed to archive ${pngPath}: ${err.message}`);
+        }
+      }
+    }
+  }
+  
+  if (archivedCount > 0) {
+    console.log(`Successfully archived ${archivedCount} PNGs to WebP.`);
+  } else {
+    console.log('No older PNGs required archiving.');
+  }
 }
 
 run();

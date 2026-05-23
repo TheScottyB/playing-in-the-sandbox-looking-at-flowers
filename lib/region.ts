@@ -155,8 +155,28 @@ async function resolveRegion(): Promise<RegionResult> {
       return { region: code ? `CA-${code}` : FALLBACK, permissionDenied: false };
     }
 
-    if (countryCode === 'MX' || countryCode === 'IS' || countryCode === 'RU' || countryCode === 'CN') {
-      return { region: countryCode, permissionDenied: false };
+    if (countryCode === 'MX') {
+      return { region: resolveMXRegion(place.region), permissionDenied: false };
+    }
+
+    if (countryCode === 'RU') {
+      return { region: resolveRURegion(place.region), permissionDenied: false };
+    }
+
+    if (countryCode === 'CN') {
+      return { region: resolveCNRegion(place.region), permissionDenied: false };
+    }
+
+    if (countryCode === 'BR') {
+      return { region: resolveBRRegion(place.region), permissionDenied: false };
+    }
+
+    if (countryCode === 'IS') {
+      return { region: 'IS', permissionDenied: false };
+    }
+
+    if (countryCode && COUNTRY_TO_REGION[countryCode]) {
+      return { region: COUNTRY_TO_REGION[countryCode], permissionDenied: false };
     }
 
     return { region: FALLBACK, permissionDenied: false };
@@ -187,4 +207,70 @@ function provinceNameToCode(region: string): string | null {
 /** Test/debug helper — clears the cached region so the next call re-prompts. */
 export async function resetRegion(): Promise<void> {
   await AsyncStorage.removeItem(STORAGE_KEY);
+}
+
+const COUNTRY_TO_REGION: Record<string, string> = {
+  // Central America
+  GT: 'GTM', BZ: 'BLZ', SV: 'SLV', HN: 'HND', NI: 'NIC', CR: 'CRI', PA: 'PAN',
+  // South America
+  CO: 'COL', VE: 'VEN', GY: 'GUY', SR: 'SUR', EC: 'ECU', PE: 'PER', BO: 'BOL', PY: 'PRY', UY: 'URY', CL: 'CHL', AR: 'ARG',
+  // Europe North
+  SE: 'EU-NORTH', NO: 'EU-NORTH', FI: 'EU-NORTH', DK: 'EU-NORTH', EE: 'EU-NORTH', LV: 'EU-NORTH', LT: 'EU-NORTH',
+  // Europe West
+  GB: 'EU-WEST', FR: 'EU-WEST', DE: 'EU-WEST', NL: 'EU-WEST', BE: 'EU-WEST', IE: 'EU-WEST', LU: 'EU-WEST', CH: 'EU-WEST', AT: 'EU-WEST',
+  // Europe East
+  PL: 'EU-EAST', UA: 'EU-EAST', RO: 'EU-EAST', HU: 'EU-EAST', CZ: 'EU-EAST', SK: 'EU-EAST', BG: 'EU-EAST', BY: 'EU-EAST', MD: 'EU-EAST',
+  // Europe South
+  ES: 'EU-SOUTH', IT: 'EU-SOUTH', GR: 'EU-SOUTH', PT: 'EU-SOUTH', HR: 'EU-SOUTH', RS: 'EU-SOUTH', SI: 'EU-SOUTH', BA: 'EU-SOUTH', AL: 'EU-SOUTH',
+  // Africa North
+  EG: 'AF-NORTH', MA: 'AF-NORTH', DZ: 'AF-NORTH', TN: 'AF-NORTH', LY: 'AF-NORTH',
+  // Africa South
+  ZA: 'AF-SOUTH', NA: 'AF-SOUTH', BW: 'AF-SOUTH', LS: 'AF-SOUTH', SZ: 'AF-SOUTH',
+  // Africa East
+  KE: 'AF-EAST', TZ: 'AF-EAST', UG: 'AF-EAST', ET: 'AF-EAST', MG: 'AF-EAST', SO: 'AF-EAST',
+  // Africa West
+  NG: 'AF-WEST', GH: 'AF-WEST', SN: 'AF-WEST', CI: 'AF-WEST', CM: 'AF-WEST',
+  // Africa Central
+  CD: 'AF-CENTRAL', CG: 'AF-CENTRAL', GA: 'AF-CENTRAL', AO: 'AF-CENTRAL', CF: 'AF-CENTRAL', TD: 'AF-CENTRAL'
+};
+
+function resolveMXRegion(region?: string | null): string {
+  if (!region) return 'MX-MEX';
+  const r = region.toLowerCase();
+  if (r.includes('jalisco')) return 'MX-JAL';
+  if (r.includes('oaxaca')) return 'MX-OAX';
+  if (r.includes('nuevo leon') || r.includes('nuevo león')) return 'MX-NLE';
+  if (r.includes('yucatan') || r.includes('yucatán')) return 'MX-YUC';
+  return 'MX-MEX';
+}
+
+function resolveCNRegion(region?: string | null): string {
+  if (!region) return 'CN-BJ';
+  const r = region.toLowerCase();
+  if (r.includes('guangdong')) return 'CN-GD';
+  if (r.includes('sichuan')) return 'CN-SC';
+  if (r.includes('zhejiang')) return 'CN-ZJ';
+  if (r.includes('tibet') || r.includes('xizang')) return 'CN-XZ';
+  return 'CN-BJ';
+}
+
+function resolveRURegion(region?: string | null): string {
+  if (!region) return 'RU-MOW';
+  const r = region.toLowerCase();
+  if (r.includes('moscow') || r.includes('moskva') || r.includes('vladimir') || r.includes('yaroslavl')) return 'RU-MOW';
+  if (r.includes('peter') || r.includes('leningrad')) return 'RU-SPE';
+  if (r.includes('siberia') || r.includes('novosibirsk') || r.includes('irkutsk') || r.includes('krasnoyarsk') || r.includes('tomsk') || r.includes('omsk') || r.includes('altai')) return 'RU-SIB';
+  if (r.includes('ural') || r.includes('sverdlovsk') || r.includes('chelyabinsk')) return 'RU-URA';
+  if (r.includes('east') || r.includes('primorsky') || r.includes('khabarovsk') || r.includes('kamchatka') || r.includes('sakhalin') || r.includes('yakut')) return 'RU-FE';
+  return 'RU-MOW';
+}
+
+function resolveBRRegion(region?: string | null): string {
+  if (!region) return 'BR-SP';
+  const r = region.toLowerCase();
+  if (r.includes('sao paulo') || r.includes('são paulo') || r.includes('rio de janeiro') || r.includes('minas') || r.includes('espirito') || r.includes('espírito')) return 'BR-SP';
+  if (r.includes('amazon') || r.includes('para ') || r.includes('pará') || r.includes('acre') || r.includes('roraima') || r.includes('rondonia') || r.includes('rondônia') || r.includes('amapa') || r.includes('amapá') || r.includes('tocantin')) return 'BR-AM';
+  if (r.includes('bahia') || r.includes('pernambuco') || r.includes('ceara') || r.includes('ceará') || r.includes('rio grande do norte') || r.includes('paraiba') || r.includes('paraíba') || r.includes('alagoas') || r.includes('sergipe') || r.includes('piau') || r.includes('maranhao') || r.includes('maranhão')) return 'BR-BA';
+  if (r.includes('rio grande do sul') || r.includes('santa catarina') || r.includes('parana') || r.includes('paraná')) return 'BR-RS';
+  return 'BR-SP';
 }

@@ -50,7 +50,7 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png",
       "name": "Specimen Sandbox",
-      "shortName": "Staring at Flowers",
+      "shortName": "Specimen Sandbox",
       "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today.",
       "themeColor": "#0a0a0c",
       "lang": "en-US"
@@ -72,7 +72,14 @@
           "backgroundColor": "#0a0a0c"
         }
       ],
-      ["expo-image", { "disableLibdav1d": true }]
+      [
+        "expo-image",
+        {
+          "disableLibdav1d": true
+        }
+      ],
+      "expo-sqlite",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true
@@ -88,7 +95,10 @@
       "appStore": {
         "primaryCategory": "Entertainment",
         "secondaryCategory": "Lifestyle",
-        "contentRating": ["4+", "everyone"]
+        "contentRating": [
+          "4+",
+          "everyone"
+        ]
       },
       "router": {}
     },

@@ -58,7 +58,18 @@ export function todayLocalIso(): string {
 }
 
 export function imageUrlFor(state: string, date: string = todayLocalIso()): string {
-  return `${PAGES_BASE_URL}/${state}/${date}.png`;
+  try {
+    const today = new Date(todayLocalIso() + 'T12:00:00');
+    const target = new Date(date + 'T12:00:00');
+    const diffTime = today.getTime() - target.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    // Within 7 days buffer serve the PNG; 8th day and older serve the WebP
+    const ext = diffDays < 8 ? 'png' : 'webp';
+    return `${PAGES_BASE_URL}/${state}/${date}.${ext}`;
+  } catch {
+    return `${PAGES_BASE_URL}/${state}/${date}.webp`;
+  }
 }
 
 function sidecarUrlFor(state: string, date: string = todayLocalIso()): string {

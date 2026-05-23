@@ -28,12 +28,43 @@ brand design pass (Claude Design handoff, 2026-05-14).
 node scripts/render-icons.mjs
 ```
 
-The `PARAMS` object at the top of `scripts/render-icons.mjs` mirrors the
-design tool's tweak panel — pearl size, foil intensity, density, stock,
-pearl style, halo. Edit and re-run to iterate.
+The `PARAMS` object at the top of `scripts/render-icons.mjs` mirrors the design tool's tweak panel. Edit and re-run the script to compile and write fresh assets to this directory.
+
+---
+
+## Design System & Mathematics
+
+### 1. Conceptual Framework: "Seed Spiral · Anchored"
+The visual identity of **Specimen Sandbox** represents the intersection of biological taxonomy, mathematical order, and natural beauty. 
+* **The Phyllotaxis Spiral**: Reflects the natural seed arrangement found in sunflowers (*Helianthus annuus*) and pinecones. It represents botanical diversity and organic growth.
+* **The Central Pearl**: Serves as the "anchor" of the design, symbolizing the local database of curated wildflower specimens. It features a warm, iridescent gradient that shifts depending on light angles.
+* **The Ink Stock**: A deep, charcoal black background (`#0a0a0c`) with textured grain, referencing traditional cataloging cardstock used in historical plant presses.
+
+### 2. Mathematical Formulation of the Spiral
+The spiral is computed using a **Vogel's Phyllotaxis Model**, which places each seed $i$ at a polar coordinate $(r, \theta)$ relative to the center $(512, 512)$ of a $1024 \times 1024$ canvas:
+
+$$\theta = i \cdot \phi_{golden}$$
+$$r = c \cdot \sqrt{i}$$
+
+Where:
+* $i$ is the seed index ($0, 1, 2, \dots, N$).
+* $\phi_{golden} = \pi \cdot (3 - \sqrt{5}) \approx 2.39996 \text{ radians} \approx 137.508^\circ$ is the Golden Angle. This angle ensures that each successive seed is spaced perfectly without creating gaps or colliding grids.
+* $c$ is the radial scaling constant (set to `baseR = 24`).
+* $r$ is bounded to ensure seeds are excluded from the center pearl's region ($r > 112$) and do not run off the card boundary ($r < 360$).
+
+### 3. SVG Stacking Order (Layers)
+To reproduce the textured, iridescent, foil-stamped look, `scripts/render-icons.mjs` stacks five layers:
+1. **Background Layer**: A `<rect>` filled with `#0a0a0c` overlaid with a SVG noise filter (`feTurbulence` with a frequency of `0.9` and color matrix adjustment) at 60% opacity to mimic paper fiber.
+2. **Halo Ring**: An optional delicate circular border (`stroke-width="2"`, `opacity="0.22"`) enclosing the spiral.
+3. **Phyllotaxis Dots**: The calculated seeds. Every $N$-th dot is colored with a cream highlights mask, while the rest are styled with a linear gradient spanning vibrant blue, lavender, pink, cream, and mint foil stops.
+4. **Master Pearl**: A circle of radius `118` styled with a multi-stop radial gradient (`#fff6d9` center outwards to `#7e90d8`).
+5. **Iridescent Streak & Rim**: A semi-transparent white slash across the pearl to add dimensional luster, bounded by a dark 3px stroke to separate the pearl cleanly from the spiral seeds.
+
+---
 
 ## Sources
 
-- Design handoff bundle: `https://api.anthropic.com/v1/design/h/qmKXs8x75JjIx7ISXT4eUw`
-- Final variant rationale: `specimen-sandbox/chats/chat1.md` in the bundle
-- Spiral algorithm: phyllotaxis (Fibonacci angle `π·(3-√5)` per seed)
+- **Design Handoff Bundle**: `https://api.anthropic.com/v1/design/h/qmKXs8x75JjIx7ISXT4eUw`
+- **Final Variant Rationale**: `specimen-sandbox/chats/chat1.md` in the design package.
+- **Spiral Algorithm**: Phyllotaxis (Fibonacci angle `π·(3-√5)` per seed).
+

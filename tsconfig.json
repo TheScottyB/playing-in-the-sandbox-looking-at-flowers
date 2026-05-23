@@ -5,6 +5,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
+      "@/constants/*": [
+        "./shared/constants/*"
+      ],
       "@/*": [
         "./*"
       ]

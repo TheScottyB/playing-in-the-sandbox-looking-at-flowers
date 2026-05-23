@@ -205,11 +205,12 @@ const deliverables = [
   { name: 'adaptive-foreground.png', mode: 'fg', desc: 'Android adaptive foreground (transparent)' },
   { name: 'adaptive-background.png', mode: 'bg', desc: 'Android adaptive background (ink stock + grain)' },
   { name: 'monochrome.png', mode: 'full', palette: 'mono-light', desc: 'Wear OS / notification (white on transparent)' },
+  { name: '../../assets/images/favicon.png', mode: 'full', size: 48, desc: 'Web build favicon' },
 ];
 
 for (const d of deliverables) {
   const svg = buildSvg(d.mode, d.palette);
-  const png = renderPng(svg);
+  const png = renderPng(svg, d.size || 1024);
   const path = join(OUT, d.name);
   writeFileSync(path, png);
   console.log(`✓ ${d.name}  (${(png.length / 1024).toFixed(1)} KB)  — ${d.desc}`);
