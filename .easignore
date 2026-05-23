@@ -52,5 +52,4 @@ app-example
 *.p12
 *.key
 *.mobileprovision
-shared
 
