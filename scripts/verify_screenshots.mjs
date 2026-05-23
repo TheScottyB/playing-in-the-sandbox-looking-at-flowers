@@ -1,36 +1,66 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'node:fs';
+import path from 'node:path';
+import { execSync } from 'node:child_process';
 
-// Define expected screenshot criteria for Apple App Store Connect
+// Define expected screenshot criteria for Apple App Store Connect based on app-store-config.json
 const DEVICE_SPECS = {
-  'iphone_pro_max': {
+  'iphone67': {
     name: 'iPhone Pro Max (6.7")',
     width: 1290,
     height: 2796,
     altWidth: 2796,
-    altHeight: 1290,
-    required: true
+    altHeight: 1290
   },
-  'iphone_plus': {
-    name: 'iPhone Plus (5.5")',
+  'iphone65': {
+    name: 'iPhone Pro Max (6.5")',
+    width: 1242,
+    height: 2688,
+    altWidth: 2688,
+    altHeight: 1242
+  },
+  'iphone61': {
+    name: 'iPhone (6.1")',
+    width: 1179,
+    height: 2556,
+    altWidth: 2556,
+    altHeight: 1179
+  },
+  'iphone55': {
+    name: 'iPhone (5.5")',
     width: 1242,
     height: 2208,
     altWidth: 2208,
-    altHeight: 1242,
-    required: false
+    altHeight: 1242
   },
-  'ipad_pro': {
+  'ipad129': {
     name: 'iPad Pro (12.9")',
     width: 2048,
     height: 2732,
     altWidth: 2732,
-    altHeight: 2048,
-    required: false
+    altHeight: 2048
+  },
+  'ipad11': {
+    name: 'iPad Pro (11")',
+    width: 1668,
+    height: 2388,
+    altWidth: 2388,
+    altHeight: 1668
+  },
+  'ipad105': {
+    name: 'iPad Pro (10.5")',
+    width: 1668,
+    height: 2224,
+    altWidth: 2224,
+    altHeight: 1668
+  },
+  'ipad97': {
+    name: 'iPad (9.7")',
+    width: 1536,
+    height: 2048,
+    altWidth: 2048,
+    altHeight: 1536
   }
 };
-
-const SCREENSHOT_SCENES = ['home', 'explore', 'cards', 'flowers'];
 
 function runCommand(cmd) {
   try {
@@ -95,13 +125,16 @@ function scanScreenshotsDir(baseDir) {
 
 function analyzeScreenshot(filePath, baseDir) {
   const relativePath = path.relative(baseDir, filePath);
-  const pathParts = relativePath.split(path.sep);
+  const fileName = path.basename(filePath);
   
-  // Try to determine the device type and theme from path
-  // Expected: screenshots/[device_type]/[theme]/[scene]/filename.ext
-  const deviceType = pathParts[0];
-  const theme = pathParts[1] || 'unknown';
-  const scene = pathParts[2] || 'unknown';
+  // Find which device spec matches this file based on prefix
+  let matchedDeviceType = null;
+  for (const devicePrefix of Object.keys(DEVICE_SPECS)) {
+    if (fileName.startsWith(devicePrefix)) {
+      matchedDeviceType = devicePrefix;
+      break;
+    }
+  }
   
   const fileInfo = getImageInfo(filePath);
   const ocr = performOCR(filePath);
@@ -124,14 +157,9 @@ function analyzeScreenshot(filePath, baseDir) {
     passes.push('No alpha channel');
   }
 
-  // 3. Location Check
-  if (pathParts.length < 4 && relativePath !== 'mcp_screenshot_post_tap.jpg') {
-    warnings.push(`File is not in the standard nested structure: \`screenshots/[device]/[theme]/[category]/[filename]\``);
-  }
-
-  // 4. Dimension Checks
-  const spec = DEVICE_SPECS[deviceType];
-  if (spec) {
+  // 3. Dimension Checks
+  if (matchedDeviceType) {
+    const spec = DEVICE_SPECS[matchedDeviceType];
     const isPortrait = fileInfo.width === spec.width && fileInfo.height === spec.height;
     const isLandscape = fileInfo.width === spec.altWidth && fileInfo.height === spec.altHeight;
     
@@ -141,15 +169,10 @@ function analyzeScreenshot(filePath, baseDir) {
       passes.push(`Dimensions match ${spec.name} (\`${fileInfo.width}x${fileInfo.height}\`)`);
     }
   } else {
-    // Screenshot at root or in unknown device folder
-    if (relativePath === 'mcp_screenshot_post_tap.jpg') {
-      warnings.push(`Misplaced screenshot found in root \`screenshots/\` directory.`);
-    } else {
-      warnings.push(`Unknown device category folder \`${deviceType}\`. Expected one of: ${Object.keys(DEVICE_SPECS).join(', ')}.`);
-    }
+    warnings.push(`Could not determine device category from filename \`${fileName}\`. Expected prefix like: ${Object.keys(DEVICE_SPECS).join(', ')}.`);
   }
 
-  // 5. OCR Content Scan (SpringBoard, Expo Launcher, Debug Ribbon, Status Bar)
+  // 4. OCR Content Scan (SpringBoard, Expo Launcher, Debug Ribbon, Status Bar)
   if (ocr.available && ocr.text) {
     const textLower = ocr.text.toLowerCase();
     
@@ -169,7 +192,6 @@ function analyzeScreenshot(filePath, baseDir) {
     }
     
     // Check for time stamp (status bar)
-    // Find timestamps like "5:19", "10:30"
     const timeMatch = ocr.text.match(/\b\d{1,2}:\d{2}\b/);
     if (timeMatch) {
       const time = timeMatch[0];
@@ -183,7 +205,7 @@ function analyzeScreenshot(filePath, baseDir) {
     warnings.push('OCR analysis skipped (tesseract not found in PATH).');
   }
 
-  // 6. File size check (warning if > 2MB)
+  // 5. File size check (warning if > 2MB)
   const sizeMB = (fileInfo.sizeBytes / (1024 * 1024)).toFixed(2);
   if (fileInfo.sizeBytes > 2 * 1024 * 1024) {
     warnings.push(`Large file size: **${sizeMB} MB**. We recommend compressing screenshots to speed up downloads and uploads.`);
@@ -194,9 +216,9 @@ function analyzeScreenshot(filePath, baseDir) {
   return {
     relativePath,
     filePath,
-    deviceType,
-    theme,
-    scene,
+    deviceType: matchedDeviceType || 'unknown',
+    theme: 'unknown',
+    scene: 'unknown',
     fileInfo,
     issues,
     warnings,
@@ -210,15 +232,13 @@ function fixScreenshot(analysis) {
   let fixed = false;
   const actionsTaken = [];
 
-  // Action 1: Strip Alpha / Convert to PNG if it's JPG in device folder
   const fileExt = path.extname(filePath).toLowerCase();
   const dirName = path.dirname(filePath);
   const baseName = path.basename(filePath, fileExt);
   
   let targetPath = filePath;
 
-  // If file is JPG and belongs to device structure, let's convert to PNG
-  if (fileInfo.format !== 'png' && relativePath !== 'mcp_screenshot_post_tap.jpg') {
+  if (fileInfo.format !== 'png') {
     const pngPath = path.join(dirName, `${baseName}.png`);
     console.log(`Converting ${relativePath} to PNG...`);
     const convertCmd = runCommand(`which convert`);
@@ -227,35 +247,29 @@ function fixScreenshot(analysis) {
     } else {
       runCommand(`sips -s format png "${filePath}" --out "${pngPath}"`);
     }
-    // Delete old file
     fs.unlinkSync(filePath);
     targetPath = pngPath;
     actionsTaken.push(`Converted format to PNG: \`${path.basename(pngPath)}\``);
     fixed = true;
     
-    // Update fileInfo for subsequent checks
     analysis.filePath = pngPath;
-    analysis.relativePath = path.relative(path.join(process.cwd(), 'screenshots'), pngPath);
+    analysis.relativePath = path.relative(path.join(process.cwd(), 'app_store_assets/screenshots'), pngPath);
     analysis.fileInfo = getImageInfo(pngPath);
   }
 
-  // Action 2: Strip Alpha channel if present
   if (analysis.fileInfo.hasAlpha) {
     console.log(`Stripping alpha channel from ${analysis.relativePath}...`);
     const convertCmd = runCommand(`which convert`);
     if (convertCmd) {
-      // ImageMagick can strip alpha reliably
       runCommand(`convert "${targetPath}" -background white -alpha remove -alpha off "${targetPath}"`);
       actionsTaken.push('Removed alpha channel using ImageMagick');
       fixed = true;
     } else {
-      // Fallback to sips
       runCommand(`sips -s format png "${targetPath}" --setProperty formatOptions default --out "${targetPath}"`);
       actionsTaken.push('Removed alpha channel using sips');
       fixed = true;
     }
     
-    // Refresh info
     analysis.fileInfo = getImageInfo(targetPath);
   }
 
@@ -277,7 +291,7 @@ function generateMarkdownReport(results, baseDir) {
 
   if (totalIssues > 0) {
     md += `> [!CAUTION]\n`;
-    md += `> **${totalIssues} critical issues detected!** Screenshots containing alpha channels, incorrect dimensions, or showing developer menu screens will be rejected by Apple App Store Connect. Use the \`npm run qc-screenshots -- --fix\` command to resolve alpha channels and formats automatically.\n\n`;
+    md += `> **${totalIssues} critical issues detected!** Screenshots containing alpha channels, incorrect dimensions, or showing developer menu screens will be rejected by Apple App Store Connect. Use the \`pnpm run qc-screenshots -- --fix\` command to resolve alpha channels and formats automatically.\n\n`;
   } else {
     md += `> [!TIP]\n`;
     md += `> No critical technical blocking issues found. Make sure the screenshot content matches your latest design expectations.\n\n`;
@@ -328,7 +342,7 @@ function generateMarkdownReport(results, baseDir) {
 }
 
 function main() {
-  const baseDir = path.join(process.cwd(), 'screenshots');
+  const baseDir = path.join(process.cwd(), 'app_store_assets/screenshots');
   const fixArg = process.argv.includes('--fix');
   
   console.log(`Starting Screenshot QC Scanner in: ${baseDir}`);
@@ -341,7 +355,7 @@ function main() {
 
   const files = scanScreenshotsDir(baseDir);
   if (files.length === 0) {
-    console.log('No screenshots found in screenshots/ directory.');
+    console.log('No screenshots found in app_store_assets/screenshots/ directory.');
     process.exit(0);
   }
 
@@ -355,7 +369,6 @@ function main() {
       const fixResult = fixScreenshot(analysis);
       if (fixResult.fixed) {
         console.log(`Fixed issues: ${fixResult.actionsTaken.join(', ')}`);
-        // Re-analyze after fix
         const reanalysis = analyzeScreenshot(analysis.filePath, baseDir);
         reanalysis.fixedActions = fixResult.actionsTaken;
         results.push(reanalysis);
@@ -366,7 +379,6 @@ function main() {
     results.push(analysis);
   }
 
-  // Print console report
   console.log('\n======================================');
   console.log('         SCREENSHOT QC REPORT         ');
   console.log('======================================');
@@ -405,7 +417,6 @@ function main() {
   console.log(`Warnings/Suggestions: ${totalWarnings}`);
   console.log('======================================\n');
 
-  // Write markdown report
   const reportPath = path.join(baseDir, 'qc_report.md');
   const markdownReport = generateMarkdownReport(results, baseDir);
   fs.writeFileSync(reportPath, markdownReport, 'utf-8');
@@ -413,7 +424,7 @@ function main() {
 
   if (totalIssues > 0 && !fixArg) {
     console.log('Tip: Run this script with the --fix argument to automatically resolve alpha channels and format mismatches:');
-    console.log('     node scripts/verify_screenshots.js --fix\n');
+    console.log('     pnpm run qc-screenshots -- --fix\n');
   }
 }
 

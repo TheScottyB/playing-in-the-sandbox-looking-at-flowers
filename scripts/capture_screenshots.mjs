@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'node:fs';
+import path from 'node:path';
+import { execSync } from 'node:child_process';
 
 /**
  * Script to automate the screenshot capture process for Specimen Sandbox
@@ -30,11 +30,10 @@ const DEVICE_TYPES = {
 };
 
 const SCREENSHOT_SCENES = [
-  'home_screen', 
-  'interactive_feature', 
-  'cards_collapsed', 
-  'cards_expanded', 
-  'theme_adaptation'
+  'home_card_front', 
+  'home_card_back', 
+  'search_modal', 
+  'detail_view'
 ];
 
 const THEMES = ['light', 'dark'];
@@ -43,35 +42,11 @@ const THEMES = ['light', 'dark'];
 function createDirectoryStructure() {
   console.log('Setting up directory structure for screenshots...');
 
-  const baseDir = path.join(process.cwd(), 'screenshots');
+  const baseDir = path.join(process.cwd(), 'app_store_assets/screenshots');
   
   if (!fs.existsSync(baseDir)) {
-    fs.mkdirSync(baseDir);
+    fs.mkdirSync(baseDir, { recursive: true });
   }
-
-  // Create device directories
-  Object.keys(DEVICE_TYPES).forEach(deviceType => {
-    const deviceDir = path.join(baseDir, deviceType);
-    if (!fs.existsSync(deviceDir)) {
-      fs.mkdirSync(deviceDir);
-    }
-
-    // Create theme directories
-    THEMES.forEach(theme => {
-      const themeDir = path.join(deviceDir, theme);
-      if (!fs.existsSync(themeDir)) {
-        fs.mkdirSync(themeDir);
-      }
-
-      // Create scene directories for organization
-      ['home', 'explore', 'cards', 'flowers'].forEach(sceneCat => {
-        const sceneDir = path.join(themeDir, sceneCat);
-        if (!fs.existsSync(sceneDir)) {
-          fs.mkdirSync(sceneDir);
-        }
-      });
-    });
-  });
 
   console.log('Directory structure created successfully!');
 }
@@ -119,37 +94,32 @@ function guideCaptureProcess(deviceType) {
   SCREENSHOT_SCENES.forEach((scene, index) => {
     console.log(`\n${index + 1}. ${scene.replace(/_/g, ' ').toUpperCase()}`);
     switch(scene) {
-      case 'home_screen':
-        console.log('   - Navigate to the Home tab');
-        console.log('   - Ensure all three tabs are visible');
-        console.log('   - Show the parallax scrolling effect');
+      case 'home_card_front':
+        console.log('   - Navigate to the Home Screen');
+        console.log('   - Capture the daily flower card (front view showing image, title, and region)');
         break;
-      case 'interactive_feature':
-        console.log('   - Navigate to the Explore tab');
-        console.log('   - Show user interaction with features');
+      case 'home_card_back':
+        console.log('   - On the Home Screen, tap the card to flip it');
+        console.log('   - Capture the daily flower card back view (showing description, stats, and bloom months)');
         break;
-      case 'cards_collapsed':
-        console.log('   - Navigate to the Cards tab');
-        console.log('   - Show multiple cards in collapsed state');
+      case 'search_modal':
+        console.log('   - Tap the Search button in the home navbar');
+        console.log('   - Type a query (e.g. "yellow desert bloom")');
+        console.log('   - Capture the search input and listed results list with similarity match percentages');
         break;
-      case 'cards_expanded':
-        console.log('   - In the Cards tab, tap a card to expand it');
-        console.log('   - Capture the card in expanded state');
-        break;
-      case 'theme_adaptation':
-        console.log('   - Show the app with theme adaptation');
-        console.log('   - Showcase native iOS styling elements');
+      case 'detail_view':
+        console.log('   - Tap the expand button on the home flower card or select a search result');
+        console.log('   - Capture the full-screen detail view containing the close button');
         break;
     }
     console.log(`   - To capture: Press Cmd + S in Simulator`);
-    console.log(`   - Save to: screenshots/${deviceType}/{theme}/{appropriate-folder}/`);
+    console.log(`   - Save to: app_store_assets/screenshots/ with correct prefix (e.g. ${deviceType === 'iphone_pro_max' ? 'iphone67.png' : 'device_prefix.png'})`);
   });
   
   console.log('\n--------------------------------------------------');
   console.log('After capturing all screenshots:');
   console.log('1. Ensure they are properly named and organized');
-  console.log('2. Edit as needed to highlight animations/interactions');
-  console.log('3. Prepare them for App Store submission');
+  console.log('2. Run verification tool: pnpm run qc-screenshots');
   console.log('--------------------------------------------------\n');
 }
 
@@ -178,4 +148,4 @@ function main() {
 }
 
 // Run the script
-main(); 
+main();
