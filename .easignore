@@ -5,12 +5,18 @@
 # Build output (re-generated during build)
 dist/
 .expo/
+web-build/
+expo-env.d.ts
 
 # Local dev / test artifacts
 *.log
 *.local
 coverage/
 .nyc_output/
+*.tsbuildinfo
+build-*.tar.gz
+build-*.apk
+build-*.aab
 
 # Editor / OS noise
 .DS_Store
@@ -19,6 +25,7 @@ coverage/
 *.swp
 *.swo
 Thumbs.db
+*.pem
 
 # Docs / scripts / tests not needed for build
 *.md
@@ -26,6 +33,8 @@ Thumbs.db
 scripts/
 docs/
 .maestro/
+.playwright-cli/
+.claude/
 
 # Dependencies and local configuration
 node_modules/
@@ -33,4 +42,15 @@ credentials.json
 credentials/
 ios/
 android/
+google-service-account.json
+app.ipa
+app-example
+
+# Native keys and provisions
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+shared
 
