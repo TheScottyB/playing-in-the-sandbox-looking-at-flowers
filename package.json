@@ -17,6 +17,8 @@
     "icons:generate": "node scripts/render-icons.mjs",
     "screenshots:capture": "node scripts/capture_screenshots.mjs",
     "screenshots:verify": "node scripts/verify_screenshots.mjs",
+    "screenshots:statusbar:setup": "xcrun simctl status_bar booted override --time \"9:41\" --batteryState \"charged\" --batteryLevel \"100\" --cellularMode \"active\" --cellularBars \"4\" --wifiMode \"searching\" --wifiBars \"3\"",
+    "screenshots:statusbar:clear": "xcrun simctl status_bar booted clear",
     "qc-screenshots": "pnpm run screenshots:verify",
     "e2e": "maestro test .maestro/",
     "e2e:smoke": "maestro test .maestro/smoke.yml",
