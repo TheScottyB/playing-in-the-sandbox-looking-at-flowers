@@ -99,9 +99,6 @@ importers:
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2
-      '@thescottyb/eas-app-store-kit':
-        specifier: link:../eas-app-store-kit
-        version: link:../eas-app-store-kit
       '@types/react':
         specifier: ~19.2.0
         version: 19.2.15

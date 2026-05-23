@@ -65,7 +65,6 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@resvg/resvg-js": "^2.6.2",
-    "@thescottyb/eas-app-store-kit": "link:../eas-app-store-kit",
     "@types/react": "~19.2.0",
     "eslint": "^9.39.4",
     "eslint-config-expo": "~56.0.4",

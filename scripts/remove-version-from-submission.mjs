@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { loadConfig, AppStoreConnectClient, parsePrivateKey } from '@thescottyb/eas-app-store-kit';
+import { loadConfig, AppStoreConnectClient, parsePrivateKey } from '../../eas-app-store-kit/src/index.mjs';
 
 async function main() {
   const config = await loadConfig({
