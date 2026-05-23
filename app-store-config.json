@@ -4,12 +4,12 @@
 		"version": "1.3.0",
 		"copyright": "2026 Scott Beilfuss",
 		"release": {
-			"automaticRelease": true
+			"automaticRelease": false
 		},
 		"info": {
 			"en-US": {
-				"description": "Sandbox Playing Flowers is your daily botanical companion, designed to reconnect you with the natural ecosystems of your region. Every morning, wake up to a stunning, AI-generated image of a native wildflower currently blooming in your US state or Canadian province.\n\nBuilt entirely offline-first for absolute privacy, the app features a fully embedded vector database of thousands of native plant species. Need to identify a flower but don't know the exact terms? Use our revolutionary Vector Vibe Search to find species using semantic concepts, colors, or feelings—all processed instantly on your device without an internet connection.\n\nUPGRADE TO THE SPECIMEN PREMIUM PASS\nTake your botanical discovery to the next level with our Premium Pass:\n- Unlimited Vector Vibe Searches: Explore our massive semantic database without daily limits.\n- The 7-Day Archive: Missed a day? Look back at a full week of stunning native flower generations.\n- Travel Mode: Override your location to explore the native flora of any region in the US and Canada.\n\nRe-engage with the seasonal rhythms of the natural world, one native flower at a time. Designed with love, powered by state-of-the-art on-device AI.",
-				"promoText": "Now featuring the Specimen Premium Pass! Unlock unlimited Vector Vibe Search, the 7-day archive, and regional Travel Mode.",
+				"description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your region and the current season. Upgrade to the Premium Pass to unlock unlimited offline semantic searches, the full 7-day history archive, and regional Travel Mode.",
+				"promoText": "Wake up to your regional bloom ritual. Try offline semantic search, go back 7 days, or travel to other states. Lock in our limited Founders Edition Lifetime VIP pass!",
 				"releaseNotes": "Introducing the Specimen Premium Pass! You can now unlock unlimited semantic searches using our offline Vector Vibe Search. We've also added the 7-day archive and regional Travel Mode so you can explore native flowers across all supported regions.",
 				"keywords": [
 					"flower",
