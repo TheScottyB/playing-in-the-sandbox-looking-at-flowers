@@ -1,150 +1,144 @@
 # Specimen Sandbox
 
-A daily ritual app: every morning, a fresh AI-generated picture of a flower native to your region (US states, Canadian provinces, or countries) — matched to what's blooming this month.
+A daily ritual app: every morning, a fresh, localized, AI-generated image of a native flower is delivered to your device, matching the season and current geographic region (US states, Canadian provinces, and international region codes).
 
-## How it works
+---
 
-1. On first launch, the app asks for your location once and resolves it to a region code (e.g. `CA`, `CA-ON`, or `MX`). The region is cached locally; no coordinates are stored or sent anywhere.
-2. Each night at 04:00 PT, a GitHub Actions cron picks one in-season native species per region from `data/species.json`, generates an image with Gemini 2.5 Flash Image, and commits the `.webp` + sidecar JSON to `docs/daily/{state}/{YYYY-MM-DD}.{webp,json}`.
-3. GitHub Pages serves those files as a free static CDN. The app fetches today's flower for your region and displays it full-bleed with the common name, latin name, and a short blurb.
+## 🏛️ Core Architecture & Flow
 
-If permission is denied, or you're in an unsupported region, the app falls back to a curated `default` bucket.
+The app operates on a hybrid client-server model optimized for privacy, performance, and offline-first usage:
 
-## Repo layout
+```mermaid
+graph TD
+    A[User Location Prompt] -->|On-Device Reverse Geocode| B[Cache Region Code locally]
+    B --> C{Online?}
+    C -->|Yes| D[Fetch Daily WebP/JSON from GitHub Pages CDN]
+    C -->|No| E[Fetch cached flower from AsyncStorage]
+    E -->|None found| F[Load Seasonal Flower from Pre-Compiled SQLite DB]
+    F -->|Offline Search| G[Hybrid Vector / Cosine Similarity Engine]
+```
+
+### 1. Privacy-First Location Resolution
+On first launch, the app requests location permission **once** to resolve the user's location via standard geocoding to a coarse region code (e.g., `CA`, `CA-ON`, `MX-JAL`, `RU-MOW`, or `default`). This code is cached locally in `AsyncStorage`; coordinates never leave the device.
+
+### 2. Static CDN Automation Pipeline
+Every night at **04:00 PT**, a GitHub Actions cron workflow executes:
+* Selects one in-season native species per region from [species.json](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/data/species.json).
+* Directs Gemini 2.5 Flash to generate a high-fidelity image of the species.
+* Optimizes the image format to WebP and generates metadata JSON.
+* Commits the output directly to the GitHub Pages static branch structure: `/docs/daily/{region}/{YYYY-MM-DD}.{webp,json}`.
+
+### 3. Pre-Compiled Vector Search & Offline Database
+To support a completely offline experience and robust exploration, the app includes a pre-compiled SQLite database ([assets/species.db](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/assets/species.db)):
+* **Build-time compilation:** Generated using [compile_species_db.mjs](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/scripts/compile_species_db.mjs) calling the Gemini Embeddings API (`gemini-embedding-001`) to output 768-dimension vectors for all species descriptions.
+* **Hybrid Search Engine:** Reads the database using `expo-sqlite`. On native builds, it utilizes native `sqlite-vec` (JSI virtual table matches). In **Expo Go** or sandbox environments where custom native bindings are locked out, it automatically falls back to an ultra-fast JavaScript dot-product scan (completing in **< 1.5ms** for 150+ species).
+
+---
+
+## 📂 Repository Layout
 
 ```
 ├── app/
-│   ├── _layout.tsx            # Stack: index + flower-detail + +not-found
-│   ├── index.tsx              # Home: daily flower card (flip-to-back for info)
-│   ├── flower-detail.tsx      # Full-screen detail view with close button
+│   ├── _layout.tsx            # Navigation controller stack (Router entry point)
+│   ├── index.tsx              # Home Screen: Daily flower showcase card (Flip card)
+│   ├── flower-detail.tsx      # Details view with overlay and light/dark theme support
 │   └── +not-found.tsx
-├── lib/
-│   ├── region.ts              # One-prompt expo-location → state, cached in AsyncStorage
-│   ├── dailyFlower.ts         # Provider: fetches sidecar JSON + image URL from GH Pages
-│   └── speciesDb.ts           # Offline database query & hybrid vector search service
+├── lib/                       # Core Application Logic Providers
+│   ├── region.ts              # One-shot geocoding, caching, and mapping service
+│   ├── dailyFlower.ts         # CDN integration & AsyncStorage cache broker
+│   └── speciesDb.ts           # SQLite sandbox, migration, and vector search service
 ├── data/
-│   └── species.json           # 3 native species per state (51 buckets + default)
+│   └── species.json           # Raw curated species catalog by region (used for daily cron)
 ├── assets/
-│   ├── species.db             # Pre-compiled offline SQLite database with embeddings
-│   └── images/favicon.png
-├── scripts/
-│   ├── generate-daily.mjs     # Gemini 2.5 Flash Image generator (Node 20)
-│   └── compile_species_db.mjs # Gemini Embeddings & SQLite database compiler
+│   ├── species.db             # Pre-compiled SQLite database with float[768] embeddings
+│   └── images/favicon.png     # Web environment asset
+├── scripts/                   # Developer & Pipeline Automation (ES Modules)
+│   ├── generate-daily.mjs     # Daily automated content compiler and publisher
+│   ├── compile_species_db.mjs # Build-time SQLite generator & Gemini embedder
+│   ├── verify_screenshots.mjs # Screenshot alpha-stripping and validation quality check (QC)
+│   └── reset-project.mjs      # Reset template tool
 ├── .github/workflows/
-│   └── generate-daily.yml     # Cron 0 11 * * * UTC = 04:00 PT
-├── docs/                      # GitHub Pages site (privacy + daily/ CDN tree)
-│   ├── daily/{state}/{date}.webp
-│   ├── daily/{state}/{date}.json
-│   ├── index.html
-│   └── privacy.html
-└── meta/                      # Internal docs (submission, dev, compliance)
+│   └── generate-daily.yml     # GitHub Actions cron (0 11 * * * UTC)
+├── docs/                      # Static GitHub Pages assets (privacy page, web index, CDN directory)
+└── meta/                      # Developer onboarding, compliance guides, and app store specs
 ```
 
-## Quick start
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+The project is built on **Expo SDK 56** and **React Native 0.85.3**. Package management is governed strictly by **pnpm**.
 
 ```bash
+# Install dependencies
 pnpm install
+
+# Start the Expo Go development server
 pnpm exec expo start
 ```
 
-Scan the QR code with **Expo Go** on iOS or Android. The app has no
-custom native modules, so Expo Go covers all required APIs — no custom
-build needed for day-to-day work.
+Scan the generated QR code using **Expo Go** on iOS or Android. Because the database uses a JS fallback when native `sqlite-vec` is unavailable, you do not need custom native clients for daily development.
 
-For native verification (TestFlight / Play Internal prerelease check):
-
-```bash
-# iOS simulator (no signing)
-eas build --profile development-simulator --platform ios --local
-
-# iOS device (Apple credentials via `eas credentials`)
-eas build --profile development --platform ios --local
-
-# Android
-eas build --profile development --platform android --local
-```
-
-See **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** for full dev loop +
-**[meta/DEPLOYMENT.md](meta/DEPLOYMENT.md)** for TestFlight / Play
-Internal submission.
-
-## First-time setup
-
-Before the cron fires for the first time, complete these three steps in order:
-
-**1. Add the Gemini API key secret**
-
-Repo → Settings → Secrets and variables → Actions → **New repository secret**
-
-| Name | Value |
-|---|---|
-| `GEMINI_API_KEY` | Your Google AI Studio key with Gemini 2.5 Flash Image access |
-
-**2. Enable GitHub Pages**
-
-Repo → Settings → Pages → Source: **Deploy from a branch** → Branch: `main`, folder: `/docs` → Save.
-
-The CDN root will be `https://<owner>.github.io/playing-in-the-sandbox-staring-at-flowers/`.
-Make sure that matches `BASE_URL` in `lib/dailyFlower.ts`.
-
-**3. Smoke-test with a dry run**
-
-Actions → "Generate Daily Flowers" → **Run workflow** → set `dry_run` to `true` → Run.
-
-The workflow should complete in under a minute, commit placeholder files, and report
-`52 generated, 0 skipped, 0 failed`. Merge or discard that commit before the first
-real cron at 04:00 PT.
-
-## Architecture
-
-`lib/dailyFlower.ts` exposes a provider interface. v1 resolves to a static GitHub Pages URL. v2 can swap in a Cloudflare Worker (IP-based geo + on-demand generation) without touching any caller. v3 could move generation on-device once Gemini Nano ships in Expo.
-
-## Cron operations
-
-The daily generator needs:
-
-1. `GEMINI_API_KEY` repo secret (Settings → Secrets → Actions)
-2. GitHub Pages enabled from `docs/` on `main` (Settings → Pages)
-
-### Manual runs
-
-Actions → "Generate Daily Flowers" → **Run workflow**. Inputs:
-
-| Input | Default | Use it for |
-|---|---|---|
-| `date` | today UTC | Generate flowers for a specific date (`2026-04-25`) |
-| `states` | every bucket | Limit to a subset (`CA,NY,TX`) |
-| `missing_only` | `false` | Conservative backfill: skip states that have any partial output (won't overwrite). Default behavior already skips states that are *fully* complete. |
-| `dry_run` | `false` | Smoke-test the pipeline without burning Gemini credits |
-
-### Backfilling missing states
-
-If the cron has only generated a partial set (rate limits, bad API key, etc.),
-re-run with `missing_only: true` for the affected dates. Existing valid files
-are skipped; only the gaps get filled. The script tolerates per-state failures
-without aborting the workflow's commit step, so partial progress is always
-persisted.
-
-Local backfill:
+### Native Pre-Release Builds
+To verify native behaviors (such as background loading or App Store compliance) compile a local development build:
 
 ```bash
-GEMINI_API_KEY=... node scripts/generate-daily.mjs \
-  --date 2026-04-25 --missing-only
+# Build for iOS Simulator (does not require Apple signing credentials)
+pnpm exec eas build --profile development-simulator --platform ios --local
+
+# Build for physical iOS device (configured via your Apple Team credentials)
+pnpm exec eas build --profile development --platform ios --local
+
+# Build for Android
+pnpm exec eas build --profile development --platform android --local
 ```
 
-The script prints `Re-run with: --states ... --missing-only` after a partial
-run so you can resume without re-paying for the states that already worked.
+---
 
-## Documentation
+## 🛠️ Operations & Cron Management
 
-- **[CHANGELOG.md](CHANGELOG.md)** — release history
-- **[meta/DEVELOPMENT.md](meta/DEVELOPMENT.md)** — local dev loop + SDK 55 maintenance
-- **[meta/DEPLOYMENT.md](meta/DEPLOYMENT.md)** — TestFlight + Play Internal walkthrough
-- **[meta/ERROR_STATES.md](meta/ERROR_STATES.md)** — error & offline behavior inventory + tester checklist
-- **[meta/SUBMISSION.md](meta/SUBMISSION.md)** — App Store submission reference
-- **[meta/PRIVACY.md](meta/PRIVACY.md)** — privacy policy (also at [docs/privacy.html](docs/privacy.html))
-- **[docs/plans/](docs/plans/)** — design + implementation plans (active and archived)
+### 1. Initial Setup Checklist
 
-## Support
+> [!IMPORTANT]
+> To configure the automated Daily Content Generator, the following repository configurations are required:
 
-Open an issue: https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues
+1. **Actions Secret:** Add a secret named `GEMINI_API_KEY` under **Settings** → **Secrets and variables** → **Actions** with a valid key from Google AI Studio.
+2. **GitHub Pages Deployment:** Go to **Settings** → **Pages**, configure source to **Deploy from a branch**, set branch to `main`, and directory to `/docs`.
+3. **Dry-Run Validation:** Navigate to **Actions** → **Generate Daily Flowers** → click **Run workflow**, set `dry_run` to `true`, and trigger the run. Verify that it executes successfully.
+
+### 2. Manual Workflow Controls
+
+Run workflows manually from **Actions** → **Generate Daily Flowers** using these parameters:
+
+| Input Parameter | Default Value | Description / Use Case |
+| :--- | :--- | :--- |
+| `date` | Today (UTC) | Force generate content for a specific date (Format: `YYYY-MM-DD`). |
+| `states` | *all* | Restrict execution to selected regions (e.g. `CA,NY,TX,MX-JAL`). |
+| `missing_only` | `false` | Conservative backfill: skips regions that already have partial files. |
+| `dry_run` | `false` | Executes the generation process without writing changes to git. |
+
+### 3. Content Backfill Procedures
+
+If the daily workflow experiences partial failures (due to API rate limits or network hiccups), you can perform a targeted backfill:
+
+```bash
+# Run local backfill for a specific date
+GEMINI_API_KEY=your_key_here node scripts/generate-daily.mjs --date 2026-04-25 --missing-only
+```
+
+The script will log progress and skip pre-existing regional assets, and output commands to resume where it left off.
+
+---
+
+## 📖 Project Documentation Index
+
+Refer to the documents under [meta/](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/meta) for platform administration and compliance:
+
+* **[DEVELOPMENT.md](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/meta/DEVELOPMENT.md)**: Deep dive into Expo SDK 56 development, local builders, simulator setups, and common troubleshooting steps.
+* **[DEPLOYMENT.md](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/meta/DEPLOYMENT.md)**: Release checklists and guide for TestFlight, Play Store internal tracks, and EAS update releases.
+* **[SUBMISSION.md](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/meta/SUBMISSION.md)**: Reference sheet for metadata configuration, IAP status, content rating, and legal questionnaires.
+* **[SUBMISSION_CHECKLIST.md](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/meta/SUBMISSION_CHECKLIST.md)**: Actionable checklist tracking remaining pre-submission release blockers.
+* **[ERROR_STATES.md](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/meta/ERROR_STATES.md)**: Offline status behaviors, CDN error layouts, and manual smoke testing.
+* **[PRIVACY.md](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/meta/PRIVACY.md)**: Official Privacy Policy text (automatically served publicly at `docs/privacy.html`).
