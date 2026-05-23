@@ -124,6 +124,16 @@ v1 ships English-only. Species data and blurbs are in English; image generation 
 
 Suggested video flow: launch → location prompt → today's flower fades in → swipe to yesterday → end card with app icon.
 
+## Routing App Coverage File Exemption
+
+**Status:** Exempt.
+
+App Store Connect requests a Routing App Coverage File (`.geojson`) only if the app registers as a turn-by-turn navigation or public transit router. 
+
+Specimen Sandbox uses location permissions to resolve a US state, Canadian province, or country code once at startup via reverse-geocoding. It does not calculate coordinates, provide directions, or act as a navigation utility. 
+
+**Action:** Ensure the app category in `app.json` remains strictly set to `Entertainment` or `Lifestyle` and that the "Routing App" capability is turned off in App Store Connect. Do not upload a coverage file.
+
 ## App Store Submission Checklist
 
 ### Legal Requirements
