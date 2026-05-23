@@ -138,6 +138,17 @@ export async function getDailyFlowerOffline(region: string, date: string): Promi
   }
 }
 
+export async function getSpeciesCount(): Promise<number> {
+  try {
+    const db = await getDatabase();
+    const result = db.getFirstSync<{ count: number }>('SELECT count(*) as count FROM species;');
+    return result?.count || 0;
+  } catch (e) {
+    console.error('[speciesDb] Failed to get species count:', e);
+    return 0;
+  }
+}
+
 /** Call Gemini Embedding API to embed search query */
 async function getQueryEmbedding(queryText: string): Promise<Float32Array | null> {
   const apiKey = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
