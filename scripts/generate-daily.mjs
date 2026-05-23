@@ -41,7 +41,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const DOCS_DIR = join(ROOT, "docs", "daily");
 const IMG_EXT = "png"; // Daily images are generated as high-res PNGs
-const SPECIES_PATH = join(ROOT, "data", "species.json");
+const SPECIES_PATH = join(ROOT, "lib", "data", "species.json");
 
 const GEMINI_MODEL = "gemini-3.1-flash-image-preview";
 const GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta";
