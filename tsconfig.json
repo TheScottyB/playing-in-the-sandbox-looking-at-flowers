@@ -8,6 +8,15 @@
       "@/constants/*": [
         "./shared/constants/*"
       ],
+      "@/components/*": [
+        "./shared/components/*"
+      ],
+      "@/styles/*": [
+        "./shared/styles/*"
+      ],
+      "@/types/*": [
+        "./shared/types/*"
+      ],
       "@/*": [
         "./*"
       ]

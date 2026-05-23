@@ -8,7 +8,7 @@
     "orientation": "portrait",
     "icon": "./app_store_assets/icons/icon-1024.png",
     "scheme": "staring-at-flowers",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.djscottyb.playinginthesandoxlookingatflowers",

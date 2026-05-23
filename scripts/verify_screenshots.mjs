@@ -2,6 +2,27 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 
+// Load environment variables from .env.local and .env if they exist
+for (const envFile of ['.env.local', '.env']) {
+  if (fs.existsSync(envFile)) {
+    const content = fs.readFileSync(envFile, 'utf-8');
+    for (const line of content.split('\n')) {
+      const match = line.match(/^\s*([^#=]+)\s*=\s*(.*)\s*$/);
+      if (match) {
+        const key = match[1].trim();
+        let val = match[2].trim();
+        // Strip optional quotes
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.slice(1, -1);
+        }
+        if (!process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    }
+  }
+}
+
 // Define expected screenshot criteria for Apple App Store Connect based on app-store-config.json
 const DEVICE_SPECS = {
   'iphone67': {
@@ -123,7 +144,81 @@ function scanScreenshotsDir(baseDir) {
   return filesList;
 }
 
-function analyzeScreenshot(filePath, baseDir) {
+async function analyzeScreenshotWithGemini(filePath, apiKey) {
+  const model = 'gemini-2.5-flash';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  
+  const buffer = fs.readFileSync(filePath);
+  const base64Image = buffer.toString('base64');
+  
+  const ext = path.extname(filePath).toLowerCase();
+  let mimeType = 'image/png';
+  if (ext === '.jpg' || ext === '.jpeg') {
+    mimeType = 'image/jpeg';
+  }
+  
+  const prompt = `Analyze this App Store screenshot. Check if there are any of the following issues:
+1. Is it a screenshot of the mobile home screen (iOS Springboard or Android Launcher/App Drawer) instead of the app?
+2. Is it showing the Expo Go client, developer launcher, Metro bundler connection screen, or other developer menus?
+3. Does it contain any debug overlays, redbox error screens, FPS meters, or a visible "DEBUG" ribbon?
+4. Does it contain any visible popups, modal overlays, permission dialogs (e.g. location permission alert), or system alert dialogs that shouldn't be in a clean production screenshot?
+5. Does the status bar show a time other than 9:41?
+
+Respond ONLY with a JSON object in this exact format:
+{
+  "isHomeScreen": true,
+  "isDevLauncher": true,
+  "hasDebugOverlay": true,
+  "hasPopupOrModal": true,
+  "statusBarTime": "9:41",
+  "explanation": "Brief explanation of any issues found"
+}`;
+
+  const body = {
+    contents: [
+      {
+        parts: [
+          {
+            inlineData: {
+              mimeType: mimeType,
+              data: base64Image
+            }
+          },
+          {
+            text: prompt
+          }
+        ]
+      }
+    ],
+    generationConfig: {
+      responseMimeType: "application/json"
+    }
+  };
+
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    
+    if (!resp.ok) {
+      throw new Error(`Gemini status ${resp.status}: ${await resp.text()}`);
+    }
+    
+    const json = await resp.json();
+    const responseText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!responseText) {
+      throw new Error('No text in Gemini response');
+    }
+    return JSON.parse(responseText);
+  } catch (err) {
+    console.warn(`  Gemini Vision analysis failed for ${path.basename(filePath)}: ${err.message}`);
+    return null;
+  }
+}
+
+async function analyzeScreenshot(filePath, baseDir, apiKey) {
   const relativePath = path.relative(baseDir, filePath);
   const fileName = path.basename(filePath);
   
@@ -203,6 +298,30 @@ function analyzeScreenshot(filePath, baseDir) {
     }
   } else if (!ocr.available) {
     warnings.push('OCR analysis skipped (tesseract not found in PATH).');
+  }
+
+  // AI Multimodal Vision Analysis (Detecting popups, system permission alerts, springboard launcher, etc.)
+  if (apiKey) {
+    const aiResult = await analyzeScreenshotWithGemini(filePath, apiKey);
+    if (aiResult) {
+      if (aiResult.isHomeScreen) {
+        issues.push('AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.');
+      }
+      if (aiResult.isDevLauncher) {
+        issues.push('AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.');
+      }
+      if (aiResult.hasDebugOverlay) {
+        warnings.push('AI Vision: Contains a visible **debug banner / FPS meter / debug overlay**.');
+      }
+      if (aiResult.hasPopupOrModal) {
+        issues.push('AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.');
+      }
+      if (aiResult.statusBarTime && aiResult.statusBarTime !== '9:41') {
+        warnings.push(`AI Vision: Status bar time is \`${aiResult.statusBarTime}\` instead of standard \`9:41\`.`);
+      } else if (aiResult.statusBarTime === '9:41') {
+        passes.push('AI Vision: Status bar shows 9:41');
+      }
+    }
   }
 
   // 5. File size check (warning if > 2MB)
@@ -341,12 +460,18 @@ function generateMarkdownReport(results, baseDir) {
   return md;
 }
 
-function main() {
+async function main() {
   const baseDir = path.join(process.cwd(), 'app_store_assets/screenshots');
   const fixArg = process.argv.includes('--fix');
+  const apiKey = process.env.GEMINI_API_KEY;
   
   console.log(`Starting Screenshot QC Scanner in: ${baseDir}`);
-  console.log(`Fix option: ${fixArg ? 'ENABLED' : 'DISABLED'}\n`);
+  console.log(`Fix option: ${fixArg ? 'ENABLED' : 'DISABLED'}`);
+  if (apiKey) {
+    console.log(`AI Vision: ENABLED (using gemini-2.5-flash)\n`);
+  } else {
+    console.log(`AI Vision: DISABLED (GEMINI_API_KEY environment variable not found)\n`);
+  }
   
   if (!fs.existsSync(baseDir)) {
     console.error(`Error: Screenshots directory not found at ${baseDir}`);
@@ -360,16 +485,22 @@ function main() {
   }
 
   const results = [];
+  let count = 0;
   
   for (const file of files) {
+    if (count > 0 && apiKey) {
+      // Avoid rate limits of free-tier Gemini API (15 RPM)
+      await new Promise(r => setTimeout(r, 5000));
+    }
     console.log(`Scanning: ${path.relative(baseDir, file)}...`);
-    const analysis = analyzeScreenshot(file, baseDir);
+    const analysis = await analyzeScreenshot(file, baseDir, apiKey);
+    count++;
     
     if (fixArg) {
       const fixResult = fixScreenshot(analysis);
       if (fixResult.fixed) {
         console.log(`Fixed issues: ${fixResult.actionsTaken.join(', ')}`);
-        const reanalysis = analyzeScreenshot(analysis.filePath, baseDir);
+        const reanalysis = await analyzeScreenshot(analysis.filePath, baseDir, apiKey);
         reanalysis.fixedActions = fixResult.actionsTaken;
         results.push(reanalysis);
         continue;

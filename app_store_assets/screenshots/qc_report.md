@@ -1,15 +1,15 @@
 # App Store Screenshot Quality Control Report
 
-*Generated on: 5/23/2026, 12:07:50 AM*
+*Generated on: 5/23/2026, 12:46:01 AM*
 
 ## Summary
 
 - **Total screenshots found**: 16
-- **Critical Issues (App Store Rejections)**: <span style="color:red">**0**</span>
-- **Warnings / Design Recommendations**: <span style="color:orange">**8**</span>
+- **Critical Issues (App Store Rejections)**: <span style="color:red">**28**</span>
+- **Warnings / Design Recommendations**: <span style="color:orange">**24**</span>
 
-> [!TIP]
-> No critical technical blocking issues found. Make sure the screenshot content matches your latest design expectations.
+> [!CAUTION]
+> **28 critical issues detected!** Screenshots containing alpha channels, incorrect dimensions, or showing developer menu screens will be rejected by Apple App Store Connect. Use the `pnpm run qc-screenshots -- --fix` command to resolve alpha channels and formats automatically.
 
 ## Detailed Results
 
@@ -20,6 +20,9 @@
 - **Dimensions**: `1668 x 2224 px`
 - **Alpha Channel**: 🟢 No
 - **File Size**: `1.18 MB`
+
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:42` instead of standard `9:41`.
 
 #### 🟢 Passed Checks:
 - Format is PNG
@@ -49,6 +52,7 @@ CA - MAY 22 2026
 - **File Size**: `2.17 MB`
 
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:42` instead of standard `9:41`.
 - Large file size: **2.17 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -87,7 +91,13 @@ symbolizing the state.
 - **Alpha Channel**: 🟢 No
 - **File Size**: `2.47 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:42 PM` instead of standard `9:41`.
 - Large file size: **2.47 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -148,7 +158,13 @@ Cancel
 - **Alpha Channel**: 🟢 No
 - **File Size**: `2.47 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:42` instead of standard `9:41`.
 - Large file size: **2.47 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -209,6 +225,9 @@ Cancel
 - **Alpha Channel**: 🟢 No
 - **File Size**: `1.58 MB`
 
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:41 PM` instead of standard `9:41`.
+
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
@@ -237,6 +256,7 @@ CA - MAY 22 2026
 - **File Size**: `3.01 MB`
 
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:42 PM` instead of standard `9:41`.
 - Large file size: **3.01 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -274,6 +294,9 @@ symbolizing the state.
 - **Alpha Channel**: 🟢 No
 - **File Size**: `0.97 MB`
 
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:43 PM` instead of standard `9:41`.
+
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
@@ -300,6 +323,9 @@ A + MAY 22 2026
 - **Dimensions**: `1536 x 2048 px`
 - **Alpha Channel**: 🟢 No
 - **File Size**: `1.87 MB`
+
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:43 PM` instead of standard `9:41`.
 
 #### 🟢 Passed Checks:
 - Format is PNG
@@ -336,6 +362,14 @@ symbolizing the state.
 - **Dimensions**: `1242 x 2208 px`
 - **Alpha Channel**: 🟢 No
 - **File Size**: `1.53 MB`
+
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
 
 #### 🟢 Passed Checks:
 - Format is PNG
@@ -374,6 +408,14 @@ Calendar Photos
 - **Alpha Channel**: 🟢 No
 - **File Size**: `1.53 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
+
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
@@ -411,6 +453,13 @@ Calendar Photos
 - **Alpha Channel**: 🟢 No
 - **File Size**: `0.31 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
+
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
@@ -446,6 +495,13 @@ available when you request it
 - **Dimensions**: `1179 x 2556 px`
 - **Alpha Channel**: 🟢 No
 - **File Size**: `1.57 MB`
+
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
+#### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
 
 #### 🟢 Passed Checks:
 - Format is PNG
@@ -490,7 +546,13 @@ symbolizing the state.
 - **Alpha Channel**: 🟢 No
 - **File Size**: `2.42 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
 - Large file size: **2.42 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -536,7 +598,13 @@ Ae
 - **Alpha Channel**: 🟢 No
 - **File Size**: `2.42 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
 - Large file size: **2.42 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -582,7 +650,13 @@ Ae
 - **Alpha Channel**: 🟢 No
 - **File Size**: `2.50 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
 - Large file size: **2.50 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -626,7 +700,13 @@ Q Search
 - **Alpha Channel**: 🟢 No
 - **File Size**: `2.50 MB`
 
+#### 🔴 Critical Issues:
+- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
+- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
+- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+
 #### ⚠️ Warnings:
+- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
 - Large file size: **2.50 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
