@@ -31,54 +31,7 @@
 				"supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues",
 				"title": "Sandbox Playing Flowers",
 				"subtitle": "Daily Native Flower Ritual",
-				"privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html",
-				"screenshots": {
-					"APP_IPHONE_67": [
-						"app_store_assets/screenshots/iphone67.png",
-						"app_store_assets/screenshots/iphone67_back.png",
-						"app_store_assets/screenshots/iphone67_yesterday.png"
-					],
-					"APP_IPHONE_65": [
-						"app_store_assets/screenshots/iphone65.png",
-						"app_store_assets/screenshots/iphone65_back.png",
-						"app_store_assets/screenshots/iphone65_yesterday.png"
-					],
-					"APP_IPHONE_61": [
-						"app_store_assets/screenshots/iphone61.png",
-						"app_store_assets/screenshots/iphone61_back.png",
-						"app_store_assets/screenshots/iphone61_yesterday.png"
-					],
-					"APP_IPHONE_55": [
-						"app_store_assets/screenshots/iphone55.png",
-						"app_store_assets/screenshots/iphone55_back.png",
-						"app_store_assets/screenshots/iphone55_yesterday.png"
-					],
-					"APP_IPAD_PRO_3GEN_129": [
-						"app_store_assets/screenshots/ipad129.png",
-						"app_store_assets/screenshots/ipad129_back.png",
-						"app_store_assets/screenshots/ipad129_yesterday.png"
-					],
-					"APP_IPAD_PRO_129": [
-						"app_store_assets/screenshots/ipad129.png",
-						"app_store_assets/screenshots/ipad129_back.png",
-						"app_store_assets/screenshots/ipad129_yesterday.png"
-					],
-					"APP_IPAD_PRO_3GEN_11": [
-						"app_store_assets/screenshots/ipad11.png",
-						"app_store_assets/screenshots/ipad11_back.png",
-						"app_store_assets/screenshots/ipad11_yesterday.png"
-					],
-					"APP_IPAD_105": [
-						"app_store_assets/screenshots/ipad105.png",
-						"app_store_assets/screenshots/ipad105_back.png",
-						"app_store_assets/screenshots/ipad105_yesterday.png"
-					],
-					"APP_IPAD_97": [
-						"app_store_assets/screenshots/ipad97.png",
-						"app_store_assets/screenshots/ipad97_back.png",
-						"app_store_assets/screenshots/ipad97_yesterday.png"
-					]
-				}
+				"privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html"
 			}
 		},
 		"categories": ["ENTERTAINMENT"],

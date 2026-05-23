@@ -8,25 +8,29 @@ const DEVICE_TYPES = {
 		name: 'iPhone Pro Max (6.7")',
 		simulator: "iPhone 16 Pro Max",
 		filePrefix: "iphone67",
+		fastlaneKey: "APP_IPHONE_67",
 		scales: [
-			{ prefix: "iphone65", w: 1242, h: 2688 },
-			{ prefix: "iphone61", w: 1179, h: 2556 },
+			{ prefix: "iphone65", w: 1242, h: 2688, fastlaneKey: "APP_IPHONE_65" },
+			{ prefix: "iphone61", w: 1179, h: 2556, fastlaneKey: "APP_IPHONE_61" },
 		],
 	},
 	iphone_plus: {
 		name: 'iPhone Plus (5.5")',
 		simulator: "iPhone SE (3rd generation)",
 		filePrefix: "iphone55",
+		fastlaneKey: "APP_IPHONE_55",
 		scales: [],
 	},
 	ipad_pro: {
 		name: 'iPad Pro (12.9")',
 		simulator: "iPad Pro 13-inch (M4)",
 		filePrefix: "ipad129",
+		fastlaneKey: "APP_IPAD_PRO_3GEN_129",
 		scales: [
-			{ prefix: "ipad11", w: 1668, h: 2388 },
-			{ prefix: "ipad105", w: 1668, h: 2224 },
-			{ prefix: "ipad97", w: 1536, h: 2048 },
+			{ prefix: "ipad129_legacy", w: 2048, h: 2732, fastlaneKey: "APP_IPAD_PRO_129", copyOnly: true },
+			{ prefix: "ipad11", w: 1668, h: 2388, fastlaneKey: "APP_IPAD_PRO_3GEN_11" },
+			{ prefix: "ipad105", w: 1668, h: 2224, fastlaneKey: "APP_IPAD_105" },
+			{ prefix: "ipad97", w: 1536, h: 2048, fastlaneKey: "APP_IPAD_97" },
 		],
 	},
 };
@@ -44,8 +48,8 @@ function runCommand(cmd) {
 	}
 }
 
-function createDirectoryStructure() {
-	const baseDir = path.join(process.cwd(), "app_store_assets/screenshots");
+function createDirectoryStructure(fastlaneKey) {
+	const baseDir = path.join(process.cwd(), "store/apple/screenshot/en-US", fastlaneKey);
 	if (!fs.existsSync(baseDir)) {
 		fs.mkdirSync(baseDir, { recursive: true });
 	}
@@ -222,7 +226,8 @@ async function postProcessScreenshot(filePath, filePrefix) {
 async function main() {
 	console.log("=== Starting Automated Screen Capture & Scaler ===");
 
-	const baseDir = createDirectoryStructure();
+	console.log("=== Starting Automated Screen Capture & Scaler ===");
+
 	const devices = Object.keys(DEVICE_TYPES);
 
 	for (const deviceKey of devices) {
@@ -267,9 +272,16 @@ async function main() {
 		}
 
 		console.log(`Post-processing screenshots for ${deviceInfo.name}...`);
+		
+		// Setup maestro output dir (temporary flat dir)
+		const tempDir = path.join(process.cwd(), "app_store_assets/screenshots");
+		if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir, { recursive: true });
+		
+		const mainDir = createDirectoryStructure(deviceInfo.fastlaneKey);
+
 		for (const suffix of SCREENSHOT_SCENES) {
 			const sourcePath = path.join(
-				baseDir,
+				tempDir,
 				`${deviceInfo.filePrefix}${suffix}.png`,
 			);
 			if (!fs.existsSync(sourcePath)) {
@@ -279,14 +291,25 @@ async function main() {
 
 			// Clean up base image
 			await postProcessScreenshot(sourcePath, deviceInfo.filePrefix);
+			
+			// Move base image to main fastlane dir
+			const mainDestPath = path.join(mainDir, `${deviceInfo.filePrefix}${suffix}.png`);
+			fs.copyFileSync(sourcePath, mainDestPath);
 
 			// Generate and clean up scaled copies
 			for (const scale of deviceInfo.scales) {
-				const destPath = path.join(baseDir, `${scale.prefix}${suffix}.png`);
-				console.log(
-					`  Scaling copy to ${scale.prefix}${suffix}.png (${scale.w}x${scale.h})...`,
-				);
-				resizeImage(sourcePath, destPath, scale.w, scale.h);
+				const scaleDir = createDirectoryStructure(scale.fastlaneKey);
+				const destPath = path.join(scaleDir, `${scale.prefix}${suffix}.png`);
+				
+				if (scale.copyOnly) {
+					console.log(`  Copying legacy format to ${scale.prefix}${suffix}.png...`);
+					fs.copyFileSync(sourcePath, destPath);
+				} else {
+					console.log(
+						`  Scaling copy to ${scale.prefix}${suffix}.png (${scale.w}x${scale.h})...`,
+					);
+					resizeImage(sourcePath, destPath, scale.w, scale.h);
+				}
 				await postProcessScreenshot(destPath, scale.prefix);
 			}
 		}
@@ -298,7 +321,7 @@ async function main() {
 
 	console.log("\n==================================================");
 	console.log("🎉 Automated capture, scaling, and formatting complete!");
-	console.log(`Saved under: ${baseDir}`);
+	console.log(`Saved under: store/apple/screenshot/en-US/`);
 	console.log("You can now run quality control verification:");
 	console.log("  pnpm run qc-screenshots");
 	console.log("==================================================\n");
