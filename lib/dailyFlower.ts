@@ -5,12 +5,13 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { ImageSourcePropType } from 'react-native';
+import { Platform, type ImageSourcePropType } from 'react-native';
 
 import { DEFAULT_FLOWER, pickVariant, type TimeOfDay } from '@/data/defaults';
 
-const PAGES_BASE_URL =
-  'https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/daily';
+const PAGES_BASE_URL = __DEV__
+  ? `http://${Platform.OS === 'android' ? '10.0.2.2' : 'localhost'}:8765/daily`
+  : 'https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/daily';
 
 const CACHE_KEY = 'dailyFlower.lastSuccess.v1';
 

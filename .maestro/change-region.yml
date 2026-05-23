@@ -9,8 +9,7 @@
 #      we're back on today after (no "Today →" button)
 appId: host.exp.Exponent
 ---
-- launchApp
-- tapOn: "http://localhost:8081"
+- runFlow: subflows/connect.yml
 
 # Wait for the daily flower to load
 - extendedWaitUntil:

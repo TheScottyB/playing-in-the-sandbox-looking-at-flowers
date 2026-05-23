@@ -6,15 +6,11 @@
 # show the default flower with an "OFFLINE · ARCHIVE" badge instead.
 appId: host.exp.Exponent
 ---
-- launchApp
-- tapOn: "http://localhost:8081"
+- runFlow: subflows/connect.yml
 
-# Wait for the screen to resolve to any terminal state
+# Wait for the screen to resolve
 - extendedWaitUntil:
-    anyOf:
-      - visible: "← Yesterday"
-      - visible: "TAP TO READ"
-      - visible: "Coming soon to your area"
+    visible: "TAP TO READ"
     timeout: 20000
 
 # If the 404 error state is shown, verify the retry button works
@@ -26,9 +22,7 @@ appId: host.exp.Exponent
       - assertVisible: "Try again"
       - tapOn: "Try again"
       - extendedWaitUntil:
-          anyOf:
-            - visible: "← Yesterday"
-            - visible: "Coming soon to your area"
+          visible: "TAP TO READ"
           timeout: 15000
 
 # If the offline fallback is shown, verify the badge is present

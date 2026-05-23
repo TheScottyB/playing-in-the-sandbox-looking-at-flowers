@@ -2,8 +2,7 @@
 # and the species info panel (back).
 appId: host.exp.Exponent
 ---
-- launchApp
-- tapOn: "http://localhost:8081"
+- runFlow: subflows/connect.yml
 
 # Wait for the flower card to load
 - extendedWaitUntil:

@@ -6,22 +6,12 @@
 #   Dev client (iOS) [CI/prod]:   com.djscottyb.playinginthesandoxlookingatflowers
 appId: host.exp.Exponent
 ---
-- launchApp
-- tapOn: "http://localhost:8081"
+- runFlow: subflows/connect.yml
 
-# Wait for the screen to resolve — either flower loads, fallback shows,
-# or an error state appears. Any of these means the app booted correctly.
+# Wait for the screen to resolve — we expect the daily flower card to load.
 - extendedWaitUntil:
-    anyOf:
-      - visible: "← Yesterday"
-      - visible: "TAP TO READ"
-      - visible: "Coming soon to your area"
-      - visible: "The flower service is having trouble"
+    visible: "TAP TO READ"
     timeout: 20000
 
-# If the flower or fallback loaded, verify nav is present
-- runFlow:
-    when:
-      visible: "← Yesterday"
-    commands:
-      - assertVisible: "← Yesterday"
+# Verify nav is present
+- assertVisible: "← Yesterday"

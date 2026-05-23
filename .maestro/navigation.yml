@@ -2,8 +2,7 @@
 # Requires network access to GitHub Pages daily flower data.
 appId: host.exp.Exponent
 ---
-- launchApp
-- tapOn: "http://localhost:8081"
+- runFlow: subflows/connect.yml
 
 # Wait for flower to load
 - extendedWaitUntil:
