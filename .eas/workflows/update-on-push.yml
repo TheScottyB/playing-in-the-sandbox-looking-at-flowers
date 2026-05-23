@@ -1,10 +1,10 @@
 name: Publish OTA update
 
-on:
-  push:
-    branches:
-      - main
-      - "preview/*"
+# on:
+#   push:
+#     branches:
+#       - main
+#       - "preview/*"
 
 jobs:
   publish_update:

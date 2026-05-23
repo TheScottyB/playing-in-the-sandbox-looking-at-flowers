@@ -14,8 +14,8 @@
     "screenshots:verify": "node scripts/verify_screenshots.mjs",
     "e2e": "maestro test .maestro/",
     "e2e:smoke": "maestro test .maestro/smoke.yml",
-    "deploy:ios": "eas build --platform ios --profile production --submit --non-interactive",
-    "deploy:android": "eas build --platform android --profile production --submit --non-interactive"
+    "deploy:ios": "eas submit --platform ios --profile production --non-interactive",
+    "deploy:android": "eas submit --platform android --profile production --non-interactive"
   },
   "dependencies": {
     "@expo/metro-runtime": "^56.0.11",
