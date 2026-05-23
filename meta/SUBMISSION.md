@@ -7,7 +7,7 @@
 | Bundle ID | com.djscottyb.playinginthesandoxlookingatflowers |
 | SKU | EX1744334003092 |
 | Apple ID | 6744488642 |
-| Version | 1.1.0 |
+| Version | 1.2.0 |
 | Build Number | TBD (next build after pivot) |
 
 ## Required URLs
@@ -25,7 +25,7 @@
 | Secondary Category | Lifestyle |
 | Age Rating | 4+ |
 | Content Rights | Original content + AI-generated imagery (Gemini 2.5 Flash Image) |
-| Features | Daily AI-generated native flower images, region-aware (US states), one-shot location, swipe-back to past 6 days, light/dark theme |
+| Features | Daily AI-generated native flower images, region-aware (US states, CA provinces, MX, CN, RU, BR, IS), one-shot location, offline backup caching, pre-compiled SQLite species database with native/fallback vector similarity search (semantic query), swipe-back to past 6 days, light/dark theme |
 
 ## App Review Information
 | Field | Value |
@@ -33,10 +33,10 @@
 | Contact Email | beilsco@gmail.com |
 | Contact Phone | - |
 | Demo Account | Not required |
-| Notes | The app requests location permission **once** on first launch to resolve the user's US state via reverse-geocoding. The state code is cached locally and the location is never transmitted off-device. Daily flower images are pre-generated server-side via a GitHub Actions cron and served from GitHub Pages — no user data is sent with these requests. Falls back to a default bucket if permission is denied or the user is outside the US. |
+| Notes | The app requests location permission **once** on first launch to resolve the user's US state or international region (CA, MX, CN, RU, BR, IS) via reverse-geocoding. The region code is cached locally and the location is never transmitted off-device. Daily flower images are pre-generated server-side via a GitHub Actions cron and served from GitHub Pages — no user data is sent with these requests. Falls back to a default bucket if permission is denied. Includes a local, pre-compiled SQLite database with embedded species text to support offline search. |
 
 ## In-App Purchases
-None in v1.1.0. (The boilerplate-era donation tier configuration is deprecated; do not re-enable without a real donation flow in the UI.)
+None in v1.2.0. (The boilerplate-era donation tier configuration is deprecated; do not re-enable without a real donation flow in the UI.)
 
 ## App Store Screenshots Requirements
 | Device | Size | Minimum Required | Key Features to Showcase |

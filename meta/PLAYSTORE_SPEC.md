@@ -12,7 +12,7 @@
 
 ## 1. Current State
 
-A React Native / Expo SDK 55 app with a **single screen**: every morning it displays a fresh AI-generated picture of a flower native to the user's US state, matched to the current month.
+A React Native / Expo SDK 56 app with a **single screen**: every morning it displays a fresh AI-generated picture of a flower native to the user's region, matched to the current month.
 
 | Component | State | Play Store Ready? |
 |-----------|-------|-------------------|
@@ -109,7 +109,7 @@ First-time setup also requires:
 
 ## 5. Open Questions
 
-- Do we want to ship Play Store v1.1.0 in lockstep with iOS, or stagger?
+- Do we want to ship Play Store v1.2.0 in lockstep with iOS, or stagger?
   Recommended: stagger. iOS first (existing TestFlight pipeline + screenshots), then Play 1–2 weeks later once the daily cron has produced ≥ 7 days of clean data across all 51 buckets.
 - Is the `default` bucket sufficient for non-US installs, or should we restrict country availability?
   Decision in PLAYSTORE_LISTING.md: **gate to US-only** for v1. Expand once provincial buckets exist for Canada.

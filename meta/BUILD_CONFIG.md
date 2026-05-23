@@ -71,7 +71,7 @@ eas submit --platform ios
 
 - **Apple Team**: Scott Beilfuss (Individual) (ID: 3X872JR6P3)
 - **Bundle Identifier**: com.djscottyb.playinginthesandoxlookingatflowers
-- **Latest Production Build**: 1.1.0 (TBD — next build after pivot)
+- **Latest Production Build**: 1.2.0 (TBD — next build after pivot)
 - **Registered Test Devices**: 2 (1 iPhone, 1 Mac)
 - **EAS Project ID**: ce77dd42-8e41-4320-8eb3-6b96b801b3b6
 
@@ -87,7 +87,7 @@ eas submit --platform ios
 3. Install via Apple Configurator or Xcode
 
 ### Method 2: QR Code / Development Client
-1. Start the development server: `npx expo start --dev-client`
+1. Start the development server: `pnpm exec expo start --dev-client`
 2. Scan the QR code with your device
 3. App will connect to your local development server
 

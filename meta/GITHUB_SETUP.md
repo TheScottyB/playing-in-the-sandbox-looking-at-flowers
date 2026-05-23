@@ -79,12 +79,16 @@ Consider implementing GitHub Actions workflows for:
      test:
        runs-on: ubuntu-latest
        steps:
-         - uses: actions/checkout@v2
-         - uses: actions/setup-node@v2
-           with:
-             node-version: '16'
-         - run: npm ci
-         - run: npm test
+          - uses: actions/checkout@v4
+          - uses: pnpm/action-setup@v4
+            with:
+              version: 11
+          - uses: actions/setup-node@v4
+            with:
+              node-version: '22'
+              cache: 'pnpm'
+          - run: pnpm install --frozen-lockfile
+          - run: pnpm test
    ```
 
 2. **Deployment to GitHub Pages**
@@ -118,12 +122,16 @@ Consider implementing GitHub Actions workflows for:
      verify:
        runs-on: macos-latest
        steps:
-         - uses: actions/checkout@v2
-         - uses: actions/setup-node@v2
-           with:
-             node-version: '16'
-         - run: npm ci
-         - run: npx expo prebuild --platform ios
+          - uses: actions/checkout@v4
+          - uses: pnpm/action-setup@v4
+            with:
+              version: 11
+          - uses: actions/setup-node@v4
+            with:
+              node-version: '22'
+              cache: 'pnpm'
+          - run: pnpm install --frozen-lockfile
+          - run: pnpm exec expo prebuild --platform ios
          - name: Build iOS
            run: xcodebuild -workspace ios/SandboxFlowers.xcworkspace -scheme SandboxFlowers -destination "generic/platform=iOS" -configuration Debug build
    ```
@@ -164,15 +172,15 @@ To enforce consistent commit messages, consider using:
 
 ```bash
 # Install commitlint
-npm install --save-dev @commitlint/cli @commitlint/config-conventional
+pnpm add -D @commitlint/cli @commitlint/config-conventional
 
 # Create commitlint config file
 echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
 
 # Set up Husky for pre-commit hooks
-npm install --save-dev husky
-npx husky install
-npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1'
+pnpm add -D husky
+pnpm exec husky install
+pnpm exec husky add .husky/commit-msg 'pnpm exec commitlint --edit $1'
 ```
 
 ### Regular Workflow Review

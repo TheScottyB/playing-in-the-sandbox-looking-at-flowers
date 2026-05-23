@@ -112,12 +112,12 @@ This is the primary development environment. Hardware is required to exercise th
 #### Setup Steps:
 1. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. Configure development build:
    ```bash
-   npx expo install expo-dev-client
+   pnpm exec expo install expo-dev-client
    ```
 
 3. Create development build for hardware:
@@ -134,7 +134,7 @@ This is the primary development environment. Hardware is required to exercise th
 
 5. Run the development server:
    ```bash
-   npx expo start --dev-client
+   pnpm exec expo start --dev-client
    ```
 
 6. Open the app on your device and shake to open the developer menu
@@ -148,7 +148,7 @@ Useful for quick testing but may not accurately represent hardware performance.
 3. Install iOS simulator
 4. Run development server:
    ```bash
-   npx expo start --ios
+   pnpm exec expo start --ios
    ```
 
 ### 3. Web Development (Limited Use)
@@ -156,7 +156,7 @@ Not recommended for primary development due to differences in styling and perfor
 
 #### Setup:
 ```bash
-npx expo start --web
+pnpm exec expo start --web
 ```
 
 ## Build Profiles
@@ -314,10 +314,10 @@ Unable to connect to Metro
 2. Alternative connection methods:
    ```bash
    # Use tunnel connection
-   npx expo start --tunnel
+   pnpm exec expo start --tunnel
    
    # Or specify LAN IP
-   npx expo start --lan --host <your-ip>
+   pnpm exec expo start --lan --host <your-ip>
    ```
 
 #### 4. Bundle Identifier Conflicts
@@ -403,7 +403,7 @@ Performance degradation
 
 1. **React Native Debugger**
    ```bash
-   npm install -g react-native-debugger
+   pnpm add -g react-native-debugger
    ```
 
 2. **Xcode Instruments**

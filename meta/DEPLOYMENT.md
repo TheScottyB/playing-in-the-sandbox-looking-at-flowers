@@ -4,7 +4,7 @@ Step-by-step for shipping to TestFlight + Google Play Store internal track. This
 
 ## Prerequisites
 
-- `eas-cli` installed: `npm install -g eas-cli`
+- `eas-cli` installed: `pnpm add -g eas-cli`
 - Logged in: `eas login`
 - Apple credentials configured via `eas credentials` → iOS → distribution cert + provisioning profile
 - Google service account JSON at `./google-service-account.json` (gitignored). To create: Play Console → Setup → API access → grant a new service account.
@@ -21,7 +21,7 @@ This consumes `submit.production.ios` in `eas.json` (Apple ID + ASC App ID + Tea
 Shortcut for iOS-only flow:
 
 ```bash
-npx testflight
+pnpm exec testflight
 ```
 
 ## Android — Internal Track

@@ -1,6 +1,6 @@
 # App Store Submission Checklist
 
-This document tracks all requirements for submitting "Specimen Sandbox" to the App Store. Updated for v1.1.0 (daily AI-generated native flower).
+This document tracks all requirements for submitting "Specimen Sandbox" to the App Store. Updated for v1.2.0 (daily AI-generated native flower).
 
 ## App Store Metadata Requirements
 
@@ -130,8 +130,8 @@ This document tracks all requirements for submitting "Specimen Sandbox" to the A
 
 ## Notes
 
-- Upgraded to Expo SDK 55 / React Native 0.83.6 / React 19.2 on 2026-04-25
-- Pivoted to daily AI-generated native flower product (v1.1.0) on 2026-04-25
+- Upgraded to Expo SDK 56 / React Native 0.85.3 / React 19.2
+- Pivoted to daily AI-generated native flower product (v1.2.0) on 2026-04-25
 - The app's only network calls are: `expo-location` reverse-geocode (resolved on-device, not via network) and the GH Pages image/JSON fetch
 - **Remaining blockers before submission**:
   1. Recapture screenshots against new daily-flower UI
