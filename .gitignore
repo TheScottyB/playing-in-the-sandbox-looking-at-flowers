@@ -54,7 +54,9 @@ android/
 build-*.tar.gz
 build-*.apk
 build-*.aab
+build-*.ipa
 
 # Google Play service account key (do not commit)
 google-service-account.json
 .vercel
+.env
