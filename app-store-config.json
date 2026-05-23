@@ -9,7 +9,7 @@
 		"info": {
 			"en-US": {
 				"description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your region and the current season. Upgrade to the Premium Pass to unlock unlimited offline semantic searches, the full 7-day history archive, and regional Travel Mode.\n\n### Features\n- Offline-first SQLite database resolves regional plants instantly without internet.\n- Curated botanical species database featuring native seasonal flora observations.\n- Explore botanical common and Latin scientific names.\n\n### Privacy\n- Strict zero-data-collection policy caches location code locally.",
-				"promoText": "Wake up to your regional bloom ritual. Search your local database offline, explore archives up to 7 days, or travel to other regions. Get 50% off with our Annual Pass, or secure permanent VIP status with our limited-time Founders Edition!",
+				"promoText": "Wake up to your regional bloom ritual. Try offline semantic search, go back 7 days, or travel to other states. Lock in our limited Founders Edition Lifetime VIP pass!",
 				"releaseNotes": "Introducing the Specimen Premium Pass! You can now unlock unlimited semantic searches using our offline Vector Vibe Search. We've also added the 7-day archive and regional Travel Mode so you can explore native flowers across all supported regions.",
 				"keywords": [
 					"flower",
@@ -29,7 +29,7 @@
 				],
 				"marketingUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers",
 				"supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues",
-				"title": "Sandbox Playing Flowers",
+				"title": "Specimen Sandbox",
 				"subtitle": "Daily Native Flower Ritual",
 				"privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html"
 			}
