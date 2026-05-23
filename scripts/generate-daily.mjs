@@ -26,7 +26,7 @@ import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import sharp from 'sharp';
+import { Jimp, JimpMime } from 'jimp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -353,17 +353,18 @@ async function archiveOldPngs() {
       
       if (diffDays >= 8) {
         const pngPath = join(statePath, file);
-        const webpPath = pngPath.replace('.png', '.webp');
+        const jpgPath = pngPath.replace('.png', '.jpg');
         
         try {
-          // 1. Convert to WebP and save in doc site
+          // 1. Convert to JPEG and save in doc site
           const stat = statSync(pngPath);
           if (stat.size > 0) {
             const buffer = readFileSync(pngPath);
-            const webpBuffer = await sharp(buffer).webp({ quality: 85 }).toBuffer();
-            writeFileSync(webpPath, webpBuffer);
+            const image = await Jimp.read(buffer);
+            const jpgBuffer = await image.getBuffer(JimpMime.jpeg, { quality: 85 });
+            writeFileSync(jpgPath, jpgBuffer);
           } else {
-            writeFileSync(webpPath, Buffer.alloc(0));
+            writeFileSync(jpgPath, Buffer.alloc(0));
           }
           
           // 2. Backup high-res PNG to common warehouse (if accessible)
@@ -384,7 +385,7 @@ async function archiveOldPngs() {
   }
   
   if (archivedCount > 0) {
-    console.log(`Successfully archived ${archivedCount} PNGs to WebP.`);
+    console.log(`Successfully archived ${archivedCount} PNGs to JPEG.`);
   } else {
     console.log('No older PNGs required archiving.');
   }

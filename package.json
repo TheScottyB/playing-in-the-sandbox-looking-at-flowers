@@ -67,7 +67,7 @@
     "@types/react": "~19.2.0",
     "eslint": "^9.39.4",
     "eslint-config-expo": "~56.0.4",
-    "sharp": "^0.34.5",
+    "jimp": "^1.6.1",
     "typescript": "^6.0.0"
   },
   "expo": {
