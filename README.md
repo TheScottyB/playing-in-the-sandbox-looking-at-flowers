@@ -20,11 +20,16 @@ If permission is denied, or you're in an unsupported region, the app falls back 
 │   └── +not-found.tsx
 ├── lib/
 │   ├── region.ts              # One-prompt expo-location → state, cached in AsyncStorage
-│   └── dailyFlower.ts         # Provider: fetches sidecar JSON + image URL from GH Pages
+│   ├── dailyFlower.ts         # Provider: fetches sidecar JSON + image URL from GH Pages
+│   └── speciesDb.ts           # Offline database query & hybrid vector search service
 ├── data/
 │   └── species.json           # 3 native species per state (51 buckets + default)
+├── assets/
+│   ├── species.db             # Pre-compiled offline SQLite database with embeddings
+│   └── images/favicon.png
 ├── scripts/
-│   └── generate-daily.mjs     # Gemini 2.5 Flash Image generator (Node 20)
+│   ├── generate-daily.mjs     # Gemini 2.5 Flash Image generator (Node 20)
+│   └── compile_species_db.mjs # Gemini Embeddings & SQLite database compiler
 ├── .github/workflows/
 │   └── generate-daily.yml     # Cron 0 11 * * * UTC = 04:00 PT
 ├── docs/                      # GitHub Pages site (privacy + daily/ CDN tree)
