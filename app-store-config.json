@@ -1,118 +1,116 @@
 {
-  "configVersion": 0,
-  "apple": {
-    "version": "1.2.0",
-    "copyright": "© 2026 Scott Beilfuss",
-    "release": {
-      "automaticRelease": true
-    },
-    "info": {
-      "en-US": {
-        "description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your region and the current season.",
-        "promotionalText": "Now featuring Vector Vibe Search! Search our offline database of native flowers using just a feeling, color, or vibe.",
-        "keywords": [
-          "flowers",
-          "native",
-          "daily",
-          "wildflowers",
-          "bloom",
-          "nature",
-          "seasons",
-          "regions"
-        ],
-        "marketingUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers",
-        "supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues",
-        "title": "Sandbox Playing Flowers",
-        "subtitle": "Daily Native Flower Ritual",
-        "privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html",
-        "screenshots": {
-          "APP_IPHONE_67": [
-            "app_store_assets/screenshots/iphone67.png",
-            "app_store_assets/screenshots/iphone67_back.png",
-            "app_store_assets/screenshots/iphone67_yesterday.png"
-          ],
-          "APP_IPHONE_65": [
-            "app_store_assets/screenshots/iphone65.png",
-            "app_store_assets/screenshots/iphone65_back.png",
-            "app_store_assets/screenshots/iphone65_yesterday.png"
-          ],
-          "APP_IPHONE_61": [
-            "app_store_assets/screenshots/iphone61.png",
-            "app_store_assets/screenshots/iphone61_back.png",
-            "app_store_assets/screenshots/iphone61_yesterday.png"
-          ],
-          "APP_IPHONE_55": [
-            "app_store_assets/screenshots/iphone55.png",
-            "app_store_assets/screenshots/iphone55_back.png",
-            "app_store_assets/screenshots/iphone55_yesterday.png"
-          ],
-          "APP_IPAD_PRO_3GEN_129": [
-            "app_store_assets/screenshots/ipad129.png",
-            "app_store_assets/screenshots/ipad129_back.png",
-            "app_store_assets/screenshots/ipad129_yesterday.png"
-          ],
-          "APP_IPAD_PRO_129": [
-            "app_store_assets/screenshots/ipad129.png",
-            "app_store_assets/screenshots/ipad129_back.png",
-            "app_store_assets/screenshots/ipad129_yesterday.png"
-          ],
-          "APP_IPAD_PRO_3GEN_11": [
-            "app_store_assets/screenshots/ipad11.png",
-            "app_store_assets/screenshots/ipad11_back.png",
-            "app_store_assets/screenshots/ipad11_yesterday.png"
-          ],
-          "APP_IPAD_105": [
-            "app_store_assets/screenshots/ipad105.png",
-            "app_store_assets/screenshots/ipad105_back.png",
-            "app_store_assets/screenshots/ipad105_yesterday.png"
-          ],
-          "APP_IPAD_97": [
-            "app_store_assets/screenshots/ipad97.png",
-            "app_store_assets/screenshots/ipad97_back.png",
-            "app_store_assets/screenshots/ipad97_yesterday.png"
-          ]
-        }
-      }
-    },
-    "categories": [
-      "ENTERTAINMENT"
-    ],
-    "advisory": {
-      "ageRatingOverride": "NONE",
-      "alcoholTobaccoOrDrugUseOrReferences": "NONE",
-      "contests": "NONE",
-      "gambling": false,
-      "gamblingSimulated": "NONE",
-      "horrorOrFearThemes": "NONE",
-      "kidsAgeBand": null,
-      "koreaAgeRatingOverride": "NONE",
-      "lootBox": false,
-      "matureOrSuggestiveThemes": "NONE",
-      "medicalOrTreatmentInformation": "NONE",
-      "profanityOrCrudeHumor": "NONE",
-      "sexualContentGraphicAndNudity": "NONE",
-      "sexualContentOrNudity": "NONE",
-      "unrestrictedWebAccess": false,
-      "violenceCartoonOrFantasy": "NONE",
-      "violenceRealistic": "NONE",
-      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
-      "advertising": false,
-      "ageAssurance": false,
-      "ageRatingOverrideV2": "NONE",
-      "developerAgeRatingInfoUrl": null,
-      "gunsOrOtherWeapons": "NONE",
-      "healthOrWellnessTopics": false,
-      "messagingAndChat": false,
-      "parentalControls": false,
-      "userGeneratedContent": false
-    },
-    "review": {
-      "firstName": "Scott",
-      "lastName": "Beilfuss",
-      "email": "beilsco@gmail.com",
-      "phone": "+18473099047",
-      "demoRequired": false,
-      "notes": "The app requests location permission once on first launch to resolve the user's US state, Canadian province, or country via reverse-geocoding. The region code is cached locally and the location is never transmitted off-device. Daily flower images are pre-generated server-side via a GitHub Actions cron and served from GitHub Pages — no user data is sent with these requests. Falls back to a default bucket if permission is denied or the user is in an unsupported region."
-    }
-  }
+	"configVersion": 0,
+	"apple": {
+		"version": "1.3.0",
+		"copyright": "© 2026 Scott Beilfuss",
+		"release": {
+			"automaticRelease": true
+		},
+		"info": {
+			"en-US": {
+				"description": "Wake up to a fresh AI-generated image of a native flower blooming near you today. Every morning, a new picture — matched to your region and the current season. Upgrade to the Premium Pass to unlock unlimited offline semantic searches, the full 7-day history archive, and regional Travel Mode.",
+				"promotionalText": "Now featuring the Specimen Premium Pass! Unlock unlimited Vector Vibe Search, the 7-day archive, and regional Travel Mode.",
+				"keywords": [
+					"flowers",
+					"native",
+					"daily",
+					"wildflowers",
+					"bloom",
+					"nature",
+					"seasons",
+					"regions"
+				],
+				"marketingUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers",
+				"supportUrl": "https://github.com/TheScottyB/playing-in-the-sandbox-staring-at-flowers/issues",
+				"title": "Sandbox Playing Flowers",
+				"subtitle": "Daily Native Flower Ritual",
+				"privacyPolicyUrl": "https://thescottyb.github.io/playing-in-the-sandbox-staring-at-flowers/privacy.html",
+				"screenshots": {
+					"APP_IPHONE_67": [
+						"app_store_assets/screenshots/iphone67.png",
+						"app_store_assets/screenshots/iphone67_back.png",
+						"app_store_assets/screenshots/iphone67_yesterday.png"
+					],
+					"APP_IPHONE_65": [
+						"app_store_assets/screenshots/iphone65.png",
+						"app_store_assets/screenshots/iphone65_back.png",
+						"app_store_assets/screenshots/iphone65_yesterday.png"
+					],
+					"APP_IPHONE_61": [
+						"app_store_assets/screenshots/iphone61.png",
+						"app_store_assets/screenshots/iphone61_back.png",
+						"app_store_assets/screenshots/iphone61_yesterday.png"
+					],
+					"APP_IPHONE_55": [
+						"app_store_assets/screenshots/iphone55.png",
+						"app_store_assets/screenshots/iphone55_back.png",
+						"app_store_assets/screenshots/iphone55_yesterday.png"
+					],
+					"APP_IPAD_PRO_3GEN_129": [
+						"app_store_assets/screenshots/ipad129.png",
+						"app_store_assets/screenshots/ipad129_back.png",
+						"app_store_assets/screenshots/ipad129_yesterday.png"
+					],
+					"APP_IPAD_PRO_129": [
+						"app_store_assets/screenshots/ipad129.png",
+						"app_store_assets/screenshots/ipad129_back.png",
+						"app_store_assets/screenshots/ipad129_yesterday.png"
+					],
+					"APP_IPAD_PRO_3GEN_11": [
+						"app_store_assets/screenshots/ipad11.png",
+						"app_store_assets/screenshots/ipad11_back.png",
+						"app_store_assets/screenshots/ipad11_yesterday.png"
+					],
+					"APP_IPAD_105": [
+						"app_store_assets/screenshots/ipad105.png",
+						"app_store_assets/screenshots/ipad105_back.png",
+						"app_store_assets/screenshots/ipad105_yesterday.png"
+					],
+					"APP_IPAD_97": [
+						"app_store_assets/screenshots/ipad97.png",
+						"app_store_assets/screenshots/ipad97_back.png",
+						"app_store_assets/screenshots/ipad97_yesterday.png"
+					]
+				}
+			}
+		},
+		"categories": ["ENTERTAINMENT"],
+		"advisory": {
+			"ageRatingOverride": "NONE",
+			"alcoholTobaccoOrDrugUseOrReferences": "NONE",
+			"contests": "NONE",
+			"gambling": false,
+			"gamblingSimulated": "NONE",
+			"horrorOrFearThemes": "NONE",
+			"kidsAgeBand": null,
+			"koreaAgeRatingOverride": "NONE",
+			"lootBox": false,
+			"matureOrSuggestiveThemes": "NONE",
+			"medicalOrTreatmentInformation": "NONE",
+			"profanityOrCrudeHumor": "NONE",
+			"sexualContentGraphicAndNudity": "NONE",
+			"sexualContentOrNudity": "NONE",
+			"unrestrictedWebAccess": false,
+			"violenceCartoonOrFantasy": "NONE",
+			"violenceRealistic": "NONE",
+			"violenceRealisticProlongedGraphicOrSadistic": "NONE",
+			"advertising": false,
+			"ageAssurance": false,
+			"ageRatingOverrideV2": "NONE",
+			"developerAgeRatingInfoUrl": null,
+			"gunsOrOtherWeapons": "NONE",
+			"healthOrWellnessTopics": false,
+			"messagingAndChat": false,
+			"parentalControls": false,
+			"userGeneratedContent": false
+		},
+		"review": {
+			"firstName": "Scott",
+			"lastName": "Beilfuss",
+			"email": "beilsco@gmail.com",
+			"phone": "+18473099047",
+			"demoRequired": false,
+			"notes": "The app requests location permission once on first launch to resolve the user's US state, Canadian province, or country via reverse-geocoding. The region code is cached locally and the location is never transmitted off-device. Daily flower images are pre-generated server-side via a GitHub Actions cron and served from GitHub Pages — no user data is sent with these requests. Falls back to a default bucket if permission is denied or the user is in an unsupported region."
+		}
+	}
 }

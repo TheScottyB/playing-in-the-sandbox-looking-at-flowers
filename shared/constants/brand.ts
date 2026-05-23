@@ -11,7 +11,7 @@
 // migrated to import from this file in a follow-up refactor. The visual
 // delta between `#0a0a0a` and `#0a0a0c` is imperceptible — not blocking.
 
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 
 /**
  * Surface + text colors. Two stocks:
@@ -19,53 +19,53 @@ import { Platform } from 'react-native';
  * - **cream**: foil-stamped specimen cardstock (future iridescent treatment, App B)
  */
 export const PALETTE = {
-  // Dark stock (matches icon background, slightly cool)
-  ink: '#0a0a0c',
-  inkSoft: '#1a1916',
+	// Dark stock (matches icon background, slightly cool)
+	ink: "#0a0a0c",
+	inkSoft: "#1a1916",
 
-  // Cream stock (foil-stamped specimen card, App B + future light-mode)
-  cream: '#e9e3d2',
-  creamHi: '#f1ecde',
-  creamLo: '#ddd5c0',
+	// Cream stock (foil-stamped specimen card, App B + future light-mode)
+	cream: "#e9e3d2",
+	creamHi: "#f1ecde",
+	creamLo: "#ddd5c0",
 
-  // Foreground text against ink
-  paper: '#ffffff',
-  paperStrong: 'rgba(255,255,255,0.9)',
-  paperBright: 'rgba(255,255,255,0.88)',
-  paperHigh: 'rgba(255,255,255,0.85)',
-  paperMid: 'rgba(255,255,255,0.75)',
-  paperSoft: 'rgba(255,255,255,0.7)',
-  paperDim: 'rgba(255,255,255,0.68)',
-  paperFaint: 'rgba(255,255,255,0.6)',
-  paperLow: 'rgba(255,255,255,0.55)',
-  paperGhost: 'rgba(255,255,255,0.5)',
+	// Foreground text against ink
+	paper: "#ffffff",
+	paperStrong: "rgba(255,255,255,0.9)",
+	paperBright: "rgba(255,255,255,0.88)",
+	paperHigh: "rgba(255,255,255,0.85)",
+	paperMid: "rgba(255,255,255,0.75)",
+	paperSoft: "rgba(255,255,255,0.7)",
+	paperDim: "rgba(255,255,255,0.68)",
+	paperFaint: "rgba(255,255,255,0.6)",
+	paperLow: "rgba(255,255,255,0.55)",
+	paperGhost: "rgba(255,255,255,0.5)",
 
-  // Lines
-  hairline: 'rgba(255,255,255,0.25)',
-  hairlineInk: 'rgba(10,10,12,0.35)',
+	// Lines
+	hairline: "rgba(255,255,255,0.25)",
+	hairlineInk: "rgba(10,10,12,0.35)",
 
-  // Brand accent — pearl gradient is icon-only (radial gradient, not
-  // expressible as a single hex). Single-color tokens approximate the
-  // pearl's mid-tone for any UI accent that wants to nod at the icon.
-  accent: '#f2b8da', // pearl mid-rose
-  accentDeep: '#7e90d8', // pearl outer-blue
-  accentInk: '#0a0a0c',
+	// Brand accent — pearl gradient is icon-only (radial gradient, not
+	// expressible as a single hex). Single-color tokens approximate the
+	// pearl's mid-tone for any UI accent that wants to nod at the icon.
+	accent: "#f2b8da", // pearl mid-rose
+	accentDeep: "#7e90d8", // pearl outer-blue
+	accentInk: "#0a0a0c",
 } as const;
 
 /** Type stack. `serif` is the only platform-branched value. */
 export const TYPE = {
-  serif: Platform.select({
-    ios: 'Georgia',
-    android: 'serif',
-    default: 'Georgia',
-  }),
+	serif: Platform.select({
+		ios: "Georgia",
+		android: "serif",
+		default: "Georgia",
+	}),
 } as const;
 
 /** Corner radii. `card` is the rounded card surface; `pill` is capsule. */
 export const RADIUS = {
-  card: 18,
-  button: 17,
-  pill: 999,
+	card: 18,
+	button: 17,
+	pill: 999,
 } as const;
 
 /**
@@ -76,9 +76,9 @@ export const RADIUS = {
  * share the letter-spacing language.
  */
 export const EYEBROW = {
-  base: { fontSize: 11, letterSpacing: 2.4, fontWeight: '600' as const },
-  small: { fontSize: 10, letterSpacing: 2.8, fontWeight: '600' as const },
-  tiny: { fontSize: 9, letterSpacing: 2, fontWeight: '600' as const },
+	base: { fontSize: 11, letterSpacing: 2.4, fontWeight: "600" as const },
+	small: { fontSize: 10, letterSpacing: 2.8, fontWeight: "600" as const },
+	tiny: { fontSize: 9, letterSpacing: 2, fontWeight: "600" as const },
 } as const;
 
 export type Palette = typeof PALETTE;

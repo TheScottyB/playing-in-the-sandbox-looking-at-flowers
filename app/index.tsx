@@ -46,9 +46,9 @@ import {
 } from "@/lib/region";
 import {
 	getDailyFlowerOffline,
+	getSpeciesCount,
 	type SpeciesRecord,
 	searchSpeciesVector,
-	getSpeciesCount,
 } from "@/lib/speciesDb";
 import PremiumModal from "@/shared/components/PremiumModal";
 import { styles } from "@/styles/home.styles";
@@ -689,19 +689,46 @@ export default function HomeScreen() {
 							</Pressable>
 						</View>
 
-						<Text style={[styles.sectionTitle, { marginTop: 16 }]}>Diagnostics</Text>
+						<Text style={[styles.sectionTitle, { marginTop: 16 }]}>
+							Diagnostics
+						</Text>
 						<View style={{ marginBottom: 12 }}>
-							<Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 4 }}>
-								App Version: {Constants.expoConfig?.version || 'Unknown'}
+							<Text
+								style={{
+									color: "rgba(255,255,255,0.7)",
+									fontSize: 13,
+									marginBottom: 4,
+								}}
+							>
+								App Version: {Constants.expoConfig?.version || "Unknown"}
 							</Text>
-							<Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 4 }}>
-								OTA Update ID: {Updates.updateId || 'None (Dev/Base Build)'}
+							<Text
+								style={{
+									color: "rgba(255,255,255,0.7)",
+									fontSize: 13,
+									marginBottom: 4,
+								}}
+							>
+								OTA Update ID: {Updates.updateId || "None (Dev/Base Build)"}
 							</Text>
-							<Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 4 }}>
-								Environment: {__DEV__ ? 'Development' : 'Production'}
+							<Text
+								style={{
+									color: "rgba(255,255,255,0.7)",
+									fontSize: 13,
+									marginBottom: 4,
+								}}
+							>
+								Environment: {__DEV__ ? "Development" : "Production"}
 							</Text>
-							<Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 4 }}>
-								Local Species DB: {dbCount !== null ? `${dbCount} records` : 'Loading...'}
+							<Text
+								style={{
+									color: "rgba(255,255,255,0.7)",
+									fontSize: 13,
+									marginBottom: 4,
+								}}
+							>
+								Local Species DB:{" "}
+								{dbCount !== null ? `${dbCount} records` : "Loading..."}
 							</Text>
 						</View>
 
