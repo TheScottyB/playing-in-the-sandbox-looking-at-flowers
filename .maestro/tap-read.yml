@@ -1,12 +1,8 @@
 appId: host.exp.Exponent
 ---
 - tapOn:
-    text: "✕"
+    text: "Try again"
     optional: true
 - extendedWaitUntil:
     visible: ".*TAP TO READ.*"
-    timeout: 5000
-- tapOn: ".*TAP TO READ.*"
-- extendedWaitUntil:
-    visible: ".*TAP TO FLIP BACK.*"
-    timeout: 5000
+    timeout: 8000

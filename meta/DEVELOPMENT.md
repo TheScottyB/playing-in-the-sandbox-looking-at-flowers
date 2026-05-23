@@ -93,6 +93,12 @@ Expo SDK 55 supports Hermes v1 opt-in. To enable later (deferred to RC2 — need
 "plugins": [["expo-build-properties", { "useHermesV1": true }]]
 ```
 
+### Sandbox Mode & UI Indicators
+
+To ensure developers, QA, and automated test agents (such as Maestro) can immediately distinguish simulated dry-run/mock content from real production CDN content, the app includes visual state indicators:
+- **Sandbox Indicator**: In development builds (`__DEV__`), a subtle, low-opacity `SANDBOX` watermark badge is displayed in the top-left corner of the daily flower card. This keeps screenshots and layouts clean but visually distinct.
+- **Offline / Archive Badge**: When the app is offline or falls back to the pre-compiled SQLite database/archive, an `OFFLINE · ARCHIVE` badge is shown in the top-right corner.
+
 ---
 
 The sections below are deeper-dive reference for hardware-first scenarios, pre-existing build profiles, and historical troubleshooting. The dev loop above supersedes the hardware-first recommendation that this guide originally led with.

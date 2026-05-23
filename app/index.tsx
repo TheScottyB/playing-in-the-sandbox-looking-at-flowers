@@ -164,7 +164,11 @@ export default function HomeScreen() {
       const date = offsetDate(todayLocalIso(), dayOffset);
       let region = 'default';
       try {
-        region = await getRegion();
+        if (process.env.EXPO_PUBLIC_SCREENSHOT_MODE === 'true') {
+          region = 'CA';
+        } else {
+          region = await getRegion();
+        }
         const flower = await fetchDailyFlower(region, date);
         if (!cancelled) setState({ status: 'ok', flower });
       } catch (e) {
@@ -280,7 +284,10 @@ export default function HomeScreen() {
     <View style={styles.root}>
       <StatusBar style="light" />
       <SafeAreaView style={styles.fill}>
-        <View style={styles.topBarRow}>
+        <View style={[
+          styles.topBarRow,
+          process.env.EXPO_PUBLIC_SCREENSHOT_MODE === 'true' && { paddingRight: 80 }
+        ]}>
           <Pressable onPress={handleEyebrowPress} style={styles.topBar}>
             <Text style={styles.eyebrow}>
               {eyebrowRegion} · {dateLabel}
@@ -334,6 +341,11 @@ export default function HomeScreen() {
                     preferHighDynamicRange
                     accessibilityLabel={state.flower.common}
                   />
+                  {__DEV__ && (
+                    <View style={styles.sandboxBadge}>
+                      <Text style={styles.sandboxBadgeText}>SANDBOX</Text>
+                    </View>
+                  )}
                   {state.flower.isDefault && (
                     <View style={styles.fallbackBadge}>
                       <Text style={styles.fallbackBadgeText}>OFFLINE · ARCHIVE</Text>
@@ -399,32 +411,37 @@ export default function HomeScreen() {
           )}
         </View>
 
-        {process.env.EXPO_PUBLIC_SCREENSHOT_MODE !== 'true' && (
-          <View style={styles.nav}>
+        <View style={styles.nav}>
+          <Pressable
+            style={[
+              styles.navBtn,
+              dayOffset <= -6 && styles.navBtnDisabled,
+              process.env.EXPO_PUBLIC_SCREENSHOT_MODE === 'true' && { borderColor: 'transparent', backgroundColor: 'transparent' }
+            ]}
+            onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
+            disabled={dayOffset <= -6}
+            hitSlop={8}
+          >
+            <Text style={[styles.navLabel, process.env.EXPO_PUBLIC_SCREENSHOT_MODE === 'true' && { color: 'transparent' }]}>← Yesterday</Text>
+          </Pressable>
+
+          {dayOffset < 0 ? (
             <Pressable
-              style={[styles.navBtn, dayOffset <= -6 && styles.navBtnDisabled]}
-              onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
-              disabled={dayOffset <= -6}
+              style={[
+                styles.navBtn,
+                process.env.EXPO_PUBLIC_SCREENSHOT_MODE === 'true' && { borderColor: 'transparent', backgroundColor: 'transparent' }
+              ]}
+              onPress={() => setDayOffset(0)}
               hitSlop={8}
             >
-              <Text style={styles.navLabel}>← Yesterday</Text>
+              <Text style={[styles.navLabel, process.env.EXPO_PUBLIC_SCREENSHOT_MODE === 'true' && { color: 'transparent' }]}>Today →</Text>
             </Pressable>
-
-            {dayOffset < 0 ? (
-              <Pressable
-                style={styles.navBtn}
-                onPress={() => setDayOffset(0)}
-                hitSlop={8}
-              >
-                <Text style={styles.navLabel}>Today →</Text>
-              </Pressable>
-            ) : (
-              <Pressable onPress={handleUpdateLocation} hitSlop={8}>
-                <Text style={styles.navSubtle}>Update location</Text>
-              </Pressable>
-            )}
-          </View>
-        )}
+          ) : (
+            <Pressable onPress={handleUpdateLocation} hitSlop={8}>
+              <Text style={[styles.navSubtle, process.env.EXPO_PUBLIC_SCREENSHOT_MODE === 'true' && { color: 'transparent' }]}>Update location</Text>
+            </Pressable>
+          )}
+        </View>
       </SafeAreaView>
 
       <Modal

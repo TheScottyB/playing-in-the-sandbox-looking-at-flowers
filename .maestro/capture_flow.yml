@@ -3,6 +3,24 @@ appId: host.exp.Exponent
 ---
 - runFlow: subflows/connect.yml
 
+# If dev menu onboarding modal pops up, dismiss it
+- runFlow:
+    when:
+      visible: ".*developer menu.*"
+    commands:
+      - tapOn:
+          id: "dev-menu-close-button"
+          optional: true
+      - tapOn:
+          text: "Close"
+          optional: true
+      - tapOn:
+          text: "x"
+          optional: true
+      - tapOn:
+          text: "✕"
+          optional: true
+
 # Wait for the daily flower card to load on the front face
 - extendedWaitUntil:
     visible: ".*TAP TO READ.*"
@@ -16,6 +34,8 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: ".*TAP TO FLIP BACK.*"
     timeout: 5000
+- waitForAnimationToEnd:
+    timeout: 3000
 - takeScreenshot: app_store_assets/screenshots/${PREFIX}_back
 
 # Flip back to the front
@@ -23,6 +43,8 @@ appId: host.exp.Exponent
 - extendedWaitUntil:
     visible: ".*TAP TO READ.*"
     timeout: 5000
+- waitForAnimationToEnd:
+    timeout: 3000
 
 # Scene 3: Yesterday's Flower
 - tapOn: "← Yesterday"

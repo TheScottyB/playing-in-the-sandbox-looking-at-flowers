@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
+import { Jimp } from 'jimp';
 
 const DEVICE_TYPES = {
   'iphone_pro_max': {
@@ -54,7 +55,9 @@ function startSimulatorAndConfigure(deviceInfo) {
     console.log(`\nBooting simulator: "${name}"...`);
     execSync(`xcrun simctl boot "${name}" || true`, { stdio: 'ignore' });
     execSync(`open -a Simulator`, { stdio: 'ignore' });
-    execSync('sleep 5');
+    console.log(`Waiting for simulator to finish booting...`);
+    execSync(`xcrun simctl bootstatus booted || true`, { stdio: 'ignore' });
+    execSync('sleep 2');
 
     console.log(`Standardizing simulator status bar to 9:41 AM...`);
     execSync(
@@ -80,6 +83,57 @@ function startSimulatorAndConfigure(deviceInfo) {
       `xcrun simctl location booted set 37.33182 -122.03118 || true`,
       { stdio: 'ignore' }
     );
+
+    console.log(`Granting location permissions to Expo Go...`);
+    execSync(
+      `xcrun simctl privacy booted grant location host.exp.Exponent || true`,
+      { stdio: 'ignore' }
+    );
+    
+    console.log(`Disabling Expo Go developer menu overlays...`);
+    // Terminate first to ensure defaults write registers on fresh start
+    execSync(
+      `xcrun simctl terminate booted host.exp.Exponent || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent EXKernelShowDevMenuOverlayKey -bool false || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent showDevMenuOverlay -bool false || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent EXKernelDisableDevMenuKey -bool true || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent EXKernelDevMenuTooltipShownKey -bool true || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent EXDevMenuIsOnboardingFinished -bool true || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent EXDevMenuShowFloatingActionButton -bool false || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent showFloatingActionButton -bool false || true`,
+      { stdio: 'ignore' }
+    );
+    execSync(
+      `xcrun simctl spawn booted defaults write host.exp.Exponent showFloatingActionButtonKey -bool false || true`,
+      { stdio: 'ignore' }
+    );
+    
+    // Kill preference daemon to force reload of written defaults
+    execSync(
+      `xcrun simctl spawn booted killall cfprefsd || true`,
+      { stdio: 'ignore' }
+    );
     
     return true;
   } catch (error) {
@@ -99,10 +153,47 @@ function resizeImage(sourcePath, destPath, targetW, targetH) {
   execSync(`sips -z ${h} ${w} "${sourcePath}" --out "${destPath}"`, { stdio: 'ignore' });
 }
 
-function postProcessScreenshot(filePath) {
+async function eraseGearIcon(filePath, filePrefix) {
+  if (!fs.existsSync(filePath) || !filePrefix) return;
+  try {
+    const image = await Jimp.read(filePath);
+    const w = image.bitmap.width;
+    const h = image.bitmap.height;
+    
+    let rect = null;
+    if (filePrefix.startsWith('iphone67')) {
+      rect = { x: 1110, y: 150, w: 160, h: 150 };
+    } else if (filePrefix.startsWith('iphone55')) {
+      rect = { x: 1080, y: 40, w: 140, h: 140 };
+    } else if (filePrefix.startsWith('ipad129')) {
+      rect = { x: 1880, y: 48, w: 140, h: 140 };
+    }
+    
+    if (rect) {
+      console.log(`     Erasing floating gear overlay from ${path.basename(filePath)}...`);
+      // Paint #0a0a0a (hex 10, 10, 10) matching the top header's background color
+      image.scan(rect.x, rect.y, rect.w, rect.h, function(x, y, idx) {
+        this.bitmap.data[idx] = 10;     // R
+        this.bitmap.data[idx + 1] = 10; // G
+        this.bitmap.data[idx + 2] = 10; // B
+        this.bitmap.data[idx + 3] = 255;// A
+      });
+      await image.write(filePath);
+    }
+  } catch (err) {
+    console.error(`     Warning: Failed to erase gear icon: ${err.message}`);
+  }
+}
+
+async function postProcessScreenshot(filePath, filePrefix) {
   if (!fs.existsSync(filePath)) return;
 
-  // 1. Remove alpha channel
+  // 1. Erase gear icon if prefix matches
+  if (filePrefix) {
+    await eraseGearIcon(filePath, filePrefix);
+  }
+
+  // 2. Remove alpha channel
   const hasAlpha = runCommand(`sips -g hasAlpha "${filePath}" | awk '/hasAlpha/ {print $2}'`) === 'yes';
   if (hasAlpha) {
     console.log(`     Removing alpha channel from ${path.basename(filePath)}...`);
@@ -128,6 +219,21 @@ async function main() {
       continue;
     }
     
+    console.log(`Launching app deep link to trigger any popups...`);
+    try {
+      execSync(`xcrun simctl openurl booted "exp://localhost:8081?disableOnboarding=1"`, { stdio: 'ignore' });
+      execSync(`sleep 5`); // Wait for JS bundle to load
+    } catch (e) {
+      console.log(`Warning: Failed to open deep link: ${e.message}`);
+    }
+    
+    console.log(`Running AI Agent Popup Squasher...`);
+    try {
+      execSync(`node scripts/agent-squash-popups.mjs`, { stdio: 'inherit' });
+    } catch (e) {
+      console.error(`Warning: AI Squasher failed: ${e.message}`);
+    }
+    
     console.log(`Running Maestro capture flow...`);
     try {
       execSync(`maestro test -e PREFIX=${deviceInfo.filePrefix} .maestro/capture_flow.yml`, { stdio: 'inherit' });
@@ -145,14 +251,14 @@ async function main() {
       }
       
       // Clean up base image
-      postProcessScreenshot(sourcePath);
+      await postProcessScreenshot(sourcePath, deviceInfo.filePrefix);
       
       // Generate and clean up scaled copies
       for (const scale of deviceInfo.scales) {
         const destPath = path.join(baseDir, `${scale.prefix}${suffix}.png`);
         console.log(`  Scaling copy to ${scale.prefix}${suffix}.png (${scale.w}x${scale.h})...`);
         resizeImage(sourcePath, destPath, scale.w, scale.h);
-        postProcessScreenshot(destPath);
+        await postProcessScreenshot(destPath, scale.prefix);
       }
     }
     

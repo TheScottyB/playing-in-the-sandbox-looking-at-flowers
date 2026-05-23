@@ -26,11 +26,14 @@ export default function ModernFlipCard({ style, children }: ModernFlipCardProps)
   }, [isFlipped]);
 
   const frontStyle = useAnimatedStyle(() => {
+    const isFrontFacing = Math.abs(rotate.value) % 360 < 90 || Math.abs(rotate.value) % 360 > 270;
     return {
       transform: [
         { perspective: 1000 },
         { rotateY: `${rotate.value}deg` },
       ],
+      opacity: isFrontFacing ? 1 : 0,
+      zIndex: isFrontFacing ? 1 : 0,
       backfaceVisibility: 'hidden',
       position: 'absolute',
       width: '100%',
@@ -39,11 +42,14 @@ export default function ModernFlipCard({ style, children }: ModernFlipCardProps)
   });
 
   const backStyle = useAnimatedStyle(() => {
+    const isBackFacing = Math.abs(rotate.value) % 360 >= 90 && Math.abs(rotate.value) % 360 <= 270;
     return {
       transform: [
         { perspective: 1000 },
         { rotateY: `${rotate.value + 180}deg` },
       ],
+      opacity: isBackFacing ? 1 : 0,
+      zIndex: isBackFacing ? 1 : 0,
       backfaceVisibility: 'hidden',
       position: 'absolute',
       width: '100%',

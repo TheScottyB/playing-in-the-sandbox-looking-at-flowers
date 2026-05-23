@@ -288,7 +288,7 @@ async function run() {
           JSON.stringify({
             common: picked.common,
             latin: picked.latin,
-            blurb: `[DRY RUN] ${picked.common} blooming today.`,
+            blurb: `${picked.common} blooming today.`,
             generatedAt: new Date().toISOString(),
           }),
         );

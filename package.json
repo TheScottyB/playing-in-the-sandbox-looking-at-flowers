@@ -5,27 +5,17 @@
   "version": "1.2.0",
   "scripts": {
     "start": "expo start",
-    "reset-project": "node scripts/reset-project.mjs",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "web": "expo start --web",
-    "clean": "expo start --clear",
     "typecheck": "tsc --noEmit",
-    "lint": "expo lint",
+    "lint": "biome check .",
     "db:compile": "node scripts/compile_species_db.mjs",
     "db:smoke": "node scripts/db-smoke.mjs",
-    "icons:generate": "node scripts/render-icons.mjs",
     "screenshots:capture": "node scripts/capture_screenshots.mjs",
     "screenshots:capture:auto": "node scripts/capture_screenshots_auto.mjs",
     "screenshots:verify": "node scripts/verify_screenshots.mjs",
-    "screenshots:statusbar:setup": "xcrun simctl status_bar booted override --time \"9:41\" --batteryState \"charged\" --batteryLevel \"100\" --cellularMode \"active\" --cellularBars \"4\" --wifiMode \"searching\" --wifiBars \"3\"",
-    "screenshots:statusbar:clear": "xcrun simctl status_bar booted clear",
-    "qc-screenshots": "pnpm run screenshots:verify",
     "e2e": "maestro test .maestro/",
     "e2e:smoke": "maestro test .maestro/smoke.yml",
     "deploy:ios": "eas build --platform ios --profile production --submit --non-interactive",
-    "deploy:android": "eas build --platform android --profile production --submit --non-interactive",
-    "deploy:all": "eas build --platform all --profile production --submit --non-interactive"
+    "deploy:android": "eas build --platform android --profile production --submit --non-interactive"
   },
   "dependencies": {
     "@expo/metro-runtime": "^56.0.11",
@@ -62,18 +52,9 @@
     "pnpm": "11.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@resvg/resvg-js": "^2.6.2",
+    "@biomejs/biome": "^2.4.15",
     "@types/react": "~19.2.0",
-    "eslint": "^9.39.4",
-    "eslint-config-expo": "~56.0.4",
     "jimp": "^1.6.1",
     "typescript": "^6.0.0"
-  },
-  "expo": {
-    "install": {
-      "exclude": []
-    }
-  },
-  "packageManager": "pnpm@11.2.2"
+  }
 }

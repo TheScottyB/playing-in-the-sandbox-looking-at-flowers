@@ -128,6 +128,23 @@ export const styles = StyleSheet.create({
     letterSpacing: 2,
     fontWeight: '600',
   },
+  sandboxBadge: {
+    position: 'absolute',
+    top: 14,
+    left: 14,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.2)',
+  },
+  sandboxBadgeText: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 8,
+    letterSpacing: 1.5,
+    fontWeight: '700',
+  },
 
   back: {
     flex: 1,
