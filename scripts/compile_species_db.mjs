@@ -94,7 +94,26 @@ async function fetchEmbedding(apiKey, text) {
       }
 
       const textErr = await resp.text();
-      console.warn(`    Warning: Embedding API failed (HTTP ${resp.status}): ${textErr.slice(0, 150)}`);
+      let errorObj;
+      try {
+        errorObj = JSON.parse(textErr);
+      } catch (e) {}
+      
+      const errorMessage = errorObj?.error?.message || textErr;
+      const isBillingOrQuota = resp.status === 429 || 
+                               errorMessage.includes('prepayment credits') || 
+                               errorMessage.includes('RESOURCE_EXHAUSTED') ||
+                               errorObj?.error?.status === 'RESOURCE_EXHAUSTED';
+                               
+      if (isBillingOrQuota) {
+        console.error('\n======================================================================');
+        console.error('🔴 CRITICAL GEMINI API ERROR: BILLING OR QUOTA EXHAUSTED');
+        console.error(errorMessage);
+        console.error('======================================================================\n');
+        process.exit(1);
+      }
+
+      console.warn(`    Warning: Embedding API failed (HTTP ${resp.status}): ${errorMessage.slice(0, 150)}`);
     } catch (e) {
       console.warn(`    Warning: Network failure on embedding fetch: ${e.message}`);
     }

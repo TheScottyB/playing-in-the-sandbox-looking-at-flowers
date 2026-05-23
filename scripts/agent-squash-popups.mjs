@@ -54,6 +54,25 @@ Do NOT include any markdown formatting or backticks. Return raw JSON.` },
 
   if (!response.ok) {
     const text = await response.text();
+    let errorObj;
+    try {
+      errorObj = JSON.parse(text);
+    } catch (e) {}
+    
+    const errorMessage = errorObj?.error?.message || text;
+    const isBillingOrQuota = response.status === 429 || 
+                             errorMessage.includes('prepayment credits') || 
+                             errorMessage.includes('RESOURCE_EXHAUSTED') ||
+                             errorObj?.error?.status === 'RESOURCE_EXHAUSTED';
+                             
+    if (isBillingOrQuota) {
+      console.error('\n======================================================================');
+      console.error('🔴 CRITICAL GEMINI API ERROR: BILLING OR QUOTA EXHAUSTED');
+      console.error(errorMessage);
+      console.error('======================================================================\n');
+      process.exit(1);
+    }
+    
     throw new Error(`Gemini API error: ${response.status} ${text}`);
   }
 

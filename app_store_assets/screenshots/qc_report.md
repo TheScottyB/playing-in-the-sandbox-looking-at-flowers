@@ -1,15 +1,15 @@
 # App Store Screenshot Quality Control Report
 
-*Generated on: 5/23/2026, 12:46:01 AM*
+*Generated on: 5/23/2026, 2:57:48 PM*
 
 ## Summary
 
-- **Total screenshots found**: 16
-- **Critical Issues (App Store Rejections)**: <span style="color:red">**28**</span>
-- **Warnings / Design Recommendations**: <span style="color:orange">**24**</span>
+- **Total screenshots found**: 25
+- **Critical Issues (App Store Rejections)**: <span style="color:red">**0**</span>
+- **Warnings / Design Recommendations**: <span style="color:orange">**4**</span>
 
-> [!CAUTION]
-> **28 critical issues detected!** Screenshots containing alpha channels, incorrect dimensions, or showing developer menu screens will be rejected by Apple App Store Connect. Use the `pnpm run qc-screenshots -- --fix` command to resolve alpha channels and formats automatically.
+> [!TIP]
+> No critical technical blocking issues found. Make sure the screenshot content matches your latest design expectations.
 
 ## Detailed Results
 
@@ -19,24 +19,21 @@
 - **Format**: PNG
 - **Dimensions**: `1668 x 2224 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `1.18 MB`
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:42` instead of standard `9:41`.
+- **File Size**: `1.00 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPad Pro (10.5") (`1668x2224`)
-- File size is optimized (1.18 MB)
+- File size is optimized (1.00 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-CA - MAY 22 2026
+9:41AM Sat May 23 aul > @)
 
-< Yesterday UPDATE LOCATION
+CA - MAY 23 2026
 ```
 
 </details>
@@ -49,34 +46,52 @@ CA - MAY 22 2026
 - **Format**: PNG
 - **Dimensions**: `1668 x 2224 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `2.17 MB`
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:42` instead of standard `9:41`.
-- Large file size: **2.17 MB**. We recommend compressing screenshots to speed up downloads and uploads.
+- **File Size**: `0.59 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPad Pro (10.5") (`1668x2224`)
+- File size is optimized (0.59 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-5:42PM Fri May 22
+9:41AM Sat May 23 al = @&)
 
-6
+cA. MAY 23 2026 =
 
-*
+TAP TO FLIP BACK
+```
+
+</details>
+
+---
+
+### `ipad105_yesterday.png`
+
+- **Path**: [ipad105_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/ipad105_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `1668 x 2224 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `0.90 MB`
+
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPad Pro (10.5") (`1668x2224`)
+- File size is optimized (0.90 MB)
+
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+9:41AM Sat May 23
 
 CA - MAY 22 2026
 
-California Poppy
-Eschscholzia californica
-
-The California poppy is renowned for its vibrant orange petals and its resilience, thriving in various Californian landscapes and
-symbolizing the state.
+all > 2)
 ```
 
 </details>
@@ -89,61 +104,22 @@ symbolizing the state.
 - **Format**: PNG
 - **Dimensions**: `1668 x 2388 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `2.47 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:42 PM` instead of standard `9:41`.
-- Large file size: **2.47 MB**. We recommend compressing screenshots to speed up downloads and uploads.
+- **File Size**: `1.06 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPad Pro (11") (`1668x2388`)
+- File size is optimized (1.06 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-42PM Fri May 22
+9:41AM Sat May 23 al > ©)
 
-Top Stories N
-Tulsi Gabbard resigns as director of
-national intelligence, citing her hus...
-
-What to Watch
-
-‘News Spotlight
-
-Inside the controversial ending of
-‘The Boys’
-
-No Reminders
-
-Featured
-‘News Spotlight
-
-A “wonder drug” gone wrong: Inside
-America’s Xanax problem
-
-FRIDAY MONDAY, MAY 25
-
-y) 2 Memorial Day sacl
-
-WEDNESDAY, MAY 27 is
-
-Eid al-Adha
-No events today
-
-Files
-
-Open in “Expo Go"?
-
-Cancel
+-
+CA - MAY 23 2026 | <<
 ```
 
 </details>
@@ -156,61 +132,48 @@ Cancel
 - **Format**: PNG
 - **Dimensions**: `1668 x 2388 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `2.47 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:42` instead of standard `9:41`.
-- Large file size: **2.47 MB**. We recommend compressing screenshots to speed up downloads and uploads.
+- **File Size**: `0.64 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPad Pro (11") (`1668x2388`)
+- File size is optimized (0.64 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-42PM Fri May 22
+9:41AM Sat May 23 atl > &)
 
-Top Stories N
-Tulsi Gabbard resigns as director of
-national intelligence, citing her hus...
+TAP TO FLIP BACK
+```
 
-What to Watch
+</details>
 
-‘News Spotlight
+---
 
-Inside the controversial ending of
-‘The Boys’
+### `ipad11_yesterday.png`
 
-No Reminders
+- **Path**: [ipad11_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/ipad11_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `1668 x 2388 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `0.96 MB`
 
-Featured
-‘News Spotlight
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPad Pro (11") (`1668x2388`)
+- File size is optimized (0.96 MB)
 
-A “wonder drug” gone wrong: Inside
-America’s Xanax problem
+<details>
+<summary>Extracted Text (OCR)</summary>
 
-FRIDAY MONDAY, MAY 25
+```text
+9:41AM Sat May 23 all = @)
 
-y) 2 Memorial Day sacl
-
-WEDNESDAY, MAY 27 is
-
-Eid al-Adha
-No events today
-
-Files
-
-Open in “Expo Go"?
-
-Cancel
+cA» way 22 2026
 ```
 
 </details>
@@ -223,24 +186,23 @@ Cancel
 - **Format**: PNG
 - **Dimensions**: `2048 x 2732 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `1.58 MB`
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:41 PM` instead of standard `9:41`.
+- **File Size**: `1.19 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPad Pro (12.9") (`2048x2732`)
-- File size is optimized (1.58 MB)
+- File size is optimized (1.19 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-CA - MAY 22 2026
+9:41AM Sat May 23 all > ©)
 
-© Yesterday UPDATE LOCATION
+CA - MAY 23 2026 @. SEARCH 7
+
+TAP TO READ
 ```
 
 </details>
@@ -256,7 +218,6 @@ CA - MAY 22 2026
 - **File Size**: `3.01 MB`
 
 #### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:42 PM` instead of standard `9:41`.
 - Large file size: **3.01 MB**. We recommend compressing screenshots to speed up downloads and uploads.
 
 #### 🟢 Passed Checks:
@@ -268,7 +229,7 @@ CA - MAY 22 2026
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-5:42PM Fri May 22
+all = &
 
 e
 
@@ -280,6 +241,31 @@ Eschscholzia californica
 
 The California poppy is renowned for its vibrant orange petals and its resilience, thriving in various Californian landscapes and
 symbolizing the state.
+```
+
+</details>
+
+---
+
+### `ipad129_yesterday.png`
+
+- **Path**: [ipad129_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/ipad129_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `2048 x 2732 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `1.27 MB`
+
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPad Pro (12.9") (`2048x2732`)
+- File size is optimized (1.27 MB)
+
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+9:41AM Sat May 23 atl = &)
 ```
 
 </details>
@@ -292,24 +278,23 @@ symbolizing the state.
 - **Format**: PNG
 - **Dimensions**: `1536 x 2048 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `0.97 MB`
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:43 PM` instead of standard `9:41`.
+- **File Size**: `0.86 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPad (9.7") (`1536x2048`)
-- File size is optimized (0.97 MB)
+- File size is optimized (0.86 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-A + MAY 22 2026
+9:41AM Sat May 23 all > @)
 
-© Yesterday UPDATE LOCATION
+CA - MAY 23 2026 { << e
+
+‘TAP TO READ
 ```
 
 </details>
@@ -322,33 +307,81 @@ A + MAY 22 2026
 - **Format**: PNG
 - **Dimensions**: `1536 x 2048 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `1.87 MB`
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:43 PM` instead of standard `9:41`.
+- **File Size**: `0.49 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPad (9.7") (`1536x2048`)
-- File size is optimized (1.87 MB)
+- File size is optimized (0.49 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-5:43PM Fri May 22
+9:41AM Sat May 23
 
-e
+A + MAY 23 2026
+
+TAP TO FLIP BACK
+```
+
+</details>
+
+---
+
+### `ipad97_yesterday.png`
+
+- **Path**: [ipad97_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/ipad97_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `1536 x 2048 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `0.77 MB`
+
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPad (9.7") (`1536x2048`)
+- File size is optimized (0.77 MB)
+
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+9:41AM Sat May 23
 
 CA - MAY 22 2026
+```
 
-California Poppy
+</details>
 
-Eschscholzia californica
+---
 
-The California poppy is renowned for its vibrant orange petals and its resilience, thriving in various Californian landscapes and
-symbolizing the state.
+### `ipad_screencheck.png`
+
+- **Path**: [ipad_screencheck.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/ipad_screencheck.png)
+- **Format**: PNG
+- **Dimensions**: `2064 x 2752 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `1.21 MB`
+
+#### ⚠️ Warnings:
+- Could not determine device category from filename `ipad_screencheck.png`. Expected prefix like: iphone67, iphone65, iphone61, iphone55, ipad129, ipad11, ipad105, ipad97.
+
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- File size is optimized (1.21 MB)
+
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+9:41AM Sat May 23 al > ©)
+
+CA - MAY 23 2026 -
+
+< Yesterday UPDATE LOCATION
 ```
 
 </details>
@@ -361,39 +394,27 @@ symbolizing the state.
 - **Format**: PNG
 - **Dimensions**: `1242 x 2208 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `1.53 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
+- **File Size**: `1.41 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone (5.5") (`1242x2208`)
-- File size is optimized (1.53 MB)
+- File size is optimized (1.41 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-Carrier = 5:41PM
+all Carrier
 
-. AM eam ? FRIDAY
+CA - MAY 23 2026
 
-Tee 22
+9:41AM
 
-No events today
+— @SEARCH ©
 
-Maps Calendar
-
-22
-
-Calendar Photos
+TAP TO READ
 ```
 
 </details>
@@ -406,39 +427,52 @@ Calendar Photos
 - **Format**: PNG
 - **Dimensions**: `1242 x 2208 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `1.53 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
+- **File Size**: `1.41 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone (5.5") (`1242x2208`)
-- File size is optimized (1.53 MB)
+- File size is optimized (1.41 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-Carrier = 5:41PM
+all Carrier 9:41AM (i
 
-. AM eam ? FRIDAY
+CA - MAY 23 2026 | @ SEARCH ©
 
-Tee 22
+TAP TO READ : 4
+```
 
-No events today
+</details>
 
-Maps Calendar
+---
 
-22
+### `iphone55_yesterday.png`
 
-Calendar Photos
+- **Path**: [iphone55_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/iphone55_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `1242 x 2208 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `1.46 MB`
+
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPhone (5.5") (`1242x2208`)
+- File size is optimized (1.46 MB)
+
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+ell Carrier 9:41AM =
+
+CA - MAY 22 2026 @. SEARCH
+
+TAP TO READ
 ```
 
 </details>
@@ -451,37 +485,31 @@ Calendar Photos
 - **Format**: PNG
 - **Dimensions**: `1179 x 2556 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `0.31 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+- **File Size**: `0.44 MB`
 
 #### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
+- Status bar time is `8:28`. Apple's design guidelines recommend standardizing simulator time to `9:41`.
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone (6.1") (`1179x2556`)
-- File size is optimized (0.31 MB)
+- File size is optimized (0.44 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-Tools
+8:28@
 
-YOUR AREA - MAY 22 2026 cd
+> @
+CA - MAY 23 2026 @. SEARCH ee
 
-Allow “Expo Go” to use
-your location?
+OFFLINE - ARCHIVE
 
-The app shows you the current
-location on a map and makes it
-available when you request it
+California Poppy
 
-< Yesterday UPDATE LOCATION
+Eschscholzia californica
 ```
 
 </details>
@@ -494,44 +522,56 @@ available when you request it
 - **Format**: PNG
 - **Dimensions**: `1179 x 2556 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `1.57 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
+- **File Size**: `0.35 MB`
 
 #### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:41` instead of standard `9:41`.
+- Status bar time is `8:28`. Apple's design guidelines recommend standardizing simulator time to `9:41`.
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone (6.1") (`1179x2556`)
-- File size is optimized (1.57 MB)
+- File size is optimized (0.35 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-x
+8:28
 
-Tools
+> @
+CA - MAY 23 2026 @. SEARCH ee
 
-Allow “Expo Go” to use
-your location?
+OFFLINE - ARCHIVE
+```
 
-The app shows you the current
-location on a map and makes it
-available when you request it
+</details>
 
-California Poppy
+---
 
-Eschscholzia californica
+### `iphone61_yesterday.png`
 
-The California poppy is renowned for its
-vibrant orange petals and its resilience,
-thriving in various Californian landscapes and
-symbolizing the state.
+- **Path**: [iphone61_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/iphone61_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `1179 x 2556 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `1.21 MB`
+
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPhone (6.1") (`1179x2556`)
+- File size is optimized (1.21 MB)
+
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+all Carrier 9:41AM =
+
+CA - MAY 22 2026 ®. SEARCH
+
+TAP TO READ
 ```
 
 </details>
@@ -544,46 +584,24 @@ symbolizing the state.
 - **Format**: PNG
 - **Dimensions**: `1242 x 2688 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `2.42 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
-- Large file size: **2.42 MB**. We recommend compressing screenshots to speed up downloads and uploads.
+- **File Size**: `0.06 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone Pro Max (6.5") (`1242x2688`)
+- Status bar shows 9:41
+- File size is optimized (0.06 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-Treasure
-Island
+9:41 oll es)
 
-FRIDAY
+YOUR AREA -: MAY 23 2026 @. SEARCH
 
-22
-
-No events today
-
-Calendar
-
-Calendar Photos
-
-&
-
-Open in “Expo Go"?
-
-Q Search
-
-Ae
+FINDING TODAY'S BLOOM
 ```
 
 </details>
@@ -596,46 +614,55 @@ Ae
 - **Format**: PNG
 - **Dimensions**: `1242 x 2688 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `2.42 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
-- Large file size: **2.42 MB**. We recommend compressing screenshots to speed up downloads and uploads.
+- **File Size**: `1.40 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone Pro Max (6.5") (`1242x2688`)
+- Status bar shows 9:41
+- File size is optimized (1.40 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-Treasure
-Island
+9:41 al (__
 
-FRIDAY
+CA - MAY 23 2026 @. SEARCH
 
-22
+SANDBOX OFFLINE - ARCH
 
-No events today
+TAP TO READ
+```
 
-Calendar
+</details>
 
-Calendar Photos
+---
 
-&
+### `iphone65_yesterday.png`
 
-Open in “Expo Go"?
+- **Path**: [iphone65_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/iphone65_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `1242 x 2688 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `1.29 MB`
 
-Q Search
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPhone Pro Max (6.5") (`1242x2688`)
+- File size is optimized (1.29 MB)
 
-Ae
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+all Carrier 9:41AM =
+
+CA - MAY 22 2026 ®. SEARCH
+
+TAP TO READ
 ```
 
 </details>
@@ -648,44 +675,28 @@ Ae
 - **Format**: PNG
 - **Dimensions**: `1290 x 2796 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `2.50 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
-- Large file size: **2.50 MB**. We recommend compressing screenshots to speed up downloads and uploads.
+- **File Size**: `1.54 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone Pro Max (6.7") (`1290x2796`)
+- Status bar shows 9:41
+- File size is optimized (1.54 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-Treasure
-Island
+9:41 all {_}
 
-FRIDAY
+CA - MAY 23 2026 @. SEARCH
 
-22
+SANDBOX OFFLINE - ARCH A
 
-No events today
+TAP TO READ
 
-Calendar
-
-Calendar Photos
-
-Open in “Expo Go"?
-
-Q Search
-
-) @
+< Yesterday UPDATE LOCATION
 ```
 
 </details>
@@ -698,44 +709,59 @@ Q Search
 - **Format**: PNG
 - **Dimensions**: `1290 x 2796 px`
 - **Alpha Channel**: 🟢 No
-- **File Size**: `2.50 MB`
-
-#### 🔴 Critical Issues:
-- AI Vision: Looks like a screenshot of the **mobile home screen** instead of the app UI.
-- AI Vision: Looks like a screenshot of the **Expo Go client / developer launcher**.
-- AI Vision: Contains a visible **popup, permission dialog (e.g., location permissions), or system alert modal**.
-
-#### ⚠️ Warnings:
-- AI Vision: Status bar time is `5:40` instead of standard `9:41`.
-- Large file size: **2.50 MB**. We recommend compressing screenshots to speed up downloads and uploads.
+- **File Size**: `1.53 MB`
 
 #### 🟢 Passed Checks:
 - Format is PNG
 - No alpha channel
 - Dimensions match iPhone Pro Max (6.7") (`1290x2796`)
+- Status bar shows 9:41
+- File size is optimized (1.53 MB)
 
 <details>
 <summary>Extracted Text (OCR)</summary>
 
 ```text
-Treasure
-Island
+9:41 all {__iy
 
-FRIDAY
+CA - MAY 23 2026 @. SEARCH
 
-22
+SANDBOX OFFLINE - ARCH A
 
-No events today
+5
 
-Calendar
+TAP TO READ
 
-Calendar Photos
+< Yesterday UPDATE LOCATION
+```
 
-Open in “Expo Go"?
+</details>
 
-Q Search
+---
 
-) @
+### `iphone67_yesterday.png`
+
+- **Path**: [iphone67_yesterday.png](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/app_store_assets/screenshots/iphone67_yesterday.png)
+- **Format**: PNG
+- **Dimensions**: `1290 x 2796 px`
+- **Alpha Channel**: 🟢 No
+- **File Size**: `1.73 MB`
+
+#### 🟢 Passed Checks:
+- Format is PNG
+- No alpha channel
+- Dimensions match iPhone Pro Max (6.7") (`1290x2796`)
+- File size is optimized (1.73 MB)
+
+<details>
+<summary>Extracted Text (OCR)</summary>
+
+```text
+all Carrier 9:41AM
+
+CA - MAY 22 2026 ®. SEARCH
+
+TAP TO READ
 ```
 
 </details>

@@ -203,7 +203,27 @@ Respond ONLY with a JSON object in this exact format:
     });
     
     if (!resp.ok) {
-      throw new Error(`Gemini status ${resp.status}: ${await resp.text()}`);
+      const errorText = await resp.text();
+      let errorObj;
+      try {
+        errorObj = JSON.parse(errorText);
+      } catch (e) {}
+      
+      const errorMessage = errorObj?.error?.message || errorText;
+      const isBillingOrQuota = resp.status === 429 || 
+                               errorMessage.includes('prepayment credits') || 
+                               errorMessage.includes('RESOURCE_EXHAUSTED') ||
+                               errorObj?.error?.status === 'RESOURCE_EXHAUSTED';
+                               
+      if (isBillingOrQuota) {
+        console.error('\n======================================================================');
+        console.error('🔴 CRITICAL GEMINI API ERROR: BILLING OR QUOTA EXHAUSTED');
+        console.error(errorMessage);
+        console.error('======================================================================\n');
+        process.exit(1);
+      }
+      
+      throw new Error(`Gemini status ${resp.status}: ${errorText}`);
     }
     
     const json = await resp.json();

@@ -196,7 +196,26 @@ async function generateImage(apiKey, species, state) {
     }
 
     const text = await resp.text();
-    lastErr = new Error(`Gemini ${resp.status}: ${text.slice(0, 200)}`);
+    let errorObj;
+    try {
+      errorObj = JSON.parse(text);
+    } catch (e) {}
+    
+    const errorMessage = errorObj?.error?.message || text;
+    const isBillingOrQuota = resp.status === 429 || 
+                             errorMessage.includes('prepayment credits') || 
+                             errorMessage.includes('RESOURCE_EXHAUSTED') ||
+                             errorObj?.error?.status === 'RESOURCE_EXHAUSTED';
+                             
+    if (isBillingOrQuota) {
+      console.error('\n======================================================================');
+      console.error('🔴 CRITICAL GEMINI API ERROR: BILLING OR QUOTA EXHAUSTED');
+      console.error(errorMessage);
+      console.error('======================================================================\n');
+      process.exit(1);
+    }
+    
+    lastErr = new Error(`Gemini ${resp.status}: ${errorMessage.slice(0, 200)}`);
 
     const retryable = resp.status === 429 || resp.status >= 500;
     if (!retryable || attempt === maxAttempts) throw lastErr;
