@@ -10,7 +10,7 @@ appId: host.exp.Exponent
 
 # Wait for the screen to resolve
 - extendedWaitUntil:
-    visible: "TAP TO READ"
+    visible: ".*TAP TO READ.*"
     timeout: 20000
 
 # If the 404 error state is shown, verify the retry button works
@@ -22,7 +22,7 @@ appId: host.exp.Exponent
       - assertVisible: "Try again"
       - tapOn: "Try again"
       - extendedWaitUntil:
-          visible: "TAP TO READ"
+          visible: ".*TAP TO READ.*"
           timeout: 15000
 
 # If the offline fallback is shown, verify the badge is present

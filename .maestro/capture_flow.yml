@@ -1,0 +1,53 @@
+# Automated screenshot capture flow
+appId: host.exp.Exponent
+---
+- runFlow: subflows/connect.yml
+
+# Wait for the daily flower card to load on the front face
+- extendedWaitUntil:
+    visible: ".*TAP TO READ.*"
+    timeout: 25000
+
+# Scene 1: Front Card
+- takeScreenshot: app_store_assets/screenshots/${PREFIX}
+
+# Scene 2: Back Card
+- tapOn: ".*TAP TO READ.*"
+- extendedWaitUntil:
+    visible: ".*TAP TO FLIP BACK.*"
+    timeout: 5000
+- takeScreenshot: app_store_assets/screenshots/${PREFIX}_back
+
+# Flip back to the front
+- tapOn: ".*TAP TO FLIP BACK.*"
+- extendedWaitUntil:
+    visible: ".*TAP TO READ.*"
+    timeout: 5000
+
+# Scene 3: Yesterday's Flower
+- tapOn: "← Yesterday"
+- extendedWaitUntil:
+    visible: "Today →"
+    timeout: 5000
+- takeScreenshot: app_store_assets/screenshots/${PREFIX}_yesterday
+
+# Return to Today
+- tapOn: "Today →"
+- extendedWaitUntil:
+    visible: ".*TAP TO READ.*"
+    timeout: 5000
+
+# Scene 4: Search Vibe
+- tapOn: "🔍 SEARCH"
+- extendedWaitUntil:
+    visible: "Vector Vibe Search"
+    timeout: 5000
+- inputText: "poppy"
+- tapOn: "Search"
+- extendedWaitUntil:
+    visible: ".*match.*"
+    timeout: 8000
+- takeScreenshot: app_store_assets/screenshots/${PREFIX}_search
+
+# Close Search Modal
+- tapOn: "Close"

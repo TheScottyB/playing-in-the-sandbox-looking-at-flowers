@@ -6,6 +6,6 @@ appId: host.exp.Exponent
       location: deny
 - openLink: "exp://localhost:8081"
 - extendedWaitUntil:
-    visible: "TAP TO READ"
+    visible: ".*TAP TO READ.*"
     timeout: 15000
 - assertVisible: "← Yesterday"

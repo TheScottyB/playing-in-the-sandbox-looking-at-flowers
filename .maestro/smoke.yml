@@ -10,7 +10,7 @@ appId: host.exp.Exponent
 
 # Wait for the screen to resolve — we expect the daily flower card to load.
 - extendedWaitUntil:
-    visible: "TAP TO READ"
+    visible: ".*TAP TO READ.*"
     timeout: 20000
 
 # Verify nav is present

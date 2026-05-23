@@ -3,6 +3,7 @@
   "license": "0BSD",
   "main": "expo-router/entry",
   "version": "1.2.0",
+  "packageManager": "pnpm@11.2.2",
   "scripts": {
     "start": "expo start",
     "reset-project": "node scripts/reset-project.mjs",
@@ -16,6 +17,7 @@
     "db:smoke": "node scripts/db-smoke.mjs",
     "icons:generate": "node scripts/render-icons.mjs",
     "screenshots:capture": "node scripts/capture_screenshots.mjs",
+    "screenshots:capture:auto": "node scripts/capture_screenshots_auto.mjs",
     "screenshots:verify": "node scripts/verify_screenshots.mjs",
     "screenshots:statusbar:setup": "xcrun simctl status_bar booted override --time \"9:41\" --batteryState \"charged\" --batteryLevel \"100\" --cellularMode \"active\" --cellularBars \"4\" --wifiMode \"searching\" --wifiBars \"3\"",
     "screenshots:statusbar:clear": "xcrun simctl status_bar booted clear",

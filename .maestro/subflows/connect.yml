@@ -16,6 +16,18 @@ appId: host.exp.Exponent
 - tapOn:
     text: "OK"
     optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    text: "Allow While Using App"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Open"
+    optional: true
 
 # Check if the local dev server is auto-discovered on screen.
 # If it is not visible, recover by opening the Expo deep link directly.
@@ -24,6 +36,9 @@ appId: host.exp.Exponent
       notVisible: "http://localhost:8081"
     commands:
       - openLink: "exp://localhost:8081"
+      - tapOn:
+          text: "Open"
+          optional: true
 
 - runFlow:
     when:
@@ -43,4 +58,16 @@ appId: host.exp.Exponent
     optional: true
 - tapOn:
     text: "Dismiss"
+    optional: true
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    text: "Allow While Using App"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Open"
     optional: true

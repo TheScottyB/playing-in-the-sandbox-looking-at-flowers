@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
-import FlipCard from 'react-native-flip-card';
+import FlipCard from '@/components/ModernFlipCard';
 
 import { IridescentOverlay } from '@/components/IridescentOverlay';
 import { styles } from '@/styles/home.styles';
@@ -322,12 +322,6 @@ export default function HomeScreen() {
               <FlipCard
                 key={state.flower.date + ':' + state.flower.state}
                 style={{ width: cardW, height: cardH }}
-                friction={6}
-                perspective={1000}
-                flipHorizontal
-                flipVertical={false}
-                clickable
-                useNativeDriver={process.env.EXPO_OS !== 'web'}
               >
                 {/* Front: image */}
                 <View style={styles.face}>
@@ -397,7 +391,7 @@ export default function HomeScreen() {
                     <Text style={styles.latin} selectable>{state.flower.latin}</Text>
                     <View style={styles.rule} />
                     <Text style={styles.blurb} selectable>{state.flower.blurb}</Text>
-                    <Text style={[styles.hint, styles.hintBack]}>TAP TO FLIP BACK</Text>
+                    <Text style={styles.hintBack} selectable={false}>TAP TO FLIP BACK</Text>
                   </LinearGradient>
                 </View>
               </FlipCard>
@@ -405,30 +399,32 @@ export default function HomeScreen() {
           )}
         </View>
 
-        <View style={styles.nav}>
-          <Pressable
-            style={[styles.navBtn, dayOffset <= -6 && styles.navBtnDisabled]}
-            onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
-            disabled={dayOffset <= -6}
-            hitSlop={8}
-          >
-            <Text style={styles.navLabel}>← Yesterday</Text>
-          </Pressable>
-
-          {dayOffset < 0 ? (
+        {process.env.EXPO_PUBLIC_SCREENSHOT_MODE !== 'true' && (
+          <View style={styles.nav}>
             <Pressable
-              style={styles.navBtn}
-              onPress={() => setDayOffset(0)}
+              style={[styles.navBtn, dayOffset <= -6 && styles.navBtnDisabled]}
+              onPress={() => setDayOffset(d => Math.max(d - 1, -6))}
+              disabled={dayOffset <= -6}
               hitSlop={8}
             >
-              <Text style={styles.navLabel}>Today →</Text>
+              <Text style={styles.navLabel}>← Yesterday</Text>
             </Pressable>
-          ) : (
-            <Pressable onPress={handleUpdateLocation} hitSlop={8}>
-              <Text style={styles.navSubtle}>Update location</Text>
-            </Pressable>
-          )}
-        </View>
+
+            {dayOffset < 0 ? (
+              <Pressable
+                style={styles.navBtn}
+                onPress={() => setDayOffset(0)}
+                hitSlop={8}
+              >
+                <Text style={styles.navLabel}>Today →</Text>
+              </Pressable>
+            ) : (
+              <Pressable onPress={handleUpdateLocation} hitSlop={8}>
+                <Text style={styles.navSubtle}>Update location</Text>
+              </Pressable>
+            )}
+          </View>
+        )}
       </SafeAreaView>
 
       <Modal
