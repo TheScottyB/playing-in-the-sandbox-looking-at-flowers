@@ -9,6 +9,8 @@
 			"@/components/*": ["./shared/components/*"],
 			"@/styles/*": ["./shared/styles/*"],
 			"@/types/*": ["./shared/types/*"],
+			"@/hooks/*": ["./shared/hooks/*"],
+			"@/data/*": ["./lib/data/*"],
 			"@/*": ["./*"]
 		}
 	},

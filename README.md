@@ -23,7 +23,7 @@ On first launch, the app requests location permission **once** to resolve the us
 
 ### 2. Static CDN Automation Pipeline
 Every night at **04:00 PT**, a GitHub Actions cron workflow executes:
-* Selects one in-season native species per region from [species.json](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/data/species.json).
+* Selects one in-season native species per region from [species.json](file:///Users/scottybe/workspace/playing-in-the-sandbox-looking-at-flowers/lib/data/species.json).
 * Directs Gemini 2.5 Flash to generate a high-fidelity image of the species.
 * Optimizes the image format to WebP and generates metadata JSON.
 * Commits the output directly to the GitHub Pages static branch structure: `/docs/daily/{region}/{YYYY-MM-DD}.{webp,json}`.

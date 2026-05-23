@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const SPECIES_PATH = join(ROOT, "data", "species.json");
+const SPECIES_PATH = join(ROOT, "lib", "data", "species.json");
 const OUT_DIR = join(ROOT, "assets");
 const DB_PATH = join(OUT_DIR, "species.db");
 const TEMP_SQL = join(ROOT, "scratch", "species_dump.sql");
