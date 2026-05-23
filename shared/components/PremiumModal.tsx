@@ -16,6 +16,7 @@ import {
 	purchasePackage,
 	restorePurchases,
 } from "@/lib/purchases";
+import { PALETTE } from "@/shared/constants/brand";
 import { IridescentOverlay } from "./IridescentOverlay";
 
 interface PremiumModalProps {
@@ -183,7 +184,7 @@ export default function PremiumModal({
 						{loadingOfferings ? (
 							<ActivityIndicator
 								size="small"
-								color="#ffd700"
+								color={PALETTE.accent}
 								style={{ marginVertical: 20 }}
 							/>
 						) : (
@@ -207,8 +208,8 @@ export default function PremiumModal({
 										{isSelected && (
 											<LinearGradient
 												colors={[
-													"rgba(255, 215, 0, 0.08)",
-													"rgba(255, 215, 0, 0.0)",
+													"rgba(242, 184, 218, 0.08)",
+													"rgba(242, 184, 218, 0.0)",
 												]}
 												start={{ x: 0, y: 0 }}
 												end={{ x: 1, y: 1 }}
@@ -239,7 +240,7 @@ export default function PremiumModal({
 						disabled={purchasing || loadingOfferings}
 					>
 						<LinearGradient
-							colors={["#ffd700", "#ffa500"]}
+							colors={[PALETTE.accent, PALETTE.accentDeep]}
 							start={{ x: 0, y: 0 }}
 							end={{ x: 1, y: 1 }}
 							style={styles.gradientBtn}
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
 		width: 250,
 		height: 250,
 		borderRadius: 125,
-		backgroundColor: "rgba(255, 215, 0, 0.06)",
+		backgroundColor: "rgba(242, 184, 218, 0.04)",
 		filter: "blur(80px)",
 	},
 	card: {
@@ -313,7 +314,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#121216",
 		borderRadius: 24,
 		borderWidth: 1,
-		borderColor: "rgba(255, 215, 0, 0.15)",
+		borderColor: "rgba(242, 184, 218, 0.15)",
 		padding: 24,
 		alignItems: "center",
 		shadowColor: "#000",
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
 	tag: {
 		fontSize: 10,
 		fontWeight: "bold",
-		color: "#ffd700",
+		color: PALETTE.accent,
 		letterSpacing: 2,
 		marginBottom: 8,
 	},
@@ -391,7 +392,7 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 	},
 	packageCardSelected: {
-		borderColor: "rgba(255, 215, 0, 0.5)",
+		borderColor: "rgba(242, 184, 218, 0.5)",
 		backgroundColor: "#1c1c28",
 	},
 	packageCardHeader: {
@@ -408,7 +409,7 @@ const styles = StyleSheet.create({
 	packagePrice: {
 		fontSize: 13,
 		fontWeight: "bold",
-		color: "#ffd700",
+		color: PALETTE.accent,
 	},
 	packageDesc: {
 		fontSize: 11,
@@ -463,7 +464,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 	},
 	legalLink: {
-		color: "#5dade2",
+		color: PALETTE.accentDeep,
 		fontSize: 11,
 	},
 	legalSeparator: {
